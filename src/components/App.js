@@ -54,7 +54,8 @@ App.propTypes = {
   insertCss: PropTypes.func.isRequired,
   context: PropTypes.shape({
     // Universal HTTP client
-    fetch: PropTypes.func.isRequired,
+    // commented for just to see the impact of not having it, will rollback if required
+    // fetch: PropTypes.func.isRequired,
     pathname: PropTypes.string.isRequired,
     query: PropTypes.object,
   }).isRequired,
