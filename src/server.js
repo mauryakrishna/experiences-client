@@ -12,22 +12,26 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
-import { graphql } from 'graphql';
-import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
 import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
+import proxy from 'express-http-proxy';
+
+// apollo setup
+import { getDataFromTree } from '@apollo/react-ssr';
+import { ApolloProvider } from 'react-apollo-hooks';
+import createApolloClient from './createApolloClient';
+
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
-import createFetch from './createFetch';
 import passport from './passport';
 import router from './router';
 import models from './data/models';
-import schema from './data/schema';
+
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
@@ -47,6 +51,8 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 const app = express();
 
+// requirement for createHttpLink
+global.fetch = nodeFetch;
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
 // Default is to trust proxy headers only from loopback interface.
@@ -108,15 +114,7 @@ app.get(
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use(
-  '/graphql',
-  expressGraphQL(req => ({
-    schema,
-    graphiql: __DEV__,
-    rootValue: { request: req },
-    pretty: __DEV__,
-  })),
-);
+app.post('/gql', proxy(config.api.serverUrl));
 
 //
 // Register server-side rendering middleware
@@ -131,14 +129,6 @@ app.get('*', async (req, res, next) => {
       // eslint-disable-next-line no-underscore-dangle
       styles.forEach(style => css.add(style._getCss()));
     };
-
-    // Universal HTTP client
-    const fetch = createFetch(nodeFetch, {
-      baseUrl: config.api.serverUrl,
-      cookie: req.headers.cookie,
-      schema,
-      graphql,
-    });
 
     // Global (context) variables that can be easily accessed from any React component
     // https://facebook.github.io/react/docs/context.html
@@ -157,33 +147,46 @@ app.get('*', async (req, res, next) => {
     }
 
     const data = { ...route };
-    data.children = ReactDOM.renderToString(
-      <App context={context} insertCss={insertCss}>
-        {route.component}
-      </App>,
-    );
-    data.styles = [{ id: 'css', cssText: [...css].join('') }];
 
-    const scripts = new Set();
-    const addChunk = chunk => {
-      if (chunks[chunk]) {
-        chunks[chunk].forEach(asset => scripts.add(asset));
-      } else if (__DEV__) {
-        throw new Error(`Chunk with name '${chunk}' cannot be found`);
-      }
-    };
-    addChunk('client');
-    if (route.chunk) addChunk(route.chunk);
-    if (route.chunks) route.chunks.forEach(addChunk);
+    const apolloClient = createApolloClient(req);
 
-    data.scripts = Array.from(scripts);
-    data.app = {
-      apiUrl: config.api.clientUrl,
-    };
+    getDataFromTree(App).then(() => {
+      const stringApp = ReactDOM.renderToString(
+        <ApolloProvider client={apolloClient}>
+          <App context={context} insertCss={insertCss}>
+            {route.component}
+          </App>
+        </ApolloProvider>,
+      );
 
-    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
-    res.status(route.status || 200);
-    res.send(`<!doctype html>${html}`);
+      const initialState = apolloClient.extract();
+
+      data.children = stringApp;
+      data.styles = [{ id: 'css', cssText: [...css].join('') }];
+
+      const scripts = new Set();
+      const addChunk = chunk => {
+        if (chunks[chunk]) {
+          chunks[chunk].forEach(asset => scripts.add(asset));
+        } else if (__DEV__) {
+          throw new Error(`Chunk with name '${chunk}' cannot be found`);
+        }
+      };
+      addChunk('client');
+      if (route.chunk) addChunk(route.chunk);
+      if (route.chunks) route.chunks.forEach(addChunk);
+
+      data.scripts = Array.from(scripts);
+      data.app = {
+        apiUrl: config.api.clientUrl,
+      };
+
+      const html = ReactDOM.renderToStaticMarkup(
+        <Html {...data} state={initialState} />,
+      );
+      res.status(route.status || 200);
+      res.send(`<!doctype html>${html}`);
+    });
   } catch (err) {
     next(err);
   }

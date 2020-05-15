@@ -9,6 +9,8 @@
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
+import { useQuery } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 import s from './Header.css';
 import Link from '../Link';
 import Navigation from '../Navigation';
@@ -17,6 +19,20 @@ import logoUrl2x from './logo-small@2x.png';
 
 export default function Header() {
   useStyles(s);
+  const EXAMPLE_QUERY = gql`
+    query exampleQuery {
+      examplequery {
+        examplename
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(EXAMPLE_QUERY);
+
+  if (loading || error) {
+    return null;
+  }
+
   return (
     <div className={s.root}>
       <div className={s.container}>
@@ -30,6 +46,7 @@ export default function Header() {
             alt="React"
           />
           <span className={s.brandTxt}>Your Company</span>
+          <span className={s.banner}>Got the name{JSON.stringify(data)}</span>
         </Link>
         <div className={s.banner}>
           <h1 className={s.bannerTitle}>React</h1>

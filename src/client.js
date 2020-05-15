@@ -13,8 +13,13 @@ import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
 import { createPath } from 'history';
+
+// Apollo settings
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { createHttpLink } from 'apollo-link-http';
 import App from './components/App';
-import createFetch from './createFetch';
 import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
@@ -33,9 +38,9 @@ const insertCss = (...styles) => {
 // https://facebook.github.io/react/docs/context.html
 const context = {
   // Universal HTTP client
-  fetch: createFetch(fetch, {
-    baseUrl: window.App.apiUrl,
-  }),
+  // fetch: createFetch(fetch, {
+  //   baseUrl: window.App.apiUrl,
+  // }),
 };
 
 const container = document.getElementById('app');
@@ -77,11 +82,22 @@ async function onLocationChange(location, action) {
       return;
     }
 
+    const client = new ApolloClient({
+      // eslint-disable-next-line no-underscore-dangle
+      link: createHttpLink({
+        uri: window.App.apiUrl,
+      }),
+      // eslint-disable-next-line no-underscore-dangle
+      cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
+    });
+
     const renderReactApp = isInitialRender ? ReactDOM.hydrate : ReactDOM.render;
     appInstance = renderReactApp(
-      <App context={context} insertCss={insertCss}>
-        {route.component}
-      </App>,
+      <ApolloHooksProvider client={client}>
+        <App context={context} insertCss={insertCss}>
+          {route.component}
+        </App>
+      </ApolloHooksProvider>,
       container,
       () => {
         if (isInitialRender) {

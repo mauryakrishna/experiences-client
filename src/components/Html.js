@@ -20,6 +20,7 @@ export default function Html({
   styles,
   scripts,
   app,
+  state,
   children,
 }) {
   return (
@@ -46,7 +47,14 @@ export default function Html({
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
         <script
-          dangerouslySetInnerHTML={{ __html: `window.App=${serialize(app)}` }}
+          dangerouslySetInnerHTML={{
+            __html: `window.__APOLLO_STATE__=${serialize(state)}`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.App=${serialize(app)}`,
+          }}
         />
         {scripts.map(script => (
           <script key={script} src={script} />
@@ -83,6 +91,7 @@ Html.propTypes = {
   ),
   scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
   app: PropTypes.object, // eslint-disable-line
+  state: PropTypes.object.isRequired,
   children: PropTypes.string.isRequired,
 };
 
