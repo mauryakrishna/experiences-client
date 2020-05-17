@@ -12,6 +12,7 @@ import React from 'react';
 import cx from 'classnames';
 import s from './Navigation.css';
 import Link from '../Link';
+import usericon from './user-icon.png';
 
 export default function Navigation() {
   useStyles(s);
@@ -29,7 +30,7 @@ export default function Navigation() {
       </Link>
       <span className={s.spacer}>or</span>
       <Link className={cx(s.link, s.highlight)} to="/register">
-        Sign up
+        <img className={s.usericon} src={usericon} alt="User settings" />
       </Link>
     </div>
   );

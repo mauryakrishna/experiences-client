@@ -45,6 +45,11 @@
     "react-dom": "^16.12.0",
     "sequelize": "^5.21.2",
     "serialize-javascript": "^2.1.1",
+    "slate": "0.58.1",
+    "slate-history": "0.58.1",
+    "slate-react": "0.58.1",
+    "slate-react-placeholder": "0.2.9",
+    "slate-when": "0.2.0",
     "source-map-support": "^0.5.9",
     "sqlite3": "^4.0.8",
     "universal-router": "^8.3.0",
@@ -112,6 +117,7 @@
     "react-dev-utils": "^9.1.0",
     "react-error-overlay": "^6.0.3",
     "react-test-renderer": "^16.12.0",
+    "regenerator-runtime": "0.13.5",
     "rimraf": "^3.0.0",
     "stylelint": "^12.0.0",
     "stylelint-config-standard": "^19.0.0",
@@ -142,7 +148,6 @@
     ]
   },
   "scripts": {
-    "precommit": "lint-staged",
     "lint-js": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
     "lint-css": "stylelint \"src/**/*.{css,less,styl,scss,sass,sss}\"",
     "lint": "yarn run lint-js && yarn run lint-css",
