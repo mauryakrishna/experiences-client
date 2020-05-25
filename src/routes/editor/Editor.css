@@ -8,5 +8,5 @@
 .container {
   margin: 0 auto;
   padding: 40px;
-  max-width: 600px;
+  max-width: var(--screen-sm-min);
 }

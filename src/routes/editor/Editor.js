@@ -3,14 +3,14 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
 import s from './Editor.css';
-import EditableForcedLayout from '../../components/Editor/EditableForcedLayout';
+import Layout from '../../components/Editor/Layout';
 
 export default function Editor({ title }) {
   useStyles(s);
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <EditableForcedLayout />
+        <Layout />
       </div>
     </div>
   );

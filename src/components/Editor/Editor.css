@@ -1,5 +1,11 @@
-.placeholder {
-  font-family: monospace;
-  font-size: 20px;
-  color: peru;
+@import '../variables.css';
+
+.placeholdercontainer {
+  padding-bottom: 20px;
+}
+
+input.placeholder {
+  width: 100%;
+  font-size: 30px;
+  background: transparent;
 }
