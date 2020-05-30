@@ -21,7 +21,7 @@ const Title = () => {
     <div className={s.placeholdercontainer}>
       <input
         className={s.placeholder}
-        placeholder="Start with the title ..."
+        placeholder="Start with the title..."
         value={title}
         onChange={validateTitle}
         maxLength="1000"

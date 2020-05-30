@@ -90,8 +90,10 @@ async function onLocationChange(location, action) {
       // eslint-disable-next-line no-underscore-dangle
       cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
     });
-
-    const renderReactApp = isInitialRender ? ReactDOM.hydrate : ReactDOM.render;
+    // hydrate - should be only enable in prod, Need to figure out a way to differentiate when dev and prod
+    // use render in dev even for ssr
+    const renderReactApp =
+      isInitialRender && !__DEV__ ? ReactDOM.hydrate : ReactDOM.render;
     appInstance = renderReactApp(
       <ApolloHooksProvider client={client}>
         <App context={context} insertCss={insertCss}>
