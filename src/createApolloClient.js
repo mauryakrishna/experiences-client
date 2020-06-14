@@ -47,5 +47,6 @@ export default () => {
     link: Array.from([errorLink, authLink, httpLink]),
     ssrForceFetchDelay: 100,
     cache: new InMemoryCache(),
+    resolvers: {},
   });
 };

@@ -22,6 +22,7 @@
     "apollo-link-context": "1.0.20",
     "apollo-link-error": "1.1.13",
     "apollo-link-http": "1.5.17",
+    "apollo-link-state": "0.4.2",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.3",

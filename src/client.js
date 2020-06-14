@@ -16,6 +16,8 @@ import { createPath } from 'history';
 
 // Apollo settings
 import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
+import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createHttpLink } from 'apollo-link-http';
@@ -23,6 +25,7 @@ import App from './components/App';
 import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
+import resolvers from './resolvers';
 
 // Enables critical path CSS rendering
 // https://github.com/kriasoft/isomorphic-style-loader
@@ -82,14 +85,31 @@ async function onLocationChange(location, action) {
       return;
     }
 
-    const client = new ApolloClient({
+    const cache = new InMemoryCache({
+      addTypename: false,
       // eslint-disable-next-line no-underscore-dangle
-      link: createHttpLink({
-        uri: window.App.apiUrl,
-      }),
-      // eslint-disable-next-line no-underscore-dangle
-      cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
+    }).restore(window.__APOLLO_STATE__);
+
+    const httpLink = createHttpLink({
+      uri: window.App.apiUrl,
     });
+
+    const stateLink = withClientState({
+      cache,
+      resolvers,
+    });
+
+    const client = new ApolloClient({
+      cache,
+      link: ApolloLink.from([stateLink, httpLink]),
+      resolvers: {},
+      defaultOptions: {
+        query: {
+          errorPolicy: 'all',
+        },
+      },
+    });
+
     // hydrate - should be only enable in prod, Need to figure out a way to differentiate when dev and prod
     // use render in dev even for ssr
     const renderReactApp =
