@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
@@ -20,7 +21,7 @@ const plugins = [...pluginsHeading];
 
 const withPlugins = [withReact, withHistory, ...withPluginsHeading];
 
-const Editor = () => {
+const Editor = ({ cb }) => {
   useStyles(s);
 
   const [value, setValue] = useState([
@@ -39,7 +40,7 @@ const Editor = () => {
         setValue(newValue);
       }}
     >
-      <SaveExperience experience={value} />
+      <i decide={SaveExperience({ value, cb })} />
       <HeadingToolbar />
       <EditablePlugins
         plugins={plugins}
@@ -51,4 +52,7 @@ const Editor = () => {
   );
 };
 
+Editor.propTypes = {
+  cb: PropTypes.func.isRequired,
+};
 export default Editor;

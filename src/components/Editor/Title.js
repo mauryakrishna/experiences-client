@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import useStyles from 'isomorphic-style-loader/useStyles';
-import ShowSaveState from './ShowSaveState';
+import PropTypes from 'prop-types';
+
 import SaveTitle from './SaveTitle';
 
 import s from './Editor.css';
 
-const Title = () => {
+const Title = ({ cb }) => {
   useStyles(s);
 
-  const [savestate, setSavestate] = useState(false);
   const [title, setTitle] = useState('');
 
   const validateTitle = event => {
@@ -20,13 +20,9 @@ const Title = () => {
     setTitle(value);
   };
 
-  const cb = newsavestate => {
-    setSavestate(newsavestate);
-  };
-
   return (
     <React.Fragment>
-      <ShowSaveState decide={SaveTitle({ title, cb })} state={savestate} />
+      <i decide={SaveTitle({ title, cb })} />
       <div className={s.placeholdercontainer}>
         <input
           className={s.placeholder}
@@ -38,6 +34,10 @@ const Title = () => {
       </div>
     </React.Fragment>
   );
+};
+
+Title.propTypes = {
+  cb: PropTypes.func.isRequired,
 };
 
 export default Title;

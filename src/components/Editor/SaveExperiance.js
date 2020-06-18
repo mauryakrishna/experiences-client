@@ -1,29 +1,66 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import useStyles from 'isomorphic-style-loader/useStyles';
 import { useDebouncedCallback } from 'use-debounce';
 
-import s from './Editor.css';
+import { GET_EXPERIENCE_ID } from '../../queries/experience';
 
-const Save = ({ experience }) => {
-  useStyles(s);
+const Save = ({ value, cb }) => {
+  const experience = value;
 
-  const SAVE_EXPERIENCE_MUTATION = gql`
-    mutation saveExperience($input: SaveExperienceInput) {
-      saveExperience(input: $input) {
-        id
+  const client = useApolloClient();
+  // check if experience already exist
+  const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+
+  // update
+  let mutation = gql`
+    mutation updateExperience($input: UpdateExperienceInput) {
+      updateExperience(input: $input) {
+        updated
       }
     }
   `;
 
-  const [saveExperience, { loading }] = useMutation(SAVE_EXPERIENCE_MUTATION);
+  let variables = { experience, id };
+
+  // new experience
+  if (!id) {
+    mutation = gql`
+      mutation saveExperience($input: SaveExperienceInput) {
+        saveExperience(input: $input) {
+          id
+        }
+      }
+    `;
+
+    variables = { experience, authorid: 123 };
+  }
+
+  const [saveExperience] = useMutation(mutation, {
+    update: (cache, { data }) => {
+      if (data.saveExperience) {
+        // eslint-disable-next-line no-shadow
+        const { id } = data.saveExperience;
+        cache.writeQuery({
+          query: GET_EXPERIENCE_ID,
+          data: { id },
+        });
+      } else if (data.updateExperience) {
+        const { updated } = data.updateExperience;
+      }
+
+      cb(false);
+    },
+  });
 
   const [debouncedCallback] = useDebouncedCallback(() => {
+    // start showing the saving in progress
+    cb(true);
+
     saveExperience({
       variables: {
-        input: { experience: JSON.stringify(experience), authorid: 123 },
+        input: variables,
       },
     });
   }, 5000);
@@ -32,17 +69,12 @@ const Save = ({ experience }) => {
     debouncedCallback();
   }, [experience]);
 
-  if (loading) {
-    return <span>Saving...</span>;
-  }
-
-  return (
-    <div>
-      <span>Saved</span>
-    </div>
-  );
+  return '';
 };
 
-Save.propTypes = { experience: PropTypes.array.isRequired };
+Save.propTypes = {
+  experience: PropTypes.array.isRequired,
+  cb: PropTypes.func.isRequired,
+};
 
 export default Save;

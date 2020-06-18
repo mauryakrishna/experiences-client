@@ -4,14 +4,12 @@ import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
-import s from './Editor.css';
 import { GET_EXPERIENCE_ID } from '../../queries/experience';
 
 const SaveTitle = ({ title, cb }) => {
   const client = useApolloClient();
   // check if experience already exist
   const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
-
   // update
   let mutation = gql`
     mutation updateTitle($input: UpdateTitleInput) {
@@ -36,13 +34,17 @@ const SaveTitle = ({ title, cb }) => {
 
   const [saveTitle] = useMutation(mutation, {
     update: (cache, { data }) => {
-      // eslint-disable-next-line no-shadow
-      const { id } = data.saveTitle || data.updateTitle;
+      if (data.saveTitle) {
+        // eslint-disable-next-line no-shadow
+        const { id } = data.saveTitle;
+        cache.writeQuery({
+          query: GET_EXPERIENCE_ID,
+          data: { id },
+        });
+      } else if (data.updateTitle) {
+        const { updated } = data.updateTitle;
+      }
 
-      cache.writeQuery({
-        query: GET_EXPERIENCE_ID,
-        data: { id },
-      });
       cb(false);
     },
   });
