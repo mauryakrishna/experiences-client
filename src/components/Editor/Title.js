@@ -29,7 +29,7 @@ const Title = ({ cb }) => {
           placeholder="Start with the title..."
           value={title}
           onChange={validateTitle}
-          maxLength="1000"
+          maxLength="460"
         />
       </div>
     </React.Fragment>
