@@ -48,12 +48,13 @@ const routes = {
       load: () => import(/* webpackChunkName: 'admin' */ './admin'),
     },
 
-    // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
+    // Wildcard routes, e.g. { path: '(.*)', ... } (must go last), this will match just any route
+    // so be care should be always last
     {
       path: '(.*)',
       name: 'dynamic-routing',
       load: () =>
-        import(/* webpackChunkName: 'not-found' */ './dynamic-routing'),
+        import(/* webpackChunkName: 'dynamic-routing' */ './dynamic-routing'),
     },
   ],
 

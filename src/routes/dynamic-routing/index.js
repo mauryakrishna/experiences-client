@@ -5,7 +5,9 @@
 import React from 'react';
 
 import NotFound from '../not-found';
+import Layout from '../../components/Layout';
 import ReadExperience from '../../components/Experience/ReadExperience';
+import PageContainer from '../../components/PageContainer/PageContainer';
 
 const getComponent = path => {
   let component = <NotFound />;
@@ -16,8 +18,11 @@ const getComponent = path => {
     pathwihoutslash &&
     RegExp(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i).test(pathwihoutslash)
   ) {
-    const slugkey = '';
-    component = <ReadExperience slugkey={slugkey} />;
+    component = (
+      <Layout>
+        <ReadExperience slug={pathwihoutslash} />
+      </Layout>
+    );
   }
 
   return component;
@@ -26,8 +31,7 @@ const getComponent = path => {
 function action(context) {
   return {
     chunks: ['dynamic-routing'],
-    component: getComponent(context.path),
+    component: <PageContainer>{getComponent(context.path)}</PageContainer>,
   };
 }
-
 export default action;
