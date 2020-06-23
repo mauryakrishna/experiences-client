@@ -10,7 +10,7 @@ import AuthorDisplay from './AuthorDisplay';
 
 const ReadExperience = ({ slug }) => {
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
-  const [author, setAuthor] = useState({});
+  const [author, setAuthor] = useState(null);
   const editor = useMemo(() => pipe(createEditor()), []);
 
   const slugWords = slug.split('-');
@@ -50,7 +50,7 @@ const ReadExperience = ({ slug }) => {
 
   return (
     <>
-      <AuthorDisplay {...author} />
+      {author && <AuthorDisplay {...author} />}
       <Slate
         editor={editor}
         value={value}
