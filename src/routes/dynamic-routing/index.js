@@ -4,25 +4,25 @@
 
 import React from 'react';
 
-import NotFound from '../not-found';
-import Layout from '../../components/Layout';
+import NotFound from '../not-found/NotFound';
 import ReadExperience from '../../components/Experience/ReadExperience';
 import PageContainer from '../../components/PageContainer/PageContainer';
+import AllOfAuthor from '../allofauthor/AllOfAuthor';
+
+const getRegex = regex => RegExp(regex);
 
 const getComponent = path => {
   let component = <NotFound />;
 
-  // path = '/some-path'; //mind the / at the start
-  const pathwihoutslash = path.substr(1);
-  if (
-    pathwihoutslash &&
-    RegExp(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i).test(pathwihoutslash)
-  ) {
-    component = (
-      <Layout>
-        <ReadExperience slug={pathwihoutslash} />
-      </Layout>
-    );
+  if (path) {
+    // experience url
+    if (getRegex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i).test(path)) {
+      component = <ReadExperience slug={path} />;
+    }
+    // about author page
+    else if (getRegex(/^@[a-z0-9]*$/i).test(path)) {
+      component = <AllOfAuthor authoruid={path} />;
+    }
   }
 
   return component;
@@ -31,7 +31,10 @@ const getComponent = path => {
 function action(context) {
   return {
     chunks: ['dynamic-routing'],
-    component: <PageContainer>{getComponent(context.path)}</PageContainer>,
+    component: (
+      // path = '/some-path'; //mind the / at the start
+      <PageContainer>{getComponent(context.path.substr(1))}</PageContainer>
+    ),
   };
 }
 export default action;

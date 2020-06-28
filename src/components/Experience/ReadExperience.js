@@ -22,7 +22,7 @@ const ReadExperience = ({ slug }) => {
         title
         experience
         author {
-          id
+          uid
           displayname
           shortintro
         }

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
-const AllOfAuthor = ({ authorid }) => {
+const AllOfAuthor = ({ authoruid }) => {
   const [authordetails, setAuthordetails] = useState({});
 
   const GET_AUTHOR_QUERY = gql`
-    query getAuthor($authorid: String!) {
-      getAuthor(authorid: $authorid) {
+    query getAuthor($uid: String!) {
+      getAuthor(uid: $uid) {
         displayname
         shortintro
         experiences {
@@ -21,7 +21,7 @@ const AllOfAuthor = ({ authorid }) => {
 
   const { data, error } = useQuery(GET_AUTHOR_QUERY, {
     variables: {
-      authorid,
+      uid: authoruid,
     },
   });
 
@@ -49,6 +49,6 @@ const AllOfAuthor = ({ authorid }) => {
 };
 
 AllOfAuthor.propTypes = {
-  authorid: PropTypes.string.isRequired,
+  authoruid: PropTypes.string.isRequired,
 };
 export default AllOfAuthor;
