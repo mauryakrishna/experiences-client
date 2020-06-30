@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useMutation, useApolloClient } from 'react-apollo-hooks';
+import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { GET_EXPERIENCE_ID } from '../../queries/experience';
 
-const SaveTitle = ({ title, cb }) => {
-  const client = useApolloClient();
-  // check if experience already exist
-  const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+function SaveTitle({ id, cb }) {
   // update
   let mutation = gql`
     mutation updateTitle($input: UpdateTitleInput) {
@@ -18,7 +15,7 @@ const SaveTitle = ({ title, cb }) => {
       }
     }
   `;
-  let variables = { id, title };
+  let variables = { id };
 
   // new
   if (!id) {
@@ -29,14 +26,15 @@ const SaveTitle = ({ title, cb }) => {
         }
       }
     `;
-    variables = { title, authorid: 123 };
+    variables = { authoruid: '@mauryakrishna1' };
   }
 
-  const [saveTitle] = useMutation(mutation, {
+  const [saveTitle, { loading, error }] = useMutation(mutation, {
     update: (cache, { data }) => {
       if (data.saveTitle) {
         // eslint-disable-next-line no-shadow
         const { id } = data.saveTitle;
+
         cache.writeQuery({
           query: GET_EXPERIENCE_ID,
           data: { id },
@@ -49,19 +47,23 @@ const SaveTitle = ({ title, cb }) => {
     },
   });
 
-  const [debouncedCallback] = useDebouncedCallback(() => {
+  const [debouncedCallback] = useDebouncedCallback(title => {
     // show the saving in progress state
     cb(true);
 
+    // not a great way to do here but could no think ofother way
+    // and there was already too much code written, so the work around
+    variables.title = title;
+
     saveTitle({ variables: { input: variables } });
-  }, 5000);
 
-  React.useEffect(() => {
-    debouncedCallback();
-  }, [title]);
+    if (error) {
+      console.log(error);
+    }
+  }, 3000);
 
-  return '';
-};
+  return debouncedCallback;
+}
 
 SaveTitle.propTypes = {
   title: PropTypes.string.isRequired,

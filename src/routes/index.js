@@ -47,6 +47,10 @@ const routes = {
       path: '/admin',
       load: () => import(/* webpackChunkName: 'admin' */ './admin'),
     },
+    {
+      path: '/edit/:slugkey',
+      load: () => import(/* webpackChunkName: 'admin' */ './editor'),
+    },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last), this will match just any route
     // be careful about this one and after

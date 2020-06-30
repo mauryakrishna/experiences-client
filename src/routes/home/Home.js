@@ -30,20 +30,24 @@ export default function Home() {
   const { loading, data, error } = useQuery(GET_EXPERIENCES_QUERY);
 
   if (loading || error) {
-    return null;
+    return <span>{error}</span>;
   }
 
   const experiences = data.getExperiences;
 
+  if (experiences.length === 0) {
+    return <h3>No experiences to take you through.</h3>;
+  }
+
   return (
     <div className={s.root}>
       <div className={s.container}>
-        {experiences.map(({ title, slug, slugkey }, index) => {
+        {experiences.map(({ title, slug, slugkey }) => {
           const link = `${slug}-${slugkey}`;
           return (
-            <Link to={link} key={index}>
-              {title}
-            </Link>
+            <div key={slugkey}>
+              <Link to={link}>{title}</Link>
+            </div>
           );
         })}
       </div>

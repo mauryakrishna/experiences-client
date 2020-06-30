@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
+import Link from '../../components/Link';
+
 const AllOfAuthor = ({ authoruid }) => {
   const [authordetails, setAuthordetails] = useState({});
 
@@ -13,6 +15,7 @@ const AllOfAuthor = ({ authoruid }) => {
         shortintro
         experiences {
           title
+          slugkey
           ispublished
         }
       }
@@ -42,7 +45,12 @@ const AllOfAuthor = ({ authoruid }) => {
       <span>{authordetails.shortintro}</span>
       {authordetails.experiences &&
         authordetails.experiences.map(experience => {
-          return <h4>{experience.title}</h4>;
+          return (
+            <h4>
+              {experience.title}
+              <Link to={`/edit/${experience.slugkey}`}>Edit</Link>
+            </h4>
+          );
         })}
     </>
   );

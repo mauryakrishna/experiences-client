@@ -4,13 +4,13 @@ import Editor from './Editor';
 
 const title = 'Write an experience...';
 
-function action() {
+function action(context, params) {
   return {
     chunks: ['editor'],
     title,
     component: (
       <Layout>
-        <Editor title={title} />
+        <Editor slugkey={params.slugkey} />
       </Layout>
     ),
   };

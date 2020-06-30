@@ -1,18 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useMutation, useApolloClient } from 'react-apollo-hooks';
+import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { GET_EXPERIENCE_ID } from '../../queries/experience';
 
-const Save = ({ value, cb }) => {
-  const experience = value;
-
-  const client = useApolloClient();
-  // check if experience already exist
-  const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
-
+const Save = ({ id, cb }) => {
   // update
   let mutation = gql`
     mutation updateExperience($input: UpdateExperienceInput) {
@@ -22,7 +16,7 @@ const Save = ({ value, cb }) => {
     }
   `;
 
-  let variables = { experience, id };
+  let variables = { id };
 
   // new experience
   if (!id) {
@@ -34,7 +28,7 @@ const Save = ({ value, cb }) => {
       }
     `;
 
-    variables = { experience, authorid: 123 };
+    variables = { authoruid: '@mauryakrishna1' };
   }
 
   const [saveExperience] = useMutation(mutation, {
@@ -54,22 +48,20 @@ const Save = ({ value, cb }) => {
     },
   });
 
-  const [debouncedCallback] = useDebouncedCallback(() => {
+  const [debouncedCallback] = useDebouncedCallback(experience => {
     // start showing the saving in progress
     cb(true);
 
+    // again
+    variables.experience = experience;
     saveExperience({
       variables: {
         input: variables,
       },
     });
-  }, 5000);
+  }, 3000);
 
-  React.useEffect(() => {
-    debouncedCallback();
-  }, [experience]);
-
-  return '';
+  return debouncedCallback;
 };
 
 Save.propTypes = {
