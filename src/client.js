@@ -16,6 +16,7 @@ import { createPath } from 'history';
 
 // Apollo settings
 import { ApolloClient } from 'apollo-client';
+import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -99,9 +100,14 @@ async function onLocationChange(location, action) {
       resolvers,
     });
 
+    const errorLink = onError(({ graphQLErrors }) => {
+      if (graphQLErrors)
+        graphQLErrors.map(({ message }) => console.log(message));
+    });
+
     const client = new ApolloClient({
       cache,
-      link: ApolloLink.from([stateLink, httpLink]),
+      link: ApolloLink.from([errorLink, stateLink, httpLink]),
       resolvers: {},
       defaultOptions: {
         query: {
