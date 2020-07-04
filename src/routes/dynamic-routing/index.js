@@ -12,7 +12,7 @@ import AllOfAuthor from '../allofauthor/AllOfAuthor';
 const getRegex = regex => RegExp(regex);
 
 const getComponent = path => {
-  let component = <NotFound />;
+  let component = <NotFound title="Could not find a page you looking for." />;
 
   if (path) {
     // experience url
