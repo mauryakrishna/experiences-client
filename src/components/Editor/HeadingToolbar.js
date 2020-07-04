@@ -14,11 +14,6 @@ import {
 import {
   HeadingToolbar,
   ToolbarElement,
-  HeadingPlugin,
-  CodeBlockPlugin,
-  BlockquotePlugin,
-  ImagePlugin,
-  LinkPlugin,
   ToolbarImage,
   ToolbarLink,
   withToggleType,
@@ -27,6 +22,11 @@ import {
   withImageUpload,
   withLink,
 } from 'slate-plugins-next';
+
+import {
+  plugins as pluginsHeadingToolbar,
+  nodeTypes,
+} from '../SlatePluginsNext/HeadingToolbarPlugins';
 
 import ToolbarMarks, {
   plugins as pluginsToolbarMarks,
@@ -37,16 +37,6 @@ import ToolbarList, {
   withPlugins as withPluginsToolbarList,
 } from './ToolbarList';
 
-const nodeTypes = {
-  typeH1: 'h1',
-  typeH2: 'h2',
-  typeH3: 'h3',
-  typeH4: 'h4',
-  typeH5: 'h5',
-  typeH6: 'h6',
-  typeBlockquote: 'blockquote',
-};
-
 const resetOptions = {
   ...nodeTypes,
   types: [nodeTypes.typeBlockquote],
@@ -55,14 +45,10 @@ const resetOptions = {
 const plugins = [
   ...pluginsToolbarMarks,
   ...pluginsToolbarList,
-  HeadingPlugin(nodeTypes),
-  CodeBlockPlugin(nodeTypes),
-  BlockquotePlugin(nodeTypes),
+  ...pluginsHeadingToolbar,
   withDeleteStartReset(resetOptions),
   withBreakEmptyReset(resetOptions),
   withImageUpload(nodeTypes),
-  LinkPlugin(nodeTypes),
-  ImagePlugin(nodeTypes),
 ];
 
 const withPlugins = [

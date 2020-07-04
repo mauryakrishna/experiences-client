@@ -2,14 +2,9 @@ import React from 'react';
 
 import { FormatListBulleted, FormatListNumbered } from '@styled-icons/material';
 
-import { ToolbarList, ListPlugin, withList } from 'slate-plugins-next';
+import { ToolbarList, withList } from 'slate-plugins-next';
 
-const nodeTypes = {
-  typeUl: 'ul',
-  typeOl: 'ol',
-};
-
-const plugins = [ListPlugin(nodeTypes)];
+import { plugins, nodeTypes } from '../SlatePluginsNext/ToolbarListPlugins';
 
 const withPlugins = [withList(nodeTypes)];
 

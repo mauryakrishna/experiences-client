@@ -10,28 +10,11 @@ import {
   MARK_ITALIC,
   MARK_STRIKETHROUGH,
   MARK_UNDERLINE,
-  ParagraphPlugin,
-  BoldPlugin,
-  ItalicPlugin,
-  UnderlinePlugin,
-  StrikethroughPlugin,
   ToolbarMark,
   withToggleType,
 } from 'slate-plugins-next';
 
-const nodeTypes = {
-  typeBold: 'bold',
-  typeItalic: 'italic',
-  typeUnderline: 'underline',
-  typeStrikethrough: 'strikethrough',
-};
-const plugins = [
-  ParagraphPlugin(nodeTypes),
-  BoldPlugin(nodeTypes),
-  ItalicPlugin(nodeTypes),
-  UnderlinePlugin(nodeTypes),
-  StrikethroughPlugin(nodeTypes),
-];
+import { plugins, nodeTypes } from '../SlatePluginsNext/ToolbarMarksPlugins';
 
 const withPlugins = [withToggleType(nodeTypes)];
 

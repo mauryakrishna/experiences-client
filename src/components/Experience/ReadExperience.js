@@ -6,9 +6,19 @@ import { EditablePlugins, pipe } from 'slate-plugins-next';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
+import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
+import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
+import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
+
 import AuthorDisplay from './AuthorDisplay';
 
 const ReadExperience = ({ slug }) => {
+  const plugins = [
+    ...pluginsHeadingToolbar,
+    ...pluginsToolbarList,
+    ...pluginsToolbarMarks,
+  ];
+
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
   const [author, setAuthor] = useState(null);
   const editor = useMemo(() => pipe(createEditor()), []);
@@ -51,14 +61,13 @@ const ReadExperience = ({ slug }) => {
   return (
     <>
       {author && <AuthorDisplay {...author} />}
-      <Slate
-        editor={editor}
-        value={value}
-        onChange={newValue => {
-          setValue(newValue);
-        }}
-      >
-        <EditablePlugins readOnly autoFocus placeholder="Read here." />
+      <Slate editor={editor} value={value}>
+        <EditablePlugins
+          plugins={plugins}
+          readOnly
+          autoFocus
+          placeholder="Read here."
+        />
       </Slate>
     </>
   );
