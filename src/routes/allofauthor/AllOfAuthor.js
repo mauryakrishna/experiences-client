@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-shadow */
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import Link from '../../components/Link';
+import UpdateAuthorDetails from './UpdateAuthorDetails';
 
 const AllOfAuthor = ({ authoruid }) => {
-  const [authordetails, setAuthordetails] = useState({});
+  const [displayname, setDisplayname] = useState('');
+  const [shortintro, setShortintro] = useState('');
+  const [experiences, setExperiences] = useState([]);
+  const [disableButton, setDisableButton] = useState(true);
+
+  const updateDebounce = UpdateAuthorDetails();
 
   const GET_AUTHOR_QUERY = gql`
     query getAuthor($uid: String!) {
@@ -22,7 +29,7 @@ const AllOfAuthor = ({ authoruid }) => {
     }
   `;
 
-  const { data, error } = useQuery(GET_AUTHOR_QUERY, {
+  const { data, error, loading } = useQuery(GET_AUTHOR_QUERY, {
     variables: {
       uid: authoruid,
     },
@@ -32,21 +39,88 @@ const AllOfAuthor = ({ authoruid }) => {
     console.log('error', error);
   }
 
-  useEffect(() => {
+  const setData = data => {
     if (data && data.getAuthor) {
-      const authordata = data.getAuthor;
-      setAuthordetails(authordata);
+      const { displayname, shortintro, experiences } = data.getAuthor;
+      setDisplayname(displayname);
+      setShortintro(shortintro);
+      setExperiences(experiences);
     }
+  };
+
+  useEffect(() => {
+    setData(data);
   }, [data]);
+
+  const handleDisplayNameChange = event => {
+    const { value } = event.target;
+    setDisplayname(value);
+
+    setDisableButton(false);
+  };
+
+  const handleIntroChange = event => {
+    const { value } = event.target;
+
+    if (value.length <= 500) {
+      setShortintro(value);
+    } else {
+      // show the charecter limit
+    }
+
+    setDisableButton(false);
+  };
+
+  const handleSaveAuthorDetails = useCallback(() => {
+    // make a mutation call
+    updateDebounce({
+      displayname,
+      shortintro,
+      authoruid,
+      cb: updated => {
+        setDisableButton(updated);
+      },
+    });
+  });
+
+  const handleCancelChanges = () => {
+    // reverse changes
+    setData(data);
+
+    // disable button
+    setDisableButton(true);
+  };
 
   return (
     <>
-      <span>{authordetails.displayname}</span>
-      <span>{authordetails.shortintro}</span>
-      {authordetails.experiences &&
-        authordetails.experiences.map(experience => {
+      <input
+        type="text"
+        onChange={handleDisplayNameChange}
+        value={displayname}
+      />
+      <textarea type="text" onChange={handleIntroChange} value={shortintro} />
+      <div>
+        <button
+          type="button"
+          disabled={disableButton}
+          onClick={handleSaveAuthorDetails}
+        >
+          Save
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          disabled={disableButton}
+          onClick={handleCancelChanges}
+        >
+          Cancel
+        </button>
+      </div>
+      {experiences &&
+        experiences.map(experience => {
           return (
-            <h4>
+            <h4 key={experience.slugkey}>
               {experience.title}
               <Link to={`/edit/${experience.slugkey}`}>Edit</Link>
             </h4>
