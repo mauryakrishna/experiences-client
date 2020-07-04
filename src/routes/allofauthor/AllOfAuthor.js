@@ -22,6 +22,7 @@ const AllOfAuthor = ({ authoruid }) => {
         shortintro
         experiences {
           title
+          slug
           slugkey
           ispublished
         }
@@ -119,9 +120,11 @@ const AllOfAuthor = ({ authoruid }) => {
       </div>
       {experiences &&
         experiences.map(experience => {
+          const { slug, slugkey } = experience;
+          const link = `${slug}-${slugkey}`;
           return (
             <h4 key={experience.slugkey}>
-              {experience.title}
+              <Link to={link}>{experience.title}</Link>
               <Link to={`/edit/${experience.slugkey}`}>Edit</Link>
             </h4>
           );
