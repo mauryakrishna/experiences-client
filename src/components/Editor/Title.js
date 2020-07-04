@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
@@ -17,10 +17,11 @@ const Title = ({ cb }) => {
   const client = useApolloClient();
   const titleData = client.readQuery({ query: GET_EXPERIENCE_TITLE });
   const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+  const saveTitleDebounceCb = SaveTitle({ id, cb });
 
   const [title, setTitle] = useState(titleData.title || '');
-
-  const saveTitleDebounceCb = SaveTitle({ id, cb });
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState('');
 
   const validateTitle = event => {
     let { value } = event.target;
@@ -28,11 +29,14 @@ const Title = ({ cb }) => {
     // remove more than one space
     value = value.replace(/\s\s+/g, ' ');
 
-    if (value.length <= 460) {
+    if (value.length <= 180) {
       setTitle(value);
 
       // placed here to avoid unneccesaary trigger of change this placed here
       saveTitleDebounceCb(value);
+    } else {
+      setMessage('Max Allowed 180 characters');
+      setShowMessage(true);
     }
   };
 
@@ -47,6 +51,7 @@ const Title = ({ cb }) => {
           maxLength="460"
         />
       </div>
+      {showMessage && <span>{message}</span>}
     </React.Fragment>
   );
 };
