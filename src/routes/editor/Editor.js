@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 
 import s from './Editor.css';
 import Layout from '../../components/Editor/Layout';
+import PublishExperience from '../../components/Publish/PublishExperience';
 
 export default function Editor({ slugkey }) {
   useStyles(s);
@@ -20,6 +21,7 @@ export default function Editor({ slugkey }) {
     },
   };
 
+  // edit flow when an experience exist.
   if (slugkey) {
     const GET_AN_EXPERIENCE_QUERY = gql`
       query getAnExperience($slugkey: String!) {
@@ -58,6 +60,7 @@ export default function Editor({ slugkey }) {
   return (
     <div className={s.root}>
       <div className={s.container}>
+        <PublishExperience />
         <Layout />
       </div>
     </div>

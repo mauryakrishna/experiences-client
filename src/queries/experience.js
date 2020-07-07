@@ -18,3 +18,9 @@ export const GET_EXPERIENCE_EXPERIENCE = gql`
     experience @client
   }
 `;
+
+export const GET_EXPERIENCE_SLUGKEY = gql`
+  query {
+    slugkey @client
+  }
+`;

@@ -11,6 +11,7 @@ const Save = ({ id, cb }) => {
   let mutation = gql`
     mutation updateExperience($input: UpdateExperienceInput) {
       updateExperience(input: $input) {
+        experience
         updated
       }
     }
@@ -23,6 +24,7 @@ const Save = ({ id, cb }) => {
     mutation = gql`
       mutation saveExperience($input: SaveExperienceInput) {
         saveExperience(input: $input) {
+          experience
           id
         }
       }
@@ -35,13 +37,16 @@ const Save = ({ id, cb }) => {
     update: (cache, { data }) => {
       if (data.saveExperience) {
         // eslint-disable-next-line no-shadow
-        const { id } = data.saveExperience;
-        cache.writeQuery({
-          query: GET_EXPERIENCE_ID,
-          data: { id },
+        const { id, experience } = data.saveExperience;
+        // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
+        cache.writeData({
+          data: { id, experience: JSON.stringify(experience) },
         });
       } else if (data.updateExperience) {
-        const { updated } = data.updateExperience;
+        const { updated, experience } = data.updateExperience;
+        if (updated) {
+          cache.writeData({ data: { experience: JSON.stringify(experience) } });
+        }
       }
 
       cb(false);

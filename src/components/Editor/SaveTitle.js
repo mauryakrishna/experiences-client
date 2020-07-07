@@ -1,16 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
-
-import { GET_EXPERIENCE_ID } from '../../queries/experience';
 
 function SaveTitle({ id, cb }) {
   // update
   let mutation = gql`
     mutation updateTitle($input: UpdateTitleInput) {
       updateTitle(input: $input) {
+        title
         updated
       }
     }
@@ -22,6 +20,7 @@ function SaveTitle({ id, cb }) {
     mutation = gql`
       mutation saveTitle($input: SaveTitleInput) {
         saveTitle(input: $input) {
+          title
           id
         }
       }
@@ -33,14 +32,14 @@ function SaveTitle({ id, cb }) {
     update: (cache, { data }) => {
       if (data.saveTitle) {
         // eslint-disable-next-line no-shadow
-        const { id } = data.saveTitle;
-
-        cache.writeQuery({
-          query: GET_EXPERIENCE_ID,
-          data: { id },
-        });
+        const { id, title } = data.saveTitle;
+        // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
+        cache.writeData({ data: { id, title } });
       } else if (data.updateTitle) {
-        const { updated } = data.updateTitle;
+        const { updated, title } = data.updateTitle;
+        if (updated) {
+          cache.writeData({ data: { title } });
+        }
       }
 
       cb(false);
