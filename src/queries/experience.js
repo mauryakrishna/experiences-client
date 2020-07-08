@@ -24,3 +24,9 @@ export const GET_EXPERIENCE_SLUGKEY = gql`
     slugkey @client
   }
 `;
+
+export const GET_EXPERIENCE_ISPUBLISHED = gql`
+  query {
+    ispublished @client
+  }
+`;

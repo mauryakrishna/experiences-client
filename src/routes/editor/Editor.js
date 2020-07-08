@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 
 import s from './Editor.css';
 import Layout from '../../components/Editor/Layout';
-import PublishExperience from '../../components/Publish/PublishExperience';
+import PublishExperience from '../../components/Publish/PublishButton';
 
 export default function Editor({ slugkey }) {
   useStyles(s);
@@ -18,6 +18,7 @@ export default function Editor({ slugkey }) {
       id: null,
       title: null,
       experience: null,
+      ispublished: null,
     },
   };
 
@@ -29,6 +30,7 @@ export default function Editor({ slugkey }) {
           id
           title
           experience
+          ispublished
         }
       }
     `;
@@ -44,12 +46,13 @@ export default function Editor({ slugkey }) {
     }
 
     if (data) {
-      const { id, title, experience } = data.getAnExperience;
+      const { id, title, experience, ispublished } = data.getAnExperience;
       client.writeData({
         data: {
           id,
           title,
           experience,
+          ispublished,
         },
       });
     }

@@ -15,7 +15,7 @@ const getComponent = path => {
   let component = <NotFound title="Could not find a page you looking for." />;
 
   if (path) {
-    // experience url | based on what allowed in slug formation
+    // experience url | based on what allowed in slug formation,should not be anything other than what can pass thisregex
     if (getRegex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/i).test(path)) {
       component = <ReadExperience slug={path} />;
     }

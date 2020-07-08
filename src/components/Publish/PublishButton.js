@@ -1,42 +1,40 @@
 import React, { useState, useCallback } from 'react';
-import gql from 'graphql-tag';
-import { useMutation, useApolloClient } from 'react-apollo-hooks';
+import { useApolloClient } from 'react-apollo-hooks';
+
+import FirstPublish from './FirstPublish';
+import SaveNPublish from './SaveNPublish';
 
 import {
-  GET_EXPERIENCE_ID,
   GET_EXPERIENCE_TITLE,
   GET_EXPERIENCE_EXPERIENCE,
+  GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
 
 const PublishExperience = () => {
   const client = useApolloClient();
-
-  const authoruid = '@mauryakrishna1';
+  const { ispublished } = client.readQuery({
+    query: GET_EXPERIENCE_ISPUBLISHED,
+  });
 
   const [disableButton] = useState(false);
-  const [buttonText, setButtonText] = useState('Publish');
-  const [errMessage, setErrMessage] = useState('');
-
-  const PUBLISH_EXPERIENCE_MUTATION = gql`
-    mutation publishExperience($input: PublishExperienceInput) {
-      publishExperience(input: $input) {
-        published
-      }
-    }
-  `;
-
-  const [publish, { loading, error }] = useMutation(
-    PUBLISH_EXPERIENCE_MUTATION,
-    {
-      update: (cache, { data }) => {
-        // redirect to publish
-        setButtonText('Published');
-      },
-    },
+  const [buttonText, setButtonText] = useState(
+    ispublished ? 'Save & Publish' : 'Publish',
   );
 
+  const cb = () => {
+    setButtonText('Published');
+  };
+
+  let publishDebounce = null;
+  if (ispublished) {
+    publishDebounce = SaveNPublish({ cb });
+  } else {
+    publishDebounce = FirstPublish({ cb });
+  }
+
+  const [errMessage, setErrMessage] = useState('');
+
   const handlePublish = useCallback(() => {
-    const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
     const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
     const { experience } = client.readQuery({
       query: GET_EXPERIENCE_EXPERIENCE,
@@ -47,15 +45,11 @@ const PublishExperience = () => {
     } else if (!experience) {
       setErrMessage('Kindly add an experience');
     } else {
-      // hit api for publish
-      publish({ variables: { input: { id, authoruid } } });
       setButtonText('Publishing....');
+      // hit api for publish
+      publishDebounce();
     }
   });
-
-  if (loading) {
-    console.log('loading', loading);
-  }
 
   return (
     <>
