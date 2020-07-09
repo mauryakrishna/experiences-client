@@ -4,8 +4,6 @@ import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { GET_EXPERIENCE_ID } from '../../queries/experience';
-
 const Save = ({ id, cb }) => {
   // update
   let mutation = gql`

@@ -22,6 +22,7 @@ import SaveExperience from './SaveExperiance';
 import {
   GET_EXPERIENCE_ID,
   GET_EXPERIENCE_EXPERIENCE,
+  GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
 
 const plugins = [...pluginsHeading];
@@ -34,6 +35,9 @@ const Editor = ({ cb }) => {
   const client = useApolloClient();
   const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
   const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+  const { ispublished } = client.readQuery({
+    query: GET_EXPERIENCE_ISPUBLISHED,
+  });
 
   const saveExperienceDebounceCb = SaveExperience({ id, cb });
 
@@ -52,10 +56,15 @@ const Editor = ({ cb }) => {
       editor={editor}
       value={value}
       onChange={newValue => {
+        // Do not go for auto save if the experience is already published ie ispublished true
+        if (ispublished) {
+          // update in cache so that while savenpublish can be taken from cache for saving
+          client.writeData({ data: { experience: JSON.stringify(newValue) } });
+        }
         // this condition added to avoid unneccessary trigger at onFocus, onBlur
         // https://github.com/ianstormtaylor/slate/issues/2055
         // so now if there is really change in editor content as compared to just previous then only go for saving
-        if (isDifferent(newValue, value)) {
+        else if (isDifferent(newValue, value)) {
           saveExperienceDebounceCb(newValue);
         }
         setValue(newValue);

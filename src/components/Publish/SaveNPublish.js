@@ -1,8 +1,17 @@
+import { useState } from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
-const SaveNPublish = () => {
+import {
+  GET_EXPERIENCE_ID,
+  GET_EXPERIENCE_TITLE,
+  GET_EXPERIENCE_EXPERIENCE,
+} from '../../queries/experience';
+
+const SaveNPublish = ({ cb }) => {
+  const client = useApolloClient();
+
   const mutation = gql`
     mutation saveNPublishExperience($input: SaveNPublishExperienceInput) {
       saveNPublishExperience(input: $input) {
@@ -13,13 +22,29 @@ const SaveNPublish = () => {
     }
   `;
 
-  const [savenpublish] = useMutation(mutation);
-
-  const [debouncedCallback] = useDebouncedCallback(
-    async ({ id, authoruid }) => {
-      await savenpublish({ variables: { input: { id, authoruid } } });
+  const [savenpublish] = useMutation(mutation, {
+    update: (cache, { data }) => {
+      if (cb) {
+        cb();
+      }
     },
-  );
+  });
+
+  const [debouncedCallback] = useDebouncedCallback(async () => {
+    const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+    const authoruid = '@mauryakrishna1';
+    const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
+    const { experience } = client.readQuery({
+      query: GET_EXPERIENCE_EXPERIENCE,
+    });
+
+    await savenpublish({
+      variables: {
+        // here experience is not stringified because while storing in cache its already stringified
+        input: { id, authoruid, title, experience },
+      },
+    });
+  });
 
   return debouncedCallback;
 };

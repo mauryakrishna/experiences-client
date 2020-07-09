@@ -6,6 +6,7 @@ import { useApolloClient } from 'react-apollo-hooks';
 import {
   GET_EXPERIENCE_ID,
   GET_EXPERIENCE_TITLE,
+  GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
 
 import SaveTitle from './SaveTitle';
@@ -17,6 +18,9 @@ const Title = ({ cb }) => {
   const client = useApolloClient();
   const titleData = client.readQuery({ query: GET_EXPERIENCE_TITLE });
   const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+  const { ispublished } = client.readQuery({
+    query: GET_EXPERIENCE_ISPUBLISHED,
+  });
   const saveTitleDebounceCb = SaveTitle({ id, cb });
 
   const [title, setTitle] = useState(titleData.title || '');
@@ -32,8 +36,14 @@ const Title = ({ cb }) => {
     if (value.length <= 180) {
       setTitle(value);
 
-      // placed here to avoid unneccesaary trigger of change this placed here
-      saveTitleDebounceCb(value);
+      // do not auto save if experience is already published
+      if (ispublished) {
+        // keep in cache so that can be taken for savenpublish after comparision
+        client.writeData({ data: { title: value } });
+      } else {
+        // placed here to avoid unneccesaary trigger of change this placed here
+        saveTitleDebounceCb(value);
+      }
     } else {
       setMessage('Max Allowed 180 characters');
       setShowMessage(true);
