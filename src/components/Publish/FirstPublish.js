@@ -9,22 +9,20 @@ const Publish = ({ cb }) => {
   const mutation = gql`
     mutation publishExperience($input: PublishExperienceInput) {
       publishExperience(input: $input) {
+        slug
+        slugkey
         published
       }
     }
   `;
 
   const [publish] = useMutation(mutation, {
-    update: (cache, { data, error }) => {
+    update: (cache, { data }) => {
       if (data && data.publishExperience) {
-        const { published } = data.publishExperience;
-        client.writeData({ data: { ispublished: published } });
-      } else if (error) {
-        console.log(error);
-      }
-
-      if (cb) {
-        cb(error, data);
+        const { slug, slugkey, published } = data.publishExperience;
+        if (published) {
+          cb({ slug, slugkey });
+        }
       }
     },
   });
@@ -34,9 +32,6 @@ const Publish = ({ cb }) => {
     const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
 
     await publish({ variables: { input: { id, authoruid } } });
-    if (cb) {
-      cb();
-    }
   }, 0);
 
   return debouncedCallback;

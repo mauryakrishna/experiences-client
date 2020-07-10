@@ -24,8 +24,11 @@ const SaveNPublish = ({ cb }) => {
 
   const [savenpublish] = useMutation(mutation, {
     update: (cache, { data }) => {
-      if (cb) {
-        cb();
+      if (data && data.saveNPublishExperience) {
+        const { slug, slugkey, published } = data.saveNPublishExperience;
+        if (published) {
+          cb({ slug, slugkey });
+        }
       }
     },
   });

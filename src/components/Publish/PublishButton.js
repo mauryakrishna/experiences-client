@@ -3,6 +3,7 @@ import { useApolloClient } from 'react-apollo-hooks';
 
 import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
+import history from '../../history';
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -21,8 +22,10 @@ const PublishExperience = () => {
     ispublished ? 'Save & Publish' : 'Publish',
   );
 
-  const cb = () => {
-    setButtonText('Published');
+  const cb = ({ slug, slugkey }) => {
+    if (slug && slugkey) {
+      history.push(`/${slug}-${slugkey}`);
+    }
   };
 
   let publishDebounce = null;
