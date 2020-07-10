@@ -20,6 +20,7 @@ const ReadExperience = ({ slug }) => {
   ];
 
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
+  const [title, setTitle] = useState('');
   const [author, setAuthor] = useState(null);
   const editor = useMemo(() => pipe(createEditor()), []);
 
@@ -52,15 +53,18 @@ const ReadExperience = ({ slug }) => {
 
   React.useEffect(() => {
     if (data && data.getAnExperience) {
-      const exp = data.getAnExperience;
-      setValue(JSON.parse(exp.experience));
-      setAuthor(exp.author);
+      // eslint-disable-next-line no-shadow
+      const { title, experience, author } = data.getAnExperience;
+      setTitle(title);
+      setValue(JSON.parse(experience));
+      setAuthor(author);
     }
   }, [data]);
 
   return (
     <>
       {author && <AuthorDisplay {...author} />}
+      <bold>{title}</bold>
       <Slate editor={editor} value={value}>
         <EditablePlugins
           plugins={plugins}
