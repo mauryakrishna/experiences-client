@@ -40,8 +40,8 @@ const SaveNPublish = ({ cb }) => {
 
     await savenpublish({
       variables: {
-        // here experience is not stringified because while storing in cache its already stringified
-        input: { id, authoruid, title, experience },
+        // here experience is not parsed because while storing in cache its already stringified
+        input: { id, authoruid, title, experience: JSON.parse(experience) },
       },
     });
   });
