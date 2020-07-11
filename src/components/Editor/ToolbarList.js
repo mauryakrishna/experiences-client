@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormatListBulleted, FormatListNumbered } from '@styled-icons/material';
 
-import { ToolbarList, withList } from 'slate-plugins-next';
+import { ToolbarList, withList } from '@udecode/slate-plugins';
 
 import { plugins, nodeTypes } from '../SlatePluginsNext/ToolbarListPlugins';
 

@@ -6,7 +6,7 @@ import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 
-import { EditablePlugins, pipe } from 'slate-plugins-next';
+import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import useStyles from 'isomorphic-style-loader/useStyles';
 
 import { useApolloClient } from 'react-apollo-hooks';
