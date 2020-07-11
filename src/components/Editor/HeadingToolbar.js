@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   FormatQuote,
-  Looks3,
-  Looks4,
-  Looks5,
-  Looks6,
   LooksOne,
   LooksTwo,
+  Looks3,
   Link,
   Image,
 } from '@styled-icons/material';
@@ -21,17 +18,23 @@ import {
   withBreakEmptyReset,
   withImageUpload,
   withLink,
-} from 'slate-plugins-next';
+} from '@udecode/slate-plugins';
 
 import {
   plugins as pluginsHeadingToolbar,
   nodeTypes,
 } from '../SlatePluginsNext/HeadingToolbarPlugins';
 
+import ToolbarAlignment, {
+  plugins as pluginsToolbarAlignment,
+  nodeTypes as nodeTypesAlign,
+} from './ToolbarAlignment';
+
 import ToolbarMarks, {
   plugins as pluginsToolbarMarks,
   withPlugins as withPluginsToolbarMarks,
 } from './ToolbarMarks';
+
 import ToolbarList, {
   plugins as pluginsToolbarList,
   withPlugins as withPluginsToolbarList,
@@ -39,6 +42,7 @@ import ToolbarList, {
 
 const resetOptions = {
   ...nodeTypes,
+  ...nodeTypesAlign,
   types: [nodeTypes.typeBlockquote],
 };
 
@@ -46,6 +50,7 @@ const plugins = [
   ...pluginsToolbarMarks,
   ...pluginsToolbarList,
   ...pluginsHeadingToolbar,
+  ...pluginsToolbarAlignment,
   withDeleteStartReset(resetOptions),
   withBreakEmptyReset(resetOptions),
   withImageUpload(nodeTypes),
@@ -65,11 +70,10 @@ export default () => {
       <ToolbarElement type={nodeTypes.typeH1} icon={<LooksOne />} />
       <ToolbarElement type={nodeTypes.typeH2} icon={<LooksTwo />} />
       <ToolbarElement type={nodeTypes.typeH3} icon={<Looks3 />} />
-      <ToolbarElement type={nodeTypes.typeH4} icon={<Looks4 />} />
-      <ToolbarElement type={nodeTypes.typeH5} icon={<Looks5 />} />
-      <ToolbarElement type={nodeTypes.typeH6} icon={<Looks6 />} />
+      <ToolbarAlignment />
       <ToolbarElement type={nodeTypes.typeBlockquote} icon={<FormatQuote />} />
       <ToolbarList />
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <ToolbarLink {...nodeTypes} icon={<Link />} />
       <ToolbarImage {...nodeTypes} icon={<Image />} />
     </HeadingToolbar>

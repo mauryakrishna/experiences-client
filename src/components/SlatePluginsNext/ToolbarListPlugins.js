@@ -1,8 +1,9 @@
-import { ListPlugin } from 'slate-plugins-next';
+import { ListType, ListPlugin } from '@udecode/slate-plugins';
 
 const nodeTypes = {
-  typeUl: 'ul',
-  typeOl: 'ol',
+  typeUl: ListType.UL,
+  typeOl: ListType.OL,
+  typeLi: ListType.LI,
 };
 
 const plugins = [ListPlugin(nodeTypes)];
