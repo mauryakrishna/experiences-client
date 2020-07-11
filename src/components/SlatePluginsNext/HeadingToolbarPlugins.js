@@ -1,19 +1,22 @@
 import {
+  BLOCKQUOTE,
+  LINK,
+  IMAGE,
+  HeadingType,
   HeadingPlugin,
   CodeBlockPlugin,
   BlockquotePlugin,
   ImagePlugin,
   LinkPlugin,
-} from 'slate-plugins-next';
+} from '@udecode/slate-plugins';
 
-// typeH4: 'h4',
-// typeH5: 'h5',
-// typeH6: 'h6',
 const nodeTypes = {
-  typeH1: 'h1',
-  typeH2: 'h2',
-  typeH3: 'h3',
-  typeBlockquote: 'blockquote',
+  typeH1: HeadingType.H1,
+  typeH2: HeadingType.H2,
+  typeH3: HeadingType.H3,
+  typeBlockquote: BLOCKQUOTE,
+  typeLink: LINK,
+  typeImg: IMAGE,
 };
 
 const plugins = [

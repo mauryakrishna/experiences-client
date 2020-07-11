@@ -5,7 +5,7 @@ import {
   FormatAlignRight,
 } from '@styled-icons/material';
 
-import { ToolbarAlign } from 'slate-plugins-next';
+import { ToolbarAlign } from '@udecode/slate-plugins';
 
 import {
   plugins,
@@ -28,4 +28,4 @@ export default () => {
   );
 };
 
-export { plugins };
+export { plugins, nodeTypes };

@@ -2,18 +2,20 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
 import { Slate } from 'slate-react';
-import { EditablePlugins, pipe } from 'slate-plugins-next';
+import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
 import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
 import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
+import { plugins as pluginsToolbarAlignment } from '../SlatePluginsNext/ToolbarAlignmentPlugins';
 
 import AuthorDisplay from './AuthorDisplay';
 
 const ReadExperience = ({ slug }) => {
   const plugins = [
+    ...pluginsToolbarAlignment,
     ...pluginsHeadingToolbar,
     ...pluginsToolbarList,
     ...pluginsToolbarMarks,

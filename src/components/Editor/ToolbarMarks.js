@@ -12,7 +12,7 @@ import {
   MARK_UNDERLINE,
   ToolbarMark,
   withToggleType,
-} from 'slate-plugins-next';
+} from '@udecode/slate-plugins';
 
 import { plugins, nodeTypes } from '../SlatePluginsNext/ToolbarMarksPlugins';
 

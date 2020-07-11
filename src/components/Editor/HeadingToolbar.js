@@ -18,7 +18,7 @@ import {
   withBreakEmptyReset,
   withImageUpload,
   withLink,
-} from 'slate-plugins-next';
+} from '@udecode/slate-plugins';
 
 import {
   plugins as pluginsHeadingToolbar,
@@ -27,6 +27,7 @@ import {
 
 import ToolbarAlignment, {
   plugins as pluginsToolbarAlignment,
+  nodeTypes as nodeTypesAlign,
 } from './ToolbarAlignment';
 
 import ToolbarMarks, {
@@ -41,6 +42,7 @@ import ToolbarList, {
 
 const resetOptions = {
   ...nodeTypes,
+  ...nodeTypesAlign,
   types: [nodeTypes.typeBlockquote],
 };
 
@@ -69,12 +71,9 @@ export default () => {
       <ToolbarElement type={nodeTypes.typeH2} icon={<LooksTwo />} />
       <ToolbarElement type={nodeTypes.typeH3} icon={<Looks3 />} />
       <ToolbarAlignment />
-      {/* <ToolbarElement type={nodeTypes.typeH4} icon={<Looks4 />} />
-      <ToolbarElement type={nodeTypes.typeH5} icon={<Looks5 />} />
-      <ToolbarElement type={nodeTypes.typeH6} icon={<Looks6 />} /> */}
-
       <ToolbarElement type={nodeTypes.typeBlockquote} icon={<FormatQuote />} />
       <ToolbarList />
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <ToolbarLink {...nodeTypes} icon={<Link />} />
       <ToolbarImage {...nodeTypes} icon={<Image />} />
     </HeadingToolbar>
