@@ -30,8 +30,8 @@ const ReadExperience = ({ slug }) => {
   const slugkey = slugWords[slugWords.length - 1];
 
   const GET_AN_EXPERIENCE_QUERY = gql`
-    query getAnExperience($slugkey: String!) {
-      getAnExperience(slugkey: $slugkey) {
+    query getAnExperienceForRead($slugkey: String!) {
+      getAnExperienceForRead(slugkey: $slugkey) {
         title
         experience
         author {
@@ -54,19 +54,23 @@ const ReadExperience = ({ slug }) => {
   }
 
   React.useEffect(() => {
-    if (data && data.getAnExperience) {
+    if (data && data.getAnExperienceForRead) {
       // eslint-disable-next-line no-shadow
-      const { title, experience, author } = data.getAnExperience;
-      setTitle(title);
-      setValue(JSON.parse(experience));
-      setAuthor(author);
+      const { title, experience, author } = data.getAnExperienceForRead;
+      if (title && experience && author) {
+        setTitle(title);
+        setValue(experience);
+        setAuthor(author);
+      } else {
+        console.log('Could not get data for experience.');
+      }
     }
   }, [data]);
 
   return (
     <>
       {author && <AuthorDisplay {...author} />}
-      <bold>{title}</bold>
+      <span>{title}</span>
       <Slate editor={editor} value={value}>
         <EditablePlugins
           plugins={plugins}

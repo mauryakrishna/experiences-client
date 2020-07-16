@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
-  GET_EXPERIENCE_ID,
+  GET_EXPERIENCE_SLUGKEY,
   GET_EXPERIENCE_TITLE,
   GET_EXPERIENCE_EXPERIENCE,
 } from '../../queries/experience';
@@ -34,7 +33,7 @@ const SaveNPublish = ({ cb }) => {
   });
 
   const [debouncedCallback] = useDebouncedCallback(async () => {
-    const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
+    const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
     const authoruid = '@mauryakrishna1';
     const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
     const { experience } = client.readQuery({
@@ -44,7 +43,12 @@ const SaveNPublish = ({ cb }) => {
     await savenpublish({
       variables: {
         // here experience is not parsed because while storing in cache its already stringified
-        input: { id, authoruid, title, experience: JSON.parse(experience) },
+        input: {
+          slugkey,
+          authoruid,
+          title,
+          experience: JSON.parse(experience),
+        },
       },
     });
   });

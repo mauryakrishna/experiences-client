@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { GET_EXPERIENCE_ID } from '../../queries/experience';
+import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
 
 const Publish = ({ cb }) => {
   const client = useApolloClient();
@@ -29,9 +29,8 @@ const Publish = ({ cb }) => {
 
   const [debouncedCallback] = useDebouncedCallback(async () => {
     const authoruid = '@mauryakrishna1';
-    const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
-
-    await publish({ variables: { input: { id, authoruid } } });
+    const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+    await publish({ variables: { input: { slugkey, authoruid } } });
   }, 0);
 
   return debouncedCallback;

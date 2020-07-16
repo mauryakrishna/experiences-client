@@ -15,8 +15,8 @@ export default function Editor({ slugkey }) {
   const client = useApolloClient();
   const cacheData = {
     data: {
-      id: null,
       title: null,
+      slugkey: null,
       experience: null,
       ispublished: null,
     },
@@ -25,9 +25,8 @@ export default function Editor({ slugkey }) {
   // edit flow when an experience exist.
   if (slugkey) {
     const GET_AN_EXPERIENCE_QUERY = gql`
-      query getAnExperience($slugkey: String!) {
-        getAnExperience(slugkey: $slugkey) {
-          id
+      query getAnExperienceForEdit($slugkey: String!) {
+        getAnExperienceForEdit(slugkey: $slugkey) {
           title
           experience
           ispublished
@@ -35,7 +34,7 @@ export default function Editor({ slugkey }) {
       }
     `;
 
-    const { loading, data } = useQuery(GET_AN_EXPERIENCE_QUERY, {
+    const { loading, data, error } = useQuery(GET_AN_EXPERIENCE_QUERY, {
       variables: {
         slugkey,
       },
@@ -45,16 +44,18 @@ export default function Editor({ slugkey }) {
       return <span>loading experience for edit...</span>;
     }
 
-    if (data) {
-      const { id, title, experience, ispublished } = data.getAnExperience;
+    if (data.getAnExperienceForEdit) {
+      const { title, experience, ispublished } = data.getAnExperienceForEdit;
       client.writeData({
         data: {
-          id,
           title,
-          experience,
+          slugkey,
+          experience: JSON.stringify(experience),
           ispublished,
         },
       });
+    } else {
+      console.log('Error getAnExperience', error);
     }
   } else {
     client.writeData(cacheData);

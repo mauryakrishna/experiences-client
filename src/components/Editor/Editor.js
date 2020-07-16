@@ -20,7 +20,6 @@ import HeadingToolbar, {
 
 import SaveExperience from './SaveExperiance';
 import {
-  GET_EXPERIENCE_ID,
   GET_EXPERIENCE_EXPERIENCE,
   GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
@@ -34,12 +33,11 @@ const Editor = ({ cb }) => {
 
   const client = useApolloClient();
   const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
-  const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
   const { ispublished } = client.readQuery({
     query: GET_EXPERIENCE_ISPUBLISHED,
   });
 
-  const saveExperienceDebounceCb = SaveExperience({ id, cb });
+  const saveExperienceDebounceCb = SaveExperience({ cb });
 
   const [value, setValue] = useState(
     JSON.parse(experience) || [{ children: [{ text: '' }] }],

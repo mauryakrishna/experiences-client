@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 
 import {
-  GET_EXPERIENCE_ID,
   GET_EXPERIENCE_TITLE,
   GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
@@ -17,11 +16,10 @@ const Title = ({ cb }) => {
 
   const client = useApolloClient();
   const titleData = client.readQuery({ query: GET_EXPERIENCE_TITLE });
-  const { id } = client.readQuery({ query: GET_EXPERIENCE_ID });
   const { ispublished } = client.readQuery({
     query: GET_EXPERIENCE_ISPUBLISHED,
   });
-  const saveTitleDebounceCb = SaveTitle({ id, cb });
+  const saveTitleDebounceCb = SaveTitle({ cb });
 
   const [title, setTitle] = useState(titleData.title || '');
   const [showMessage, setShowMessage] = useState(false);
