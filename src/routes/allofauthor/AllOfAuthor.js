@@ -158,12 +158,11 @@ const AllOfAuthor = ({ authoruid }) => {
       </div>
       {experiences &&
         experiences.map(experience => {
-          const { slug, slugkey } = experience;
-          const link = `${slug}-${slugkey}`;
+          const { title, slugkey } = experience;
           return (
-            <h4 key={experience.slugkey}>
-              <Link to={link}>{experience.title}</Link>
-              <Link to={`/edit/${experience.slugkey}`}>Edit</Link>
+            <h4 key={slugkey}>
+              <span>{title}</span>
+              <Link to={`/edit/${slugkey}`}>Edit</Link>
             </h4>
           );
         })}
