@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
@@ -12,37 +13,71 @@ const AllOfAuthor = ({ authoruid }) => {
   const [shortintro, setShortintro] = useState('');
   const [experiences, setExperiences] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
-
+  const [cursor, setCursor] = useState(null);
+  const experienceperpage = 10;
   const updateDebounce = UpdateAuthorDetails();
 
   const GET_AUTHOR_QUERY = gql`
-    query getAuthor($uid: String!) {
-      getAuthor(uid: $uid) {
-        displayname
-        shortintro
-        experiences {
-          title
-          slug
-          slugkey
-          ispublished
+    query getAuthor($cursor: String, $experienceperpage: Int!, $uid: String!) {
+      getAuthor(
+        cursor: $cursor
+        experienceperpage: $experienceperpage
+        uid: $uid
+      ) {
+        cursor
+        author {
+          displayname
+          shortintro
+          experiences {
+            title
+            slug
+            slugkey
+            ispublished
+          }
         }
       }
     }
   `;
 
-  const { data, error, loading } = useQuery(GET_AUTHOR_QUERY, {
+  const { data, loading, fetchMore } = useQuery(GET_AUTHOR_QUERY, {
     variables: {
+      experienceperpage,
       uid: authoruid,
     },
   });
 
-  if (error) {
-    console.log('error', error);
-  }
+  const loadMoreExperiences = () => {
+    fetchMore({
+      query: GET_AUTHOR_QUERY,
+      variables: {
+        cursor,
+        experienceperpage,
+        uid: authoruid,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        const prevExp = prev.getAuthor.author.experiences;
+        const newExp = fetchMoreResult.getAuthor.author.experiences;
+        const updatedcursor = fetchMoreResult.getAuthor.cursor;
+        const combined = [...prevExp, ...newExp];
+        return {
+          getAuthor: {
+            cursor: updatedcursor,
+            author: {
+              displayname: fetchMoreResult.getAuthor.author.displayname,
+              shortintro: fetchMoreResult.getAuthor.author.shortintro,
+              experiences: combined,
+            },
+          },
+        };
+      },
+    });
+  };
 
   const setData = data => {
     if (data && data.getAuthor) {
-      const { displayname, shortintro, experiences } = data.getAuthor;
+      const updatedcursor = data.getAuthor.cursor;
+      const { displayname, shortintro, experiences } = data.getAuthor.author;
+      setCursor(updatedcursor);
       setDisplayname(displayname);
       setShortintro(shortintro);
       setExperiences(experiences);
@@ -92,6 +127,9 @@ const AllOfAuthor = ({ authoruid }) => {
     setDisableButton(true);
   };
 
+  if (loading) {
+    return <h4>loading...</h4>;
+  }
   return (
     <>
       <input
@@ -129,6 +167,9 @@ const AllOfAuthor = ({ authoruid }) => {
             </h4>
           );
         })}
+      <button type="button" onClick={loadMoreExperiences}>
+        Load more...
+      </button>
     </>
   );
 };
