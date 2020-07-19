@@ -11,6 +11,8 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 
 import { useApolloClient } from 'react-apollo-hooks';
 
+import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
+
 import s from './Editor.css';
 
 import HeadingToolbar, {
@@ -74,6 +76,7 @@ const Editor = ({ cb }) => {
         placeholder="experience"
         spellCheck
         autoFocus
+        renderLeaf={[renderLeafBold]}
       />
     </Slate>
   );

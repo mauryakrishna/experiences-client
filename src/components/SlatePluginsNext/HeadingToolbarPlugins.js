@@ -1,8 +1,10 @@
 import {
-  BLOCKQUOTE,
-  LINK,
-  IMAGE,
-  HeadingType,
+  ELEMENT_BLOCKQUOTE,
+  ELEMENT_LINK,
+  ELEMENT_IMAGE,
+  ELEMENT_H1,
+  ELEMENT_H2,
+  ELEMENT_H3,
   HeadingPlugin,
   CodeBlockPlugin,
   BlockquotePlugin,
@@ -11,12 +13,12 @@ import {
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
-  typeH1: HeadingType.H1,
-  typeH2: HeadingType.H2,
-  typeH3: HeadingType.H3,
-  typeBlockquote: BLOCKQUOTE,
-  typeLink: LINK,
-  typeImg: IMAGE,
+  typeH1: ELEMENT_H1,
+  typeH2: ELEMENT_H2,
+  typeH3: ELEMENT_H3,
+  typeBlockquote: ELEMENT_BLOCKQUOTE,
+  typeLink: ELEMENT_LINK,
+  typeImg: ELEMENT_IMAGE,
 };
 
 const plugins = [

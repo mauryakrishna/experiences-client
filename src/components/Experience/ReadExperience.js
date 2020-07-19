@@ -10,7 +10,7 @@ import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToo
 import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
 import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
 import { plugins as pluginsToolbarAlignment } from '../SlatePluginsNext/ToolbarAlignmentPlugins';
-
+import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
 import AuthorDisplay from './AuthorDisplay';
 
 const ReadExperience = ({ slug }) => {
@@ -77,6 +77,7 @@ const ReadExperience = ({ slug }) => {
           readOnly
           autoFocus
           placeholder="Read here."
+          renderLeaf={[renderLeafBold]}
         />
       </Slate>
     </>
