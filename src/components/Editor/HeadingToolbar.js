@@ -18,7 +18,12 @@ import {
   withBreakEmptyReset,
   withImageUpload,
   withLink,
+  withTrailingNode,
+  withResetBlockType,
+  withTransforms,
 } from '@udecode/slate-plugins';
+
+import pluginExitBreak from '../SlatePluginsNext/ExitBreakPlugin';
 
 import {
   plugins as pluginsHeadingToolbar,
@@ -51,16 +56,23 @@ const plugins = [
   ...pluginsToolbarList,
   ...pluginsHeadingToolbar,
   ...pluginsToolbarAlignment,
-  withDeleteStartReset(resetOptions),
-  withBreakEmptyReset(resetOptions),
-  withImageUpload(nodeTypes),
+  ...pluginExitBreak,
 ];
 
 const withPlugins = [
   ...withPluginsToolbarList,
   ...withPluginsToolbarMarks,
+  withDeleteStartReset(resetOptions),
+  withBreakEmptyReset(resetOptions),
+  withImageUpload(nodeTypes),
   withToggleType(nodeTypes),
   withLink(nodeTypes),
+  withTrailingNode({ type: nodeTypes.typeP }),
+  withResetBlockType({
+    types: [nodeTypes.typeBlockquote],
+    defaultType: nodeTypes.typeP,
+  }),
+  withTransforms(),
 ];
 
 export default () => {
