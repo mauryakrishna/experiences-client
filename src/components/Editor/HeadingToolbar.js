@@ -20,6 +20,9 @@ import {
   withLink,
 } from '@udecode/slate-plugins';
 
+import pluginExitBreak from '../SlatePluginsNext/ExitBreakPlugin';
+import pluginSoftBreak from '../SlatePluginsNext/SoftBreakPlugin';
+
 import {
   plugins as pluginsHeadingToolbar,
   nodeTypes,
@@ -51,14 +54,16 @@ const plugins = [
   ...pluginsToolbarList,
   ...pluginsHeadingToolbar,
   ...pluginsToolbarAlignment,
-  withDeleteStartReset(resetOptions),
-  withBreakEmptyReset(resetOptions),
-  withImageUpload(nodeTypes),
+  ...pluginExitBreak,
+  ...pluginSoftBreak,
 ];
 
 const withPlugins = [
   ...withPluginsToolbarList,
   ...withPluginsToolbarMarks,
+  withDeleteStartReset(resetOptions),
+  withBreakEmptyReset(resetOptions),
+  withImageUpload(nodeTypes),
   withToggleType(nodeTypes),
   withLink(nodeTypes),
 ];

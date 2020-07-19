@@ -5,6 +5,7 @@ import {
   ELEMENT_H1,
   ELEMENT_H2,
   ELEMENT_H3,
+  ELEMENT_PARAGRAPH,
   HeadingPlugin,
   CodeBlockPlugin,
   BlockquotePlugin,
@@ -19,6 +20,7 @@ const nodeTypes = {
   typeBlockquote: ELEMENT_BLOCKQUOTE,
   typeLink: ELEMENT_LINK,
   typeImg: ELEMENT_IMAGE,
+  typeP: ELEMENT_PARAGRAPH,
 };
 
 const plugins = [
