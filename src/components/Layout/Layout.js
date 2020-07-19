@@ -12,13 +12,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // external-global styles must be imported in your JS.
-import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';
 import Footer from '../Footer';
 
 export default function Layout({ children }) {
-  useStyles(s, normalizeCss);
+  useStyles(s);
   return (
     <>
       <Header />
