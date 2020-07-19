@@ -2,7 +2,6 @@ import {
   ELEMENT_H1,
   ELEMENT_H2,
   ELEMENT_H3,
-  ELEMENT_PARAGRAPH,
   ExitBreakPlugin,
 } from '@udecode/slate-plugins';
 
@@ -21,7 +20,7 @@ export default [
         query: {
           start: true,
           end: true,
-          allow: [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_PARAGRAPH],
+          allow: [ELEMENT_H1, ELEMENT_H2, ELEMENT_H3],
         },
       },
     ],

@@ -42,7 +42,16 @@ const Editor = ({ cb }) => {
   const saveExperienceDebounceCb = SaveExperience({ cb });
 
   const [value, setValue] = useState(
-    JSON.parse(experience) || [{ children: [{ text: '' }] }],
+    JSON.parse(experience) || [
+      {
+        children: [
+          {
+            type: 'paragraph',
+            children: [{ text: '' }],
+          },
+        ],
+      },
+    ],
   );
 
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
