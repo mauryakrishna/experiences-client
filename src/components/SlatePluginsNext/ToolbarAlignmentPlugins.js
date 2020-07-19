@@ -1,14 +1,14 @@
 import {
-  ALIGN_LEFT,
-  ALIGN_RIGHT,
-  ALIGN_CENTER,
+  ELEMENT_ALIGN_CENTER,
+  ELEMENT_ALIGN_RIGHT,
+  ELEMENT_ALIGN_LEFT,
   AlignPlugin,
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
-  typeAlignLeft: ALIGN_LEFT,
-  typeAlignRight: ALIGN_RIGHT,
-  typeAlignCenter: ALIGN_CENTER,
+  typeAlignLeft: ELEMENT_ALIGN_LEFT,
+  typeAlignRight: ELEMENT_ALIGN_RIGHT,
+  typeAlignCenter: ELEMENT_ALIGN_CENTER,
 };
 
 const plugins = [AlignPlugin(nodeTypes)];
