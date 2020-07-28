@@ -28,7 +28,7 @@ import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
-import passport from './passport';
+import passport from './auth/passport';
 import router from './router';
 import models from './data/models';
 
@@ -104,6 +104,7 @@ app.get(
     session: false,
   }),
   (req, res) => {
+    console.log('login+++++++++++++++++++++++');
     const expiresIn = 60 * 60 * 24 * 180; // 180 days
     const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
     res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
