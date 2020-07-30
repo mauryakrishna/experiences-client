@@ -18,6 +18,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import proxy from 'express-http-proxy';
+import { LocalStorage } from 'node-localstorage';
 
 // apollo setup
 import { getDataFromTree } from '@apollo/react-ssr';
@@ -48,7 +49,7 @@ process.on('unhandledRejection', (reason, p) => {
 // -----------------------------------------------------------------------------
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
-
+global.localStorage = new LocalStorage('./scratch');
 const app = express();
 
 // requirement for createHttpLink
@@ -92,6 +93,21 @@ app.use(passport.initialize());
 
 app.get(
   '/login/facebook',
+  (req, res, next) => {
+    localStorage.setItem('authIntent', 'login');
+    next();
+  },
+  passport.authenticate('facebook', {
+    scope: ['email', 'user_location'],
+    session: false,
+  }),
+);
+app.get(
+  '/register/facebook',
+  (req, res, next) => {
+    localStorage.setItem('authIntent', 'register');
+    next();
+  },
   passport.authenticate('facebook', {
     scope: ['email', 'user_location'],
     session: false,
@@ -104,10 +120,9 @@ app.get(
     session: false,
   }),
   (req, res) => {
-    console.log('login+++++++++++++++++++++++');
-    const expiresIn = 60 * 60 * 24 * 180; // 180 days
-    const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
-    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+    // const expiresIn = 60 * 60 * 24 * 180; // 180 days
+    // const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
+    // res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
     res.redirect('/');
   },
 );

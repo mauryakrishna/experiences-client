@@ -1,5 +1,6 @@
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import config from '../config';
+import afterauth from './afterauth';
 
 const facebookOptionsLogin = {
   clientID: config.auth.facebook.id,
@@ -9,23 +10,15 @@ const facebookOptionsLogin = {
   passReqToCallback: true,
 };
 
-const facebookCallback = (req, accessToken, refreshToken, profile, done) => {
-  // eslint-disable-next-line no-underscore-dangle
-  // const { displayname, email } = profile._json;
-  // fetch('http://localhost:4000/gql', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({
-  //     query: '',
-  //     variables: { input: { displayname, email } },
-  //   }),
-  // }).then(res => {
-  //   console.log('fetch respnse', res);
-  // });
-  console.log('req', req.user, profile);
+const facebookCallback = async (
+  req,
+  accessToken,
+  refreshToken,
+  profile,
+  done,
+) => {
+  await afterauth(profile);
   done(null, req.user);
 };
 
-const login = new FacebookStrategy(facebookOptionsLogin, facebookCallback);
-
-export { login };
+export default new FacebookStrategy(facebookOptionsLogin, facebookCallback);

@@ -1,20 +1,26 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { useQuery, useApolloClient } from 'react-apollo-hooks';
 
 export default () => {
-  const onClick = () => {
-    console.log('click');
-    window.location.href = 'http://localhost:3000/login/facebook';
+  const redirect = type => {
+    window.location.href = `http://localhost:3000/${type}/facebook`;
   };
+
+  const login = () => {
+    redirect('login');
+  };
+
+  const register = () => {
+    redirect('register');
+  };
+
   return (
     <div>
-      <button type="button" onClick={onClick}>
+      <button type="button" onClick={login}>
         Login with Facebook
       </button>
-      <a href="http://localhost:3000/register/facebook">
+      <button type="button" onClick={register}>
         Register with Facebook
-      </a>
+      </button>
     </div>
   );
 };
