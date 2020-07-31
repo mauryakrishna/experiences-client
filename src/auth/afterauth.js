@@ -1,8 +1,10 @@
+import config from '../config';
+
 const afterauth = async profile => {
   const authIntent = localStorage.getItem('authIntent');
 
   // eslint-disable-next-line no-underscore-dangle
-  const { displayname, email } = profile._json;
+  const { name, email } = profile._json;
   let QUERY;
   let VARIABLES;
   if (authIntent === 'login') {
@@ -19,7 +21,6 @@ const afterauth = async profile => {
     `;
     VARIABLES = { email };
   } else if (authIntent === 'register') {
-    console.log('register');
     QUERY = `
       mutation signupAuthor($input: SignupAuthorInput) {
         signupAuthor(input: $input) {
@@ -32,10 +33,10 @@ const afterauth = async profile => {
       }
     `;
 
-    VARIABLES = { input: { displayname, email } };
+    VARIABLES = { input: { displayname: name, email } };
   }
 
-  await fetch('http://localhost:4000/gql', {
+  await fetch(config.api.serverUrl, {
     method: 'POST',
     Accept: 'application/json',
     headers: { 'Content-Type': 'application/json' },
