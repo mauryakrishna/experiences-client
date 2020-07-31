@@ -36,7 +36,7 @@ const afterauth = async profile => {
     VARIABLES = { input: { displayname: name, email } };
   }
 
-  await fetch(config.api.serverUrl, {
+  const { data } = await fetch(config.api.serverUrl, {
     method: 'POST',
     Accept: 'application/json',
     headers: { 'Content-Type': 'application/json' },
@@ -44,9 +44,10 @@ const afterauth = async profile => {
       query: QUERY,
       variables: VARIABLES,
     }),
-  })
-    .then(res => res.json())
-    .then(res => console.log(res.data));
+  }).then(res => res.json());
+
+  const { exist, author } = data.signinAuthor || data.signupAuthor;
+  return { exist, author };
 };
 
 export default afterauth;

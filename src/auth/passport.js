@@ -1,5 +1,5 @@
 import passport from 'passport';
-import fblogin from './passport-fb';
+import fblogin from './facebook';
 
 /**
  * Sign in with Facebook.
