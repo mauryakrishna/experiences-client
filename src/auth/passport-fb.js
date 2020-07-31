@@ -6,7 +6,7 @@ const facebookOptionsLogin = {
   clientID: config.auth.facebook.id,
   clientSecret: config.auth.facebook.secret,
   callbackURL: '/login/facebook/return',
-  profileFields: ['displayName', 'name', 'email', 'link', 'locale', 'timezone'],
+  profileFields: ['name', 'email'],
   passReqToCallback: true,
 };
 
