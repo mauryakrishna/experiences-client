@@ -12,12 +12,12 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
-import jwt from 'jsonwebtoken';
 import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import proxy from 'express-http-proxy';
+import { LocalStorage } from 'node-localstorage';
 
 // apollo setup
 import { getDataFromTree } from '@apollo/react-ssr';
@@ -28,7 +28,8 @@ import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
-import passport from './passport';
+import passport from './auth/passport';
+import authrouter from './auth/routes';
 import router from './router';
 import models from './data/models';
 
@@ -48,7 +49,7 @@ process.on('unhandledRejection', (reason, p) => {
 // -----------------------------------------------------------------------------
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
-
+global.localStorage = new LocalStorage('./scratch');
 const app = express();
 
 // requirement for createHttpLink
@@ -89,27 +90,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use(passport.initialize());
-
-app.get(
-  '/login/facebook',
-  passport.authenticate('facebook', {
-    scope: ['email', 'user_location'],
-    session: false,
-  }),
-);
-app.get(
-  '/login/facebook/return',
-  passport.authenticate('facebook', {
-    failureRedirect: '/login',
-    session: false,
-  }),
-  (req, res) => {
-    const expiresIn = 60 * 60 * 24 * 180; // 180 days
-    const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
-    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-    res.redirect('/');
-  },
-);
+app.use(authrouter);
 
 //
 // Register API middleware

@@ -14,6 +14,7 @@ import gql from 'graphql-tag';
 import s from './Header.css';
 import Link from '../Link';
 import Navigation from '../Navigation';
+import SignUp from '../../auth/signup';
 
 export default function Header() {
   useStyles(s);
@@ -38,6 +39,7 @@ export default function Header() {
         <Link className={s.brand} to="/">
           Experiences
         </Link>
+        <SignUp />
       </div>
     </div>
   );
