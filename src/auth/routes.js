@@ -21,6 +21,10 @@ const authCallback = (req, res) => {
   const { exist, author } = req;
   const authIntent = localStorage.getItem('authIntent');
 
+  const expiresIn = 60 * 60 * 24 * 180; // 180 days
+  const token = jwt.sign(author, config.auth.jwt.secret, { expiresIn });
+  res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+
   /**
    * If user try to login but did not exist on application,
    * present an opportunity to become a signed user
@@ -28,9 +32,6 @@ const authCallback = (req, res) => {
   if (authIntent === 'login' && exist === false) {
     res.redirect('/register');
   } else {
-    const expiresIn = 60 * 60 * 24 * 180; // 180 days
-    const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
-    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
     res.redirect('/');
   }
 };
