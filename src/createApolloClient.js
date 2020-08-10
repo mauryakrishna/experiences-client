@@ -3,26 +3,27 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
+import Cookies from 'js-cookie';
 
 import config from './config';
 
-export default () => {
+export default req => {
   const httpLink = createHttpLink({
     uri: config.api.serverUrl,
     credentials: 'include', // ' same-origin',
-    // headers: {
-    //   cookie: req.header('Cookie'),
-    // },
+    headers: {
+      cookie: req.header('Cookie'),
+    },
     fetchPolicy: 'network-only',
     errorPolicy: 'all',
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('id_token');
     return {
       headers: {
         ...headers,
-        authorization: token,
+        token,
       },
     };
   });

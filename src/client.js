@@ -22,6 +22,9 @@ import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import Cookies from 'js-cookie';
+
 import App from './components/App';
 import history from './history';
 import { updateMeta } from './DOMUtils';
@@ -91,6 +94,16 @@ async function onLocationChange(location, action) {
       // eslint-disable-next-line no-underscore-dangle
     }).restore(window.__APOLLO_STATE__);
 
+    const authLink = setContext((_, { headers }) => {
+      const token = Cookies.get('id_token');
+      return {
+        headers: {
+          ...headers,
+          token,
+        },
+      };
+    });
+
     const httpLink = createHttpLink({
       uri: window.App.apiUrl,
     });
@@ -107,7 +120,7 @@ async function onLocationChange(location, action) {
 
     const client = new ApolloClient({
       cache,
-      link: ApolloLink.from([errorLink, stateLink, httpLink]),
+      link: ApolloLink.from([errorLink, authLink, stateLink, httpLink]),
       resolvers: {},
       defaultOptions: {
         query: {
