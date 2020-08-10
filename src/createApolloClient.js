@@ -19,11 +19,9 @@ export default req => {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = Cookies.get('id_token');
     return {
       headers: {
         ...headers,
-        token,
       },
     };
   });

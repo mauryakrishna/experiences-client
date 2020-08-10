@@ -23,7 +23,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import Cookies from 'js-cookie';
 
 import App from './components/App';
 import history from './history';
@@ -95,11 +94,9 @@ async function onLocationChange(location, action) {
     }).restore(window.__APOLLO_STATE__);
 
     const authLink = setContext((_, { headers }) => {
-      const token = Cookies.get('id_token');
       return {
         headers: {
           ...headers,
-          token,
         },
       };
     });

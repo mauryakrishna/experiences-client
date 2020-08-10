@@ -18,11 +18,18 @@ const registerIntent = (req, res, next) => {
 };
 
 const authCallback = (req, res) => {
-  const { exist, author } = req;
+  const { exist, profilejson, author } = req;
   const authIntent = localStorage.getItem('authIntent');
-
   const expiresIn = 60 * 60 * 24 * 180; // 180 days
-  const token = jwt.sign(author, config.auth.jwt.secret, { expiresIn });
+
+  let tokendata = null;
+  if (exist === false) {
+    tokendata = { displayname: profilejson.name, email: profilejson.email };
+  } else {
+    tokendata = author;
+  }
+
+  const token = jwt.sign(tokendata, config.auth.jwt.secret, { expiresIn });
   res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
 
   /**
