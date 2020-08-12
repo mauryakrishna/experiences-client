@@ -11,14 +11,17 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import s from './Register.css';
+
+import history from '../../history';
 
 export default function Register({ title }) {
   useStyles(s);
+  const client = useApolloClient();
   const REGISTER_MUTATION_QUERY = gql`
-    mutation signupAuthor($input: SignupAuthorInput) {
-      signupAuthor(input: $input) {
+    mutation buttonPressRegister {
+      buttonPressRegister {
         exist
         author {
           displayname
@@ -30,17 +33,16 @@ export default function Register({ title }) {
 
   const [registerAuthor] = useMutation(REGISTER_MUTATION_QUERY, {
     update: (cache, { data }) => {
-      // do something here with data
-      // set authoruid into apollo cache
-      console.log('data', data);
+      const { displayname, authoruid } = data.buttonPressRegister.author;
+      client.writeData({ data: { displayname, authoruid } });
+
+      // redirect to home
+      history.push('/');
     },
   });
 
   const register = () => {
-    console.log('register invoked');
-    registerAuthor({
-      variables: { input: { displayname: 'somename', email: 'email' } },
-    });
+    registerAuthor();
   };
 
   return (

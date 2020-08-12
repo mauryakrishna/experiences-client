@@ -15,7 +15,8 @@ export default function Editor({ slugkey }) {
   const client = useApolloClient();
   const cacheData = {
     data: {
-      authIntent: null,
+      displayname: null,
+      authoruid: null,
       title: null,
       slugkey: null,
       experience: null,
