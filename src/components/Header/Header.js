@@ -13,32 +13,19 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import s from './Header.css';
 import Link from '../Link';
-import Navigation from '../Navigation';
+import Authenticate from './Authenticate';
 import SignUp from '../../auth/signup';
 
 export default function Header() {
   useStyles(s);
-  const EXAMPLE_QUERY = gql`
-    query exampleQuery {
-      examplequery {
-        examplename
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(EXAMPLE_QUERY);
-
-  if (loading || error) {
-    return null;
-  }
 
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <Navigation />
         <Link className={s.brand} to="/">
           Experiences
         </Link>
+        <Authenticate />
         <SignUp />
       </div>
     </div>
