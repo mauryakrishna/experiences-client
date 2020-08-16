@@ -9,12 +9,12 @@
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
+
 import s from './Header.css';
 import Link from '../Link';
 import Authenticate from './Authenticate';
 import SignUp from '../../auth/signup';
+import Logout from './Logout';
 
 export default function Header() {
   useStyles(s);
@@ -26,6 +26,7 @@ export default function Header() {
           Experiences
         </Link>
         <Authenticate />
+        <Logout />
         <SignUp />
       </div>
     </div>

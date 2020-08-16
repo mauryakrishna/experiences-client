@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-
 import Login from './Login';
 
 export default () => {
@@ -21,8 +20,13 @@ export default () => {
   useEffect(() => {
     if (data && data.verifyMe) {
       const { valid, displayname } = data.verifyMe;
-      setAuthorname(displayname);
-      setIsValid(valid);
+      // if token not valid
+      if (!valid) {
+        // clear cookie from client side
+      } else {
+        setAuthorname(displayname);
+        setIsValid(valid);
+      }
     }
   }, [data]);
 

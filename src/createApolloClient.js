@@ -3,7 +3,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
-import Cookies from 'js-cookie';
 
 import config from './config';
 

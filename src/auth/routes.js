@@ -20,7 +20,7 @@ const registerIntent = (req, res, next) => {
 const authCallback = (req, res) => {
   const { exist, profilejson, author } = req;
   const authIntent = localStorage.getItem('authIntent');
-  const expiresIn = 60 * 60 * 24 * 180; // 180 days
+  const expiresIn = 60 * 60 * 24 * 7; // 7 days
 
   let tokendata = null;
   if (exist === false) {
@@ -30,7 +30,11 @@ const authCallback = (req, res) => {
   }
 
   const token = jwt.sign(tokendata, config.auth.jwt.secret, { expiresIn });
-  res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+  res.cookie('id_token', token, {
+    maxAge: 1000 * expiresIn,
+    httpOnly: true,
+    sameSite: 'Strict',
+  });
 
   /**
    * If user try to login but did not exist on application,
@@ -42,6 +46,16 @@ const authCallback = (req, res) => {
     res.redirect('/');
   }
 };
+
+/**
+ * universal logout from handles login from all
+ */
+
+authrouter.get('/logout', (req, res) => {
+  // eslint-disable-next-line consistent-return
+  res.clearCookie('id_token');
+  res.redirect('/');
+});
 
 /**
  * facebook
