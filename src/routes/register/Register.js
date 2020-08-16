@@ -34,7 +34,7 @@ export default function Register({ title }) {
   const [registerAuthor] = useMutation(REGISTER_MUTATION_QUERY, {
     update: (cache, { data }) => {
       const { displayname, authoruid } = data.buttonPressRegister.author;
-      client.writeData({ data: { displayname, authoruid } });
+      client.writeData({ data: { displayname, authoruid, loggedin: true } });
 
       // redirect to home
       history.push('/');
