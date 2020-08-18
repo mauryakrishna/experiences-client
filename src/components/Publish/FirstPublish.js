@@ -28,9 +28,8 @@ const Publish = ({ cb }) => {
   });
 
   const [debouncedCallback] = useDebouncedCallback(async () => {
-    const authoruid = '@mauryakrishna1';
     const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
-    await publish({ variables: { input: { slugkey, authoruid } } });
+    await publish({ variables: { input: { slugkey } } });
   }, 0);
 
   return debouncedCallback;

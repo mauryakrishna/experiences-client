@@ -34,7 +34,6 @@ const SaveNPublish = ({ cb }) => {
 
   const [debouncedCallback] = useDebouncedCallback(async () => {
     const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
-    const authoruid = '@mauryakrishna1';
     const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
     const { experience } = client.readQuery({
       query: GET_EXPERIENCE_EXPERIENCE,
@@ -45,7 +44,6 @@ const SaveNPublish = ({ cb }) => {
         // here experience is not parsed because while storing in cache its already stringified
         input: {
           slugkey,
-          authoruid,
           title,
           experience: JSON.parse(experience),
         },

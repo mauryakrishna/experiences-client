@@ -43,7 +43,7 @@ const Save = ({ cb }) => {
     const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
     saveExperience({
       variables: {
-        input: { experience, authoruid: '@mauryakrishna1', slugkey },
+        input: { experience, slugkey },
       },
     });
   }, 3000);

@@ -40,7 +40,7 @@ function SaveTitle({ cb }) {
     cb(true);
     const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
     saveTitle({
-      variables: { input: { authoruid: '@mauryakrishna1', title, slugkey } },
+      variables: { input: { title, slugkey } },
     });
   }, 3000);
 
