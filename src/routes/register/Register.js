@@ -12,6 +12,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from 'react-apollo-hooks';
+import localStorage from 'local-storage';
 import s from './Register.css';
 
 import history from '../../history';
@@ -34,7 +35,8 @@ export default function Register({ title }) {
   const [registerAuthor] = useMutation(REGISTER_MUTATION_QUERY, {
     update: (cache, { data }) => {
       const { displayname, authoruid } = data.buttonPressRegister.author;
-      client.writeData({ data: { displayname, authoruid, loggedin: true } });
+      client.writeData({ data: { displayname, authoruid } });
+      localStorage.set('loggedin', true);
 
       // redirect to home
       history.push('/');

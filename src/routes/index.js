@@ -21,6 +21,7 @@ const routes = {
     },
     {
       path: '/writeanexperience',
+      protected: true,
       load: () => import(/* webpackChunkName: 'editor' */ './editor'),
     },
     {
@@ -49,6 +50,7 @@ const routes = {
     },
     {
       path: '/edit/:slugkey',
+      protected: true,
       load: () => import(/* webpackChunkName: 'admin' */ './editor'),
     },
 

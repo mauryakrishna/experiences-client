@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useApolloClient } from 'react-apollo-hooks';
+import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import localStorage from 'local-storage';
 import Login from './Login';
 
 export default () => {
-  const client = useApolloClient();
   const [authorname, setAuthorname] = useState('');
   const [isvalid, setIsValid] = useState(false);
 
@@ -28,7 +28,7 @@ export default () => {
         setAuthorname(displayname);
         setIsValid(valid);
       }
-      client.writeData({ data: { loggedin: valid } });
+      localStorage.set('loggedin', valid);
     }
   }, [data]);
 

@@ -7,11 +7,17 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+// https://www.kriasoft.com/universal-router/redirects
 import UniversalRouter from 'universal-router';
+import localStorage from 'local-storage';
 import routes from './routes';
 
 export default new UniversalRouter(routes, {
   resolveRoute(context, params) {
+    const loggedin = localStorage.get('loggedin');
+    if (context.route.protected && loggedin === false) {
+      return { redirect: '/login', from: context.pathname };
+    }
     if (typeof context.route.load === 'function') {
       return context.route
         .load()
