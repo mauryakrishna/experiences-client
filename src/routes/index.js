@@ -49,6 +49,10 @@ const routes = {
       load: () => import(/* webpackChunkName: 'admin' */ './admin'),
     },
     {
+      path: '/author/:authoruid',
+      load: () => import(/* webpackChunkName: 'allofauthor' */ './allofauthor'),
+    },
+    {
       path: '/edit/:slugkey',
       protected: true,
       load: () => import(/* webpackChunkName: 'admin' */ './editor'),

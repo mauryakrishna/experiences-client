@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import localStorage from 'local-storage';
 
 import Link from '../../components/Link';
 import UpdateAuthorDetails from './UpdateAuthorDetails';
@@ -14,6 +15,7 @@ const AllOfAuthor = ({ authoruid }) => {
   const [experiences, setExperiences] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
   const [cursor, setCursor] = useState(null);
+  const allowActions = authoruid === localStorage.get('username');
   const experienceperpage = 10;
   const updateDebounce = UpdateAuthorDetails();
 
@@ -139,22 +141,28 @@ const AllOfAuthor = ({ authoruid }) => {
       />
       <textarea type="text" onChange={handleIntroChange} value={shortintro} />
       <div>
-        <button
-          type="button"
-          disabled={disableButton}
-          onClick={handleSaveAuthorDetails}
-        >
-          Save
-        </button>
-      </div>
-      <div>
-        <button
-          type="button"
-          disabled={disableButton}
-          onClick={handleCancelChanges}
-        >
-          Cancel
-        </button>
+        {allowActions && (
+          <div>
+            <button
+              type="button"
+              disabled={disableButton}
+              onClick={handleSaveAuthorDetails}
+            >
+              Save
+            </button>
+          </div>
+        )}
+        {allowActions && (
+          <div>
+            <button
+              type="button"
+              disabled={disableButton}
+              onClick={handleCancelChanges}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
       </div>
       {experiences &&
         experiences.map(experience => {
@@ -162,7 +170,7 @@ const AllOfAuthor = ({ authoruid }) => {
           return (
             <h4 key={slugkey}>
               <span>{title}</span>
-              <Link to={`/edit/${slugkey}`}>Edit</Link>
+              {allowActions && <Link to={`/edit/${slugkey}`}>Edit</Link>}
             </h4>
           );
         })}

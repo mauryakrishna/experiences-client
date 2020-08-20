@@ -13,6 +13,7 @@ export default () => {
       verifyMe {
         valid
         displayname
+        authoruid
       }
     }
   `;
@@ -20,7 +21,7 @@ export default () => {
 
   useEffect(() => {
     if (data && data.verifyMe) {
-      const { valid, displayname } = data.verifyMe;
+      const { valid, displayname, authoruid } = data.verifyMe;
       // if token not valid
       if (!valid) {
         // clear cookie from client side
@@ -28,6 +29,7 @@ export default () => {
         setAuthorname(displayname);
         setIsValid(valid);
       }
+      localStorage.set('username', authoruid);
       localStorage.set('loggedin', valid);
     }
   }, [data]);

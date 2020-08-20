@@ -5,7 +5,7 @@ import Link from '../Link';
 const AuthorDisplay = ({ uid, displayname, shortintro }) => {
   return (
     <div>
-      <Link to={`/${uid}`}>{displayname}</Link>
+      <Link to={`/author/${uid}`}>{displayname}</Link>
       <span>{shortintro}</span>
     </div>
   );
