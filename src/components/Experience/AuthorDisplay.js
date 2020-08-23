@@ -14,6 +14,10 @@ const AuthorDisplay = ({ uid, displayname, shortintro }) => {
 AuthorDisplay.propTypes = {
   uid: PropTypes.string.isRequired,
   displayname: PropTypes.string.isRequired,
-  shortintro: PropTypes.string.isRequired,
+  shortintro: PropTypes.string,
+};
+
+AuthorDisplay.defaultProps = {
+  shortintro: null,
 };
 export default AuthorDisplay;

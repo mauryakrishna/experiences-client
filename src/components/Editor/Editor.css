@@ -9,3 +9,10 @@ input.placeholder {
   font-size: 30px;
   background: transparent;
 }
+
+.editorcontainer {
+  padding: 10px 15px;
+  width: 100%;
+  height: 80vh;
+  overflow-y: scroll;
+}

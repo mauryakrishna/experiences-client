@@ -80,13 +80,15 @@ const Editor = ({ cb }) => {
       }}
     >
       <HeadingToolbar />
-      <EditablePlugins
-        plugins={plugins}
-        placeholder="experience"
-        spellCheck
-        autoFocus
-        renderLeaf={[renderLeafBold]}
-      />
+      <div className={s.editorcontainer}>
+        <EditablePlugins
+          plugins={plugins}
+          placeholder="experience"
+          spellCheck
+          autoFocus
+          renderLeaf={[renderLeafBold]}
+        />
+      </div>
     </Slate>
   );
 };
