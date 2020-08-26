@@ -10,6 +10,7 @@
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ThemeProvider, useTheme, Grid, Divider } from '@chakra-ui/core';
 
 // external-global styles must be imported in your JS.
 import s from './Layout.css';
@@ -18,12 +19,24 @@ import Footer from '../Footer';
 
 export default function Layout({ children }) {
   useStyles(s);
+  const theme = useTheme();
   return (
-    <>
-      <Header />
-      {children}
-      <Footer />
-    </>
+    <ThemeProvider theme={theme}>
+      <div className={s.root}>
+        <div className={s.container}>
+          <Grid>
+            <Grid>
+              <Header />
+            </Grid>
+            <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+            <Grid>{children}</Grid>
+            <Grid>
+              <Footer />
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

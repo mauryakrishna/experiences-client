@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import localStorage from 'local-storage';
+
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+  MenuOptionGroup,
+  MenuItemOption,
+  Icon,
+} from '@chakra-ui/core';
 import Login from './Login';
 
 export default () => {
@@ -38,5 +50,22 @@ export default () => {
     return <span>...</span>;
   }
 
-  return <>{isvalid ? <span>{authorname}</span> : <Login />}</>;
+  return (
+    <>
+      {isvalid ? (
+        <Menu>
+          <MenuButton borderWidth="1px" px={4} py={2}>
+            {authorname}
+          </MenuButton>
+          <MenuList>
+            <MenuItem>My Page</MenuItem>
+            <MenuItem>Settings</MenuItem>
+            <MenuItem>Logout</MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
 };

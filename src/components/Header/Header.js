@@ -10,6 +10,8 @@
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 
+import { Grid, Box } from '@chakra-ui/core';
+
 import s from './Header.css';
 import Link from '../Link';
 import Authenticate from './Authenticate';
@@ -20,15 +22,22 @@ export default function Header() {
   useStyles(s);
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
+    <Grid templateColumns="repeat(2, 2fr)" gap={3}>
+      <Box border="1px" borderColor="green.200" w="100%" height="40px" p={3}>
         <Link className={s.brand} to="/">
           Experiences
         </Link>
+      </Box>
+      <Box
+        border="1px"
+        borderColor="green.200"
+        w="100%"
+        height="40px"
+        p={3}
+        textAlign="center"
+      >
         <Authenticate />
-        <Logout />
-        <SignUp />
-      </div>
-    </div>
+      </Box>
+    </Grid>
   );
 }

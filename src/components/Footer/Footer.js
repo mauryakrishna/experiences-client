@@ -9,6 +9,7 @@
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
+import { Flex, Text, Divider } from '@chakra-ui/core';
 import s from './Footer.css';
 import Link from '../Link';
 
@@ -18,23 +19,25 @@ export default function Footer() {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <span className={s.text}>© Your Company</span>
-        <span className={s.spacer}>·</span>
-        <Link className={s.link} to="/">
-          Home
-        </Link>
-        <span className={s.spacer}>·</span>
-        <Link className={s.link} to="/admin">
-          Admin
-        </Link>
-        <span className={s.spacer}>·</span>
-        <Link className={s.link} to="/privacy">
-          Privacy
-        </Link>
-        <span className={s.spacer}>·</span>
-        <Link className={s.link} to="/not-found">
-          Not Found
-        </Link>
+        <Flex textAlign="center">
+          <span className={s.text}>© Your Company</span>
+          <Divider
+            orientation="vertical"
+            borderColor="gray.100"
+            borderWidth="2"
+          />
+          <Link className={s.link} to="/">
+            Home
+          </Link>
+          <Divider orientation="vertical" />
+          <Link className={s.link} to="/">
+            About
+          </Link>
+          <Divider orientation="vertical" />
+          <Link className={s.link} to="/privacy">
+            Privacy
+          </Link>
+        </Flex>
       </div>
     </div>
   );
