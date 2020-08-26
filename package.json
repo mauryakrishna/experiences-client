@@ -15,6 +15,9 @@
   "dependencies": {
     "@apollo/react-ssr": "3.1.5",
     "@babel/polyfill": "^7.7.0",
+    "@chakra-ui/core": "0.8.0",
+    "@emotion/core": "10.0.35",
+    "@emotion/styled": "10.0.27",
     "@styled-icons/material": "10.0.0",
     "@udecode/slate-plugins": "0.62.0",
     "apollo-cache-inmemory": "1.6.6",
@@ -28,6 +31,7 @@
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.3",
     "emotion": "10.0.27",
+    "emotion-theming": "10.0.27",
     "express": "^4.16.3",
     "express-http-proxy": "1.6.0",
     "express-jwt": "^5.3.1",
