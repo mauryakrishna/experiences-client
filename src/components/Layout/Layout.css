@@ -18,8 +18,8 @@
   margin: 0 auto;
   padding: 0 0 30px;
   height: 95vh;
+  width: 100%;
   max-width: var(--max-content-width);
-  border: 1px green solid;
 }
 
 /*

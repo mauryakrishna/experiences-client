@@ -8,10 +8,8 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuGroup,
-  MenuDivider,
-  MenuOptionGroup,
-  MenuItemOption,
+  Button,
+  Text,
   Icon,
 } from '@chakra-ui/core';
 import Login from './Login';
@@ -54,10 +52,11 @@ export default () => {
     <>
       {isvalid ? (
         <Menu>
-          <MenuButton borderWidth="1px" px={4} py={2}>
+          <MenuButton as={Text} borderWidth="1px" fontWeight="700">
             {authorname}
+            <Icon color="white" name="chevron-down" />
           </MenuButton>
-          <MenuList>
+          <MenuList color="black">
             <MenuItem>My Page</MenuItem>
             <MenuItem>Settings</MenuItem>
             <MenuItem>Logout</MenuItem>
