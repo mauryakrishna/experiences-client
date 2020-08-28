@@ -17,28 +17,38 @@ export default function Footer() {
   useStyles(s);
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <Flex textAlign="center">
-          <span className={s.text}>© Your Company</span>
-          <Divider
-            orientation="vertical"
-            borderColor="gray.100"
-            borderWidth="2"
-          />
-          <Link className={s.link} to="/">
-            Home
-          </Link>
-          <Divider orientation="vertical" />
-          <Link className={s.link} to="/">
-            About
-          </Link>
-          <Divider orientation="vertical" />
-          <Link className={s.link} to="/privacy">
-            Privacy
-          </Link>
-        </Flex>
+    <Flex bg="green.50">
+      <div className={s.root}>
+        <div className={s.container}>
+          <Flex align="flex-end">
+            <span className={s.text}>© Your Company</span>
+            <Divider
+              orientation="vertical"
+              borderColor="teal.500"
+              borderWidth="2"
+            />
+            <Link className={s.link} to="/">
+              Home
+            </Link>
+            <Divider
+              orientation="vertical"
+              borderColor="teal.500"
+              borderWidth="2"
+            />
+            <Link className={s.link} to="/about">
+              About
+            </Link>
+            <Divider
+              orientation="vertical"
+              borderColor="teal.500"
+              borderWidth="2"
+            />
+            <Link className={s.link} to="/privacy">
+              Privacy
+            </Link>
+          </Flex>
+        </div>
       </div>
-    </div>
+    </Flex>
   );
 }
