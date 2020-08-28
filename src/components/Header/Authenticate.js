@@ -4,15 +4,19 @@ import gql from 'graphql-tag';
 import localStorage from 'local-storage';
 
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Button,
-  Text,
+  Divider,
+  Box,
   Icon,
+  PseudoBox,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  PopoverArrow,
 } from '@chakra-ui/core';
 import Login from './Login';
+import Link from '../Link';
 
 export default () => {
   const [authorname, setAuthorname] = useState('');
@@ -51,17 +55,44 @@ export default () => {
   return (
     <>
       {isvalid ? (
-        <Menu>
-          <MenuButton as={Text} borderWidth="1px" fontWeight="700">
-            {authorname}
-            <Icon color="white" name="chevron-down" />
-          </MenuButton>
-          <MenuList color="black">
-            <MenuItem>My Page</MenuItem>
-            <MenuItem>Settings</MenuItem>
-            <MenuItem>Logout</MenuItem>
-          </MenuList>
-        </Menu>
+        <Popover usePortal>
+          <PopoverTrigger>
+            <PseudoBox
+              as={Button}
+              bg="transparent"
+              borderColor="white"
+              borderWidth="1px"
+              _hover={{
+                bg: 'transparent',
+                color: ' white',
+                borderColor: 'white',
+                borderWidth: '1px',
+                rounded: '4px',
+              }}
+              rightIcon="chevron-down"
+            >
+              {authorname} <Icon name="chevron-down" color="white" />
+            </PseudoBox>
+          </PopoverTrigger>
+          <PopoverContent zIndex={4} width="180px">
+            <PopoverArrow />
+            <PopoverBody>
+              <Box>
+                <Link to="/writeanexperience">Write an Experience</Link>
+              </Box>
+              <Divider />
+              <Box>
+                <Link to={`/author/${localStorage.get('username')}`}>
+                  My Page
+                </Link>
+              </Box>
+              <Divider />
+              <Box>
+                <Link to="/logout">Logout</Link>
+              </Box>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       ) : (
         <Login />
       )}
