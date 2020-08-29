@@ -15,8 +15,6 @@ import { Box, Flex, Heading } from '@chakra-ui/core';
 import s from './Header.css';
 import Link from '../Link';
 import Authenticate from './Authenticate';
-import SignUp from '../../auth/signup';
-import Logout from './Logout';
 
 export default function Header() {
   useStyles(s);

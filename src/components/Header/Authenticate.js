@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import localStorage from 'local-storage';
 
 import {
-  Button,
+  Flex,
   Divider,
   Box,
   Icon,
@@ -17,6 +17,8 @@ import {
 } from '@chakra-ui/core';
 import Login from './Login';
 import Link from '../Link';
+import Logout from './Logout';
+import Register from './Register';
 
 export default () => {
   const [authorname, setAuthorname] = useState('');
@@ -58,7 +60,6 @@ export default () => {
         <Popover usePortal>
           <PopoverTrigger>
             <PseudoBox
-              as={Button}
               bg="transparent"
               borderColor="white"
               borderWidth="1px"
@@ -77,24 +78,39 @@ export default () => {
           <PopoverContent zIndex={4} width="180px">
             <PopoverArrow />
             <PopoverBody>
-              <Box>
+              <Box textDecoration="none">
                 <Link to="/writeanexperience">Write an Experience</Link>
               </Box>
               <Divider />
-              <Box>
+              <Box textDecoration="none">
                 <Link to={`/author/${localStorage.get('username')}`}>
                   My Page
                 </Link>
               </Box>
               <Divider />
-              <Box>
-                <Link to="/logout">Logout</Link>
+              <Box textDecoration="none">
+                <Logout />
               </Box>
             </PopoverBody>
           </PopoverContent>
         </Popover>
       ) : (
-        <Login />
+        <Flex align="center">
+          <Flex bg="transparent" align="flex-end">
+            <Login />
+          </Flex>
+          <Flex>
+            <Divider orientation="vertical" bg="white" borderWidth="2px" />
+          </Flex>
+          <Flex
+            bg="transparent"
+            align="center"
+            justify="center"
+            fontWeight="500"
+          >
+            <Register />
+          </Flex>
+        </Flex>
       )}
     </>
   );

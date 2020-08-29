@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  Button,
+  Flex,
   PseudoBox,
   Text,
-  Flex,
-  useDisclosure,
+  Button,
   Modal,
-  ModalBody,
   ModalOverlay,
   ModalContent,
+  ModalBody,
+  useDisclosure,
 } from '@chakra-ui/core';
 
 export default () => {
@@ -25,9 +25,8 @@ export default () => {
   return (
     <Flex>
       <PseudoBox cursor="pointer" onClick={onOpen}>
-        <Text>Login</Text>
+        <Text>Register</Text>
       </PseudoBox>
-
       <Modal
         blockScrollOnMount={false}
         isOpen={isOpen}
@@ -47,7 +46,7 @@ export default () => {
                 bg="#3b5998"
                 _hover={{ bg: '#2d4373' }}
               >
-                <Text color="white">Login with facebook</Text>
+                <Text color="white">Register with facebook</Text>
               </Button>
             </PseudoBox>
           </ModalBody>
