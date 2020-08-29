@@ -6,6 +6,8 @@ import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
+import { Flex, Text, PseudoBox } from '@chakra-ui/core';
+
 import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
 import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
 import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
@@ -68,19 +70,28 @@ const ReadExperience = ({ slug }) => {
   }, [data]);
 
   return (
-    <>
-      {author && <AuthorDisplay {...author} />}
-      <span>{title}</span>
-      <Slate editor={editor} value={value}>
-        <EditablePlugins
-          plugins={plugins}
-          readOnly
-          autoFocus
-          placeholder="Read here."
-          renderLeaf={[renderLeafBold]}
-        />
-      </Slate>
-    </>
+    <PseudoBox px={24} py={2}>
+      <Flex align="left" py={5}>
+        <Text fontWeight="bold" fontSize="18px">
+          {title}
+        </Text>
+      </Flex>
+
+      <Flex>
+        <AuthorDisplay {...author} />
+      </Flex>
+      <Flex align="center" justify="center" py={5}>
+        <Slate editor={editor} value={value}>
+          <EditablePlugins
+            plugins={plugins}
+            readOnly
+            autoFocus
+            placeholder="Read here."
+            renderLeaf={[renderLeafBold]}
+          />
+        </Slate>
+      </Flex>
+    </PseudoBox>
   );
 };
 
