@@ -50,7 +50,7 @@ const Title = ({ cb }) => {
 
   return (
     <React.Fragment>
-      <div className={s.placeholdercontainer}>
+      <div>
         <input
           className={s.placeholder}
           placeholder="Start with the title..."

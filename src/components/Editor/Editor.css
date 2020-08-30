@@ -1,9 +1,5 @@
 @import '../variables.css';
 
-.placeholdercontainer {
-  padding-bottom: 20px;
-}
-
 input.placeholder {
   width: 100%;
   font-size: 30px;
@@ -11,7 +7,6 @@ input.placeholder {
 }
 
 .editorcontainer {
-  padding: 10px 15px;
   width: 100%;
   height: 80vh;
   overflow-y: scroll;

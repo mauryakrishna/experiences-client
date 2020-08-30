@@ -60,9 +60,11 @@ export default () => {
         <Popover usePortal>
           <PopoverTrigger>
             <PseudoBox
+              p={2}
               bg="transparent"
               borderColor="white"
               borderWidth="1px"
+              borderRadius="4px"
               _hover={{
                 bg: 'transparent',
                 color: ' white',
