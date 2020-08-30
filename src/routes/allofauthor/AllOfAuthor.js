@@ -148,14 +148,27 @@ const AllOfAuthor = ({ authoruid }) => {
   }
   return (
     <PseudoBox px={24} py={2}>
-      <Flex align="flex-end">
-        <Editable value={`${displayname}`} onChange={handleDisplayNameChange}>
+      <Flex py={2}>
+        <Editable
+          fontSize="20px"
+          fontWeight="700"
+          value={`${displayname}`}
+          onChange={handleDisplayNameChange}
+        >
           <EditablePreview />
           <EditableInput />
         </Editable>
       </Flex>
-      <Flex align="">
-        <Textarea onChange={handleIntroChange} value={shortintro} />
+      <Flex>
+        <Textarea
+          p={0}
+          fontSize="18px"
+          fontWeight="500"
+          borderWidth="0"
+          resize="none"
+          onChange={handleIntroChange}
+          value={`${shortintro}`}
+        />
       </Flex>
       <Flex>
         {allowActions && (
@@ -170,7 +183,7 @@ const AllOfAuthor = ({ authoruid }) => {
         )}
       </Flex>
 
-      <SectionHeader>Your Experiences </SectionHeader>
+      <SectionHeader>All Experiences </SectionHeader>
 
       <Stack spacing={3}>
         {experiences &&
