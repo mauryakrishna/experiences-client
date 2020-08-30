@@ -80,7 +80,7 @@ const ReadExperience = ({ slug }) => {
       <Flex>
         <AuthorDisplay {...author} />
       </Flex>
-      <Flex align="center" justify="center" py={5}>
+      <Flex justify="left" py={5}>
         <Slate editor={editor} value={value}>
           <EditablePlugins
             plugins={plugins}
