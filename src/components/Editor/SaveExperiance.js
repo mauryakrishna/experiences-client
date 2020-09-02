@@ -4,6 +4,12 @@ import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
+import {
+  WAIT,
+  MAX_WAIT,
+  SAVE_INITIATED,
+  SAVE_COMPLETED,
+} from '../../ConfigConstants';
 
 const Save = ({ cb }) => {
   const client = useApolloClient();
@@ -33,20 +39,24 @@ const Save = ({ cb }) => {
         }
       }
 
-      cb(false);
+      cb(SAVE_COMPLETED);
     },
   });
 
-  const [debouncedCallback] = useDebouncedCallback(experience => {
-    // start showing the saving in progress
-    cb(true);
-    const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
-    saveExperience({
-      variables: {
-        input: { experience, slugkey },
-      },
-    });
-  }, 3000);
+  const [debouncedCallback] = useDebouncedCallback(
+    experience => {
+      // start showing the saving in progress
+      cb(SAVE_INITIATED);
+      const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+      saveExperience({
+        variables: {
+          input: { experience, slugkey },
+        },
+      });
+    },
+    WAIT,
+    { maxWait: MAX_WAIT },
+  );
 
   return debouncedCallback;
 };

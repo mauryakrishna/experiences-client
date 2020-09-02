@@ -3,6 +3,13 @@ import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
+import {
+  WAIT,
+  MAX_WAIT,
+  SAVE_INITIATED,
+  SAVE_COMPLETED,
+} from '../../ConfigConstants';
+
 import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
 
 function SaveTitle({ cb }) {
@@ -31,18 +38,22 @@ function SaveTitle({ cb }) {
         }
       }
 
-      cb(false);
+      cb(SAVE_COMPLETED);
     },
   });
 
-  const [debouncedCallback] = useDebouncedCallback(title => {
-    // show the saving in progress state
-    cb(true);
-    const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
-    saveTitle({
-      variables: { input: { title, slugkey } },
-    });
-  }, 3000);
+  const [debouncedCallback] = useDebouncedCallback(
+    title => {
+      // show the saving in progress state
+      cb(SAVE_INITIATED);
+      const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+      saveTitle({
+        variables: { input: { title, slugkey } },
+      });
+    },
+    WAIT,
+    { maxWait: MAX_WAIT },
+  );
 
   return debouncedCallback;
 }

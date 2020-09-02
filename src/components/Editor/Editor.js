@@ -83,9 +83,8 @@ const Editor = ({ cb }) => {
       <div className={s.editorcontainer}>
         <EditablePlugins
           plugins={plugins}
-          placeholder="experience"
+          placeholder="that moment.."
           spellCheck
-          autoFocus
           renderLeaf={[renderLeafBold]}
         />
       </div>
