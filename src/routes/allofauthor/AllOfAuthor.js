@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import localStorage from 'local-storage';
 
 import {
+  Text,
   Flex,
   Stack,
   PseudoBox,
@@ -51,6 +52,7 @@ const AllOfAuthor = ({ authoruid }) => {
             slug
             slugkey
             ispublished
+            created_at
           }
         }
       }
@@ -188,7 +190,14 @@ const AllOfAuthor = ({ authoruid }) => {
       <Stack spacing={3}>
         {experiences &&
           experiences.map(experience => {
-            const { title, slugkey, slug, ispublished } = experience;
+            const {
+              title,
+              slugkey,
+              slug,
+              ispublished,
+              // eslint-disable-next-line camelcase
+              created_at,
+            } = experience;
             return (
               <Flex
                 key={slugkey}
@@ -202,6 +211,9 @@ const AllOfAuthor = ({ authoruid }) => {
                   <Link to={`/${slug}-${slugkey}`}>{title}</Link>
                 </TitleInList>
                 <Flex align="center" justify="center">
+                  {/* eslint-disable-next-line camelcase */}
+                  <Text>{`Started ${created_at}`}</Text>
+
                   {allowActions && (
                     <AuthorActions {...{ ispublished, slugkey }} />
                   )}
