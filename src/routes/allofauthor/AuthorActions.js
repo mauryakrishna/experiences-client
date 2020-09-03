@@ -44,32 +44,30 @@ const AuthorActions = ({ slugkey }) => {
         <Icon name="edit" onClick={edit} />
       </Tooltip>
       <Tooltip label="Delete">
-        <>
-          <Icon
-            name="delete"
-            onClick={() => {
-              setAlertPropmtOpen(true);
-            }}
-          />
-          <AlertPrompt
-            {...{
-              isOpen: isAlertPromptOpen,
-              header: 'Delete an Experience',
-              body:
-                'Experience will be lost forever once deleted. Would you still like to delete?',
-              cancelBtnText: 'Cancel',
-              yesBtnText: 'Delete',
-              onCancel: () => {
-                setAlertPropmtOpen(false);
-              },
-              onYes: () => {
-                deleteExp();
-                setAlertPropmtOpen(false);
-              },
-            }}
-          />
-        </>
+        <Icon
+          name="delete"
+          onClick={() => {
+            setAlertPropmtOpen(true);
+          }}
+        />
       </Tooltip>
+      <AlertPrompt
+        {...{
+          isOpen: isAlertPromptOpen,
+          header: 'Delete an Experience',
+          body:
+            'Experience will be lost forever once deleted. Would you still like to delete?',
+          cancelBtnText: 'Cancel',
+          yesBtnText: 'Delete',
+          onCancel: () => {
+            setAlertPropmtOpen(false);
+          },
+          onYes: () => {
+            deleteExp();
+            setAlertPropmtOpen(false);
+          },
+        }}
+      />
     </>
   );
 };
