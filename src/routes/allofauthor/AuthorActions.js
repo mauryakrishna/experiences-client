@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import localStorage from 'local-storage';
+import history from '../../history';
 import { Tooltip, Icon, AlertPrompt } from '../../components/UIElements';
 
 const AuthorActions = ({ slugkey }) => {
   const [isAlertPromptOpen, setAlertPropmtOpen] = useState(false);
   const edit = () => {
-    window.location.href = `${window.location.origin}/edit/${slugkey}`;
+    history.push(`/edit/${slugkey}`);
   };
 
   const mutaton = gql`

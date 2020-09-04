@@ -78,7 +78,7 @@ const ReadExperience = ({ slug }) => {
       </Flex>
 
       <Flex>
-        <AuthorDisplay {...author} />
+        <AuthorDisplay {...{ author }} />
       </Flex>
       <Flex justify="left" py={5}>
         <Slate editor={editor} value={value}>

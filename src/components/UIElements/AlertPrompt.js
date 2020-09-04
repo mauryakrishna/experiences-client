@@ -37,6 +37,7 @@ const AlertPrompt = React.forwardRef((props, ref) => {
       bg="green.50"
       leastDestructiveRef={cancelRef}
       blockScrollOnMount={false}
+      onClose={() => {}}
     >
       <AlertDialogOverlay bg="green.50" opacity="0.4" />
       <AlertDialogContent>
