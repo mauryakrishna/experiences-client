@@ -50,8 +50,10 @@ const Title = ({ cb }) => {
 
   return (
     <React.Fragment>
-      <div className={s.placeholdercontainer}>
+      <div>
         <input
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus
           className={s.placeholder}
           placeholder="Start with the title..."
           value={title}

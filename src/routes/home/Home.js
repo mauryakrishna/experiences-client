@@ -11,6 +11,15 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import {
+  Skeleton,
+  Grid,
+  Box,
+  PseudoBox,
+  Button,
+  Stack,
+  Text,
+} from '@chakra-ui/core';
 
 import Link from '../../components/Link';
 import s from './Home.css';
@@ -66,29 +75,90 @@ export default function Home() {
     }
   }, [data]);
 
-  if (loading) {
-    return <h4>loading...</h4>;
-  }
-  if (experiences.length === 0) {
-    return <h3>No experiences to take you through.</h3>;
-  }
-  if (experiences.length > 0) {
-    return (
-      <div className={s.root}>
-        <div className={s.container}>
+  const getSkeleton = count => {
+    const allSkeleton = [];
+    const numberOfSkeleton = count || experiencePerPage;
+    // eslint-disable-next-line no-plusplus
+    for (let i = numberOfSkeleton; i >= 0; i--) {
+      allSkeleton.push(
+        <Skeleton
+          isLoaded={!loading}
+          color="teal.200"
+          height="20px"
+          my="5px"
+          key={i}
+        />,
+      );
+    }
+    return allSkeleton;
+  };
+
+  // eslint-disable-next-line no-shadow
+  const getExperiencesStack = experiences => {
+    if (experiences.length > 0) {
+      return (
+        <Stack spacing={3}>
           {experiences.map(({ title, slug, slugkey }) => {
             const link = `${slug}-${slugkey}`;
             return (
-              <div key={slugkey}>
-                <Link to={link}>{title}</Link>
-              </div>
+              <PseudoBox
+                key={slugkey}
+                borderColor="gray.50"
+                borderWidth={1}
+                _hover={{ borderColor: 'gray.200', bg: 'gray.50' }}
+              >
+                <Link to={link}>
+                  <Text
+                    fontWeight="800"
+                    height="18px"
+                    margin={3}
+                    color="gray.600"
+                  >
+                    {title}
+                  </Text>
+                </Link>
+              </PseudoBox>
             );
           })}
-        </div>
-        <button type="button" onClick={loadMoreExperiences}>
-          Load more...
-        </button>
-      </div>
-    );
+          <Button
+            isLoading={loading}
+            onClick={loadMoreExperiences}
+            variantColor="teal"
+            variant="outline"
+          >
+            Load more
+          </Button>
+        </Stack>
+      );
+    }
+
+    return [];
+  };
+
+  if (loading) {
+    return getSkeleton();
   }
+
+  return (
+    <div className={s.root}>
+      <div className={s.container}>
+        <Skeleton isLoaded>
+          <Grid templateColumns="repeat(2, 1fr)">
+            <Box>
+              <Text fontWeight="400" fontSize="24px" verticalAlign="center">
+                Experiences makes life. Share it so others can make theirs.
+              </Text>
+            </Box>
+
+            <Box>
+              {!loading && experiences.length === 0 && (
+                <h4>Get Started, share your experiences.</h4>
+              )}
+              {getExperiencesStack(experiences)}
+            </Box>
+          </Grid>
+        </Skeleton>
+      </div>
+    </div>
+  );
 }

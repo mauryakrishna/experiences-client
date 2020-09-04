@@ -6,7 +6,7 @@ import React from 'react';
 
 import NotFound from '../not-found/NotFound';
 import ReadExperience from '../../components/Experience/ReadExperience';
-import PageContainer from '../../components/PageContainer/PageContainer';
+import Layout from '../../components/Layout';
 
 const getRegex = regex => RegExp(regex);
 
@@ -28,7 +28,7 @@ function action(context) {
     chunks: ['dynamic-routing'],
     component: (
       // path = '/some-path'; //mind the / at the start
-      <PageContainer>{getComponent(context.path.substr(1))}</PageContainer>
+      <Layout>{getComponent(context.path.substr(1))}</Layout>
     ),
   };
 }

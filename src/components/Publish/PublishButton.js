@@ -5,6 +5,8 @@ import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
 import history from '../../history';
 
+import { Button } from '../UIElements';
+
 import {
   GET_EXPERIENCE_TITLE,
   GET_EXPERIENCE_EXPERIENCE,
@@ -56,9 +58,9 @@ const PublishExperience = () => {
 
   return (
     <>
-      <button type="button" disabled={disableButton} onClick={handlePublish}>
+      <Button disabled={disableButton} onClick={handlePublish}>
         {buttonText}
-      </button>
+      </Button>
       <span>{errMessage}</span>
     </>
   );

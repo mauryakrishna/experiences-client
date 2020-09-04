@@ -2,7 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import localStorage from 'local-storage';
+
+import {
+  Flex,
+  Divider,
+  Box,
+  Icon,
+  PseudoBox,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  PopoverArrow,
+} from '@chakra-ui/core';
 import Login from './Login';
+import Link from '../Link';
+import Logout from './Logout';
+import Register from './Register';
 
 export default () => {
   const [authorname, setAuthorname] = useState('');
@@ -38,5 +54,66 @@ export default () => {
     return <span>...</span>;
   }
 
-  return <>{isvalid ? <span>{authorname}</span> : <Login />}</>;
+  return (
+    <>
+      {isvalid ? (
+        <Popover usePortal>
+          <PopoverTrigger>
+            <PseudoBox
+              p={2}
+              bg="transparent"
+              borderColor="white"
+              borderWidth="1px"
+              borderRadius="4px"
+              _hover={{
+                bg: 'transparent',
+                color: ' white',
+                borderColor: 'white',
+                borderWidth: '1px',
+                rounded: '4px',
+              }}
+              rightIcon="chevron-down"
+            >
+              {authorname} <Icon name="chevron-down" color="white" />
+            </PseudoBox>
+          </PopoverTrigger>
+          <PopoverContent zIndex={4} width="180px">
+            <PopoverArrow />
+            <PopoverBody>
+              <Box textDecoration="none">
+                <Link to="/writeanexperience">Write an Experience</Link>
+              </Box>
+              <Divider />
+              <Box textDecoration="none">
+                <Link to={`/author/${localStorage.get('username')}`}>
+                  My Page
+                </Link>
+              </Box>
+              <Divider />
+              <Box textDecoration="none">
+                <Logout />
+              </Box>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <Flex align="center">
+          <Flex bg="transparent" align="flex-end">
+            <Login />
+          </Flex>
+          <Flex>
+            <Divider orientation="vertical" bg="white" borderWidth="2px" />
+          </Flex>
+          <Flex
+            bg="transparent"
+            align="center"
+            justify="center"
+            fontWeight="500"
+          >
+            <Register />
+          </Flex>
+        </Flex>
+      )}
+    </>
+  );
 };

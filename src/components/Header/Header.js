@@ -10,25 +10,36 @@
 import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 
+import { Box, Flex, Heading } from '@chakra-ui/core';
+
 import s from './Header.css';
 import Link from '../Link';
 import Authenticate from './Authenticate';
-import SignUp from '../../auth/signup';
-import Logout from './Logout';
 
 export default function Header() {
   useStyles(s);
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <Link className={s.brand} to="/">
-          Experiences
-        </Link>
+    <Flex
+      as="nav"
+      align="center"
+      justify="space-between"
+      wrap="wrap"
+      padding="1rem"
+      bg="teal.500"
+      color="white"
+    >
+      <Flex align="center" mr={3}>
+        <Heading as="h3" size={['xs', 'sm', 'md', 'lg']} letterSpacing="-.1rem">
+          <Link className={s.brand} to="/">
+            Experiences
+          </Link>
+        </Heading>
+      </Flex>
+
+      <Box>
         <Authenticate />
-        <Logout />
-        <SignUp />
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 }

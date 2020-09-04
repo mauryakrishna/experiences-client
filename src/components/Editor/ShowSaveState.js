@@ -1,13 +1,30 @@
 /* eslint-disable import/prefer-default-export */
-import React from 'react';
 import PropTypes from 'prop-types';
 
-const ShowSavedState = ({ state }) => {
-  return <span>{state === true ? 'Saving...' : 'Saved'}</span>;
+import {
+  SAVE_NOTHING,
+  SAVE_INITIATED,
+  SAVE_COMPLETED,
+} from '../../ConfigConstants';
+
+const ShowSaveState = ({ state }) => {
+  let retState = null;
+  if (state === SAVE_INITIATED) {
+    retState = 'Saving...';
+  }
+
+  if (state === SAVE_COMPLETED) {
+    retState = 'Saved';
+  }
+
+  if (state === SAVE_NOTHING) {
+    retState = '';
+  }
+  return retState;
 };
 
-ShowSavedState.propTypes = {
-  state: PropTypes.bool.isRequired,
+ShowSaveState.propTypes = {
+  state: PropTypes.number.isRequired,
 };
 
-export default ShowSavedState;
+export default ShowSaveState;
