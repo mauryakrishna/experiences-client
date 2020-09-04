@@ -5,6 +5,8 @@ import Tooltip from './Tooltip';
 import Icon from './Icon';
 import IconButton from './IconButton';
 import AlertPrompt from './AlertPrompt';
+import Divider from './Divider';
+import Input from './Input';
 
 export {
   Button,
@@ -14,4 +16,6 @@ export {
   Icon,
   IconButton,
   AlertPrompt,
+  Divider,
+  Input,
 };

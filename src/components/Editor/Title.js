@@ -10,6 +10,7 @@ import {
 
 import SaveTitle from './SaveTitle';
 import s from './Editor.css';
+import { Input } from '../UIElements';
 
 const Title = ({ cb }) => {
   useStyles(s);
@@ -51,7 +52,7 @@ const Title = ({ cb }) => {
   return (
     <React.Fragment>
       <div>
-        <input
+        <Input
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           className={s.placeholder}
