@@ -13,8 +13,21 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 export default function Layout({ children }) {
+  const breakpoints = ['20em', '30em', '48em', '62em', '80em'];
+  breakpoints.xs = breakpoints[0];
+  breakpoints.sm = breakpoints[1];
+  breakpoints.md = breakpoints[2];
+  breakpoints.lg = breakpoints[3];
+  breakpoints.xl = breakpoints[4];
+
+  const customTheme = {
+    ...theme,
+    breakpoints,
+  };
+
+  console.log('breakpoints', theme);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
       <PseudoBox maxW="1000px" my="0" mx="auto">
         <Grid>

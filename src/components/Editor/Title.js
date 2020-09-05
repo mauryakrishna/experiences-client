@@ -53,7 +53,8 @@ const Title = ({ cb }) => {
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           w="100%"
-          fontSize="30px"
+          fontWeight="400"
+          fontSize={{ sm: '1.5rem', md: '2rem' }}
           bg="transparent"
           placeholder="Start with the title..."
           value={title}

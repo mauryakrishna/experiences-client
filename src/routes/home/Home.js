@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import {
-  Skeleton,
-  Grid,
-  Box,
-  PseudoBox,
-  Button,
-  Stack,
-  Text,
-} from '@chakra-ui/core';
+import { Skeleton, Box, Flex, Button, Stack, Text } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
 
@@ -89,23 +81,26 @@ export default function Home() {
           {experiences.map(({ title, slug, slugkey }) => {
             const link = `${slug}-${slugkey}`;
             return (
-              <PseudoBox
+              <Flex
                 key={slugkey}
-                borderColor="gray.50"
+                pointer="cursor"
+                borderColor="gray.200"
                 borderWidth={1}
-                _hover={{ borderColor: 'gray.200', bg: 'gray.50' }}
+                width="100%"
+                _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
               >
-                <Link to={link}>
-                  <Text
-                    fontWeight="800"
-                    height="18px"
-                    margin={3}
-                    color="gray.600"
-                  >
+                <Text
+                  fontWeight="500"
+                  fontSize={{ base: '1rem', md: '1.2rem' }}
+                  margin={3}
+                  width="100%"
+                  color="gray.600"
+                >
+                  <Link to={link} width="100%">
                     {title}
-                  </Text>
-                </Link>
-              </PseudoBox>
+                  </Link>
+                </Text>
+              </Flex>
             );
           })}
           <Button
@@ -128,19 +123,19 @@ export default function Home() {
   }
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)">
-      <Box>
+    <Flex px="5">
+      <Box display={{ base: 'none', sm: 'none', md: 'block' }} w="50%">
         <Text fontWeight="400" fontSize="24px" verticalAlign="center">
           Experiences makes life. Share it so others can make theirs.
         </Text>
       </Box>
 
-      <Box>
+      <Box w={{ base: '100%', sm: '100%', md: '50%' }}>
         {!loading && experiences.length === 0 && (
           <h4>Get Started, share your experiences.</h4>
         )}
         {getExperiencesStack(experiences)}
       </Box>
-    </Grid>
+    </Flex>
   );
 }
