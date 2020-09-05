@@ -1,13 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-import useStyles from 'isomorphic-style-loader/useStyles';
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -22,10 +12,8 @@ import {
 } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
-import s from './Home.css';
 
 export default function Home() {
-  useStyles(s);
   const [experiences, setExperiences] = useState([]);
   const experiencePerPage = 10;
   const [cursor, setCursor] = useState(null);
@@ -140,25 +128,19 @@ export default function Home() {
   }
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <Skeleton isLoaded>
-          <Grid templateColumns="repeat(2, 1fr)">
-            <Box>
-              <Text fontWeight="400" fontSize="24px" verticalAlign="center">
-                Experiences makes life. Share it so others can make theirs.
-              </Text>
-            </Box>
+    <Grid templateColumns="repeat(2, 1fr)">
+      <Box>
+        <Text fontWeight="400" fontSize="24px" verticalAlign="center">
+          Experiences makes life. Share it so others can make theirs.
+        </Text>
+      </Box>
 
-            <Box>
-              {!loading && experiences.length === 0 && (
-                <h4>Get Started, share your experiences.</h4>
-              )}
-              {getExperiencesStack(experiences)}
-            </Box>
-          </Grid>
-        </Skeleton>
-      </div>
-    </div>
+      <Box>
+        {!loading && experiences.length === 0 && (
+          <h4>Get Started, share your experiences.</h4>
+        )}
+        {getExperiencesStack(experiences)}
+      </Box>
+    </Grid>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useStyles from 'isomorphic-style-loader/useStyles';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 
@@ -9,12 +8,10 @@ import {
 } from '../../queries/experience';
 
 import SaveTitle from './SaveTitle';
-import s from './Editor.css';
+
 import { Input } from '../UIElements';
 
 const Title = ({ cb }) => {
-  useStyles(s);
-
   const client = useApolloClient();
   const titleData = client.readQuery({ query: GET_EXPERIENCE_TITLE });
   const { ispublished } = client.readQuery({
@@ -55,7 +52,9 @@ const Title = ({ cb }) => {
         <Input
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
-          className={s.placeholder}
+          w="100%"
+          fontSize="30px"
+          bg="transparent"
           placeholder="Start with the title..."
           value={title}
           onChange={validateTitle}
