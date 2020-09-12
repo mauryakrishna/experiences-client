@@ -52,6 +52,7 @@ const AllOfAuthor = ({ authoruid }) => {
             slug
             slugkey
             ispublished
+            publishdate
             created_at
           }
         }
@@ -149,7 +150,7 @@ const AllOfAuthor = ({ authoruid }) => {
     return <h4>loading...</h4>;
   }
   return (
-    <PseudoBox px={24} py={2}>
+    <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '6rem' }} py={2}>
       <Flex py={2}>
         <Editable
           fontSize="20px"
@@ -185,7 +186,7 @@ const AllOfAuthor = ({ authoruid }) => {
         )}
       </Flex>
 
-      <SectionHeader>All Experiences </SectionHeader>
+      <SectionHeader>Experiences </SectionHeader>
 
       <Stack spacing={3}>
         {experiences &&
@@ -195,6 +196,7 @@ const AllOfAuthor = ({ authoruid }) => {
               slugkey,
               slug,
               ispublished,
+              publishdate,
               // eslint-disable-next-line camelcase
               created_at,
             } = experience;
@@ -207,13 +209,32 @@ const AllOfAuthor = ({ authoruid }) => {
                 borderRadius="8px"
                 w="100%"
               >
-                <TitleInList w="100%">
+                <Text
+                  fontWeight="500"
+                  fontSize={{ base: '1rem', md: '1.2rem' }}
+                  margin={3}
+                  width="100%"
+                  color="gray.600"
+                >
                   <Link to={`/${slug}-${slugkey}`}>{title}</Link>
-                </TitleInList>
-                <Flex align="center" justify="center">
-                  {/* eslint-disable-next-line camelcase */}
-                  <Text>{`Started ${created_at}`}</Text>
 
+                  <Flex>
+                    <Text
+                      fontWeight="100"
+                      pt={2}
+                      fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
+                      width="100%"
+                      color="gray.600"
+                    >
+                      {ispublished
+                        ? `Published on ${publishdate}`
+                        : // eslint-disable-next-line camelcase
+                          `Started ${created_at}`}
+                    </Text>
+                  </Flex>
+                </Text>
+
+                <Flex align="center" justify="center">
                   {allowActions && (
                     <AuthorActions {...{ ispublished, slugkey }} />
                   )}

@@ -12,17 +12,15 @@ export default function Header() {
       align="center"
       justify="space-between"
       wrap="wrap"
-      padding={['0.6rem', '0.7rem', '0.9rem']}
+      px="0.7rem"
+      py="0.5rem"
       bg="teal.500"
       color="white"
     >
       <Flex align="center" mr={3}>
         <Heading as="h3">
           <Link to="/">
-            <Text
-              fontSize={{ xs: '1.5rem', sm: '1.5rem', md: '1.8rem' }}
-              color="white"
-            >
+            <Text fontSize="1.5rem" color="white">
               Experiences
             </Text>
           </Link>

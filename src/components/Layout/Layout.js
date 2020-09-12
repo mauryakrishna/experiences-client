@@ -29,7 +29,7 @@ export default function Layout({ children }) {
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
-      <PseudoBox maxW="1000px" my="0" mx="auto">
+      <PseudoBox maxW="1000px" my="0" mx="auto" lineHeight="1.3">
         <Grid>
           <Grid>
             <Header />

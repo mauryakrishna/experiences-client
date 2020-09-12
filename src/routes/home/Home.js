@@ -78,7 +78,7 @@ export default function Home() {
     if (experiences.length > 0) {
       return (
         <Stack spacing={3}>
-          {experiences.map(({ title, slug, slugkey }) => {
+          {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
             const link = `${slug}-${slugkey}`;
             return (
               <Flex
@@ -99,7 +99,19 @@ export default function Home() {
                   <Link to={link} width="100%">
                     {title}
                   </Link>
+                  <Flex>
+                    <Text
+                      fontWeight="100"
+                      pt={2}
+                      fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
+                      width="100%"
+                      color="gray.600"
+                      // eslint-disable-next-line camelcase
+                    >{`${publishdate}`}</Text>
+                  </Flex>
                 </Text>
+
+                <Text>{author}</Text>
               </Flex>
             );
           })}
