@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
+import { Textarea, Flex } from '@chakra-ui/core';
+import { EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS } from '../../ConfigConstants';
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -9,7 +11,7 @@ import {
 
 import SaveTitle from './SaveTitle';
 
-import { Input } from '../UIElements';
+import { AutoResizeTextarea } from '../UIElements';
 
 const Title = ({ cb }) => {
   const client = useApolloClient();
@@ -23,6 +25,7 @@ const Title = ({ cb }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
 
+  const ref = useRef();
   const validateTitle = event => {
     let { value } = event.target;
 
@@ -48,20 +51,33 @@ const Title = ({ cb }) => {
 
   return (
     <React.Fragment>
-      <div>
-        <Input
+      <Flex>
+        <Textarea
           // eslint-disable-next-line jsx-a11y/no-autofocus
+          inputRef={ref}
+          px={0}
           autoFocus
           w="100%"
+          minHeight="0"
+          borderWidth="0"
+          focusBorderColor="white"
+          resize="none"
           fontWeight="400"
           fontSize={{ sm: '1.5rem', md: '2rem' }}
           bg="transparent"
           placeholder="Start with the title..."
           value={title}
+          as={AutoResizeTextarea}
           onChange={validateTitle}
-          maxLength="460"
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+            }
+          }}
+          maxLength={`${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS}`}
+          transition="height none"
         />
-      </div>
+      </Flex>
       {showMessage && <span>{message}</span>}
     </React.Fragment>
   );
