@@ -76,7 +76,7 @@ const Editor = ({ cb }) => {
       }}
     >
       <HeadingToolbar />
-      <Box w="100%" h="80vh" overflowY="scroll">
+      <Box w="100%" h="80vh" overflowY="scroll" px={2}>
         <EditablePlugins
           plugins={plugins}
           placeholder="that moment.."

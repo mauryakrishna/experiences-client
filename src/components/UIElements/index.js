@@ -7,6 +7,7 @@ import IconButton from './IconButton';
 import AlertPrompt from './AlertPrompt';
 import Divider from './Divider';
 import Input from './Input';
+import AutoResizeTextarea from './AutoResizeTextarea';
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   AlertPrompt,
   Divider,
   Input,
+  AutoResizeTextarea,
 };

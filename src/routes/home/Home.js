@@ -19,6 +19,9 @@ export default function Home() {
           slug
           slugkey
           publishdate
+          author {
+            displayname
+          }
         }
       }
     }
@@ -79,6 +82,7 @@ export default function Home() {
       return (
         <Stack spacing={3}>
           {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
+            const { displayname } = author;
             const link = `${slug}-${slugkey}`;
             return (
               <Flex
@@ -86,6 +90,7 @@ export default function Home() {
                 pointer="cursor"
                 borderColor="gray.200"
                 borderWidth={1}
+                borderRadius="8px"
                 width="100%"
                 _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
               >
@@ -99,19 +104,20 @@ export default function Home() {
                   <Link to={link} width="100%">
                     {title}
                   </Link>
+
                   <Flex>
                     <Text
-                      fontWeight="100"
+                      fontWeight="400"
                       pt={2}
-                      fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
-                      width="100%"
+                      fontSize={{ base: '0.75rem', md: '0.8rem' }}
+                      maxWidth="100%"
                       color="gray.600"
                       // eslint-disable-next-line camelcase
-                    >{`${publishdate}`}</Text>
+                    >
+                      {`${publishdate}`} | {displayname}
+                    </Text>
                   </Flex>
                 </Text>
-
-                <Text>{author}</Text>
               </Flex>
             );
           })}

@@ -14,3 +14,5 @@ export const WAIT = 2000;
 export const SAVE_NOTHING = 1;
 export const SAVE_INITIATED = 2;
 export const SAVE_COMPLETED = 3;
+
+export const SHORT_INTRO_MAX_CHARACTERS_LIMIT = 200;
