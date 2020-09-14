@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
@@ -25,7 +26,9 @@ const ReadExperience = ({ slug }) => {
 
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
   const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState(null);
+  const [publishdate, setPublishDate] = useState('');
+  const [uid, setUid] = useState('');
+  const [displayname, setDisplayname] = useState('');
   const editor = useMemo(() => pipe(createEditor()), []);
 
   const slugWords = slug.split('-');
@@ -36,6 +39,7 @@ const ReadExperience = ({ slug }) => {
       getAnExperienceForRead(slugkey: $slugkey) {
         title
         experience
+        publishdate
         author {
           uid
           displayname
@@ -57,12 +61,19 @@ const ReadExperience = ({ slug }) => {
 
   React.useEffect(() => {
     if (data && data.getAnExperienceForRead) {
-      // eslint-disable-next-line no-shadow
-      const { title, experience, author } = data.getAnExperienceForRead;
+      const {
+        title,
+        experience,
+        author,
+        publishdate,
+      } = data.getAnExperienceForRead;
       if (title && experience && author) {
         setTitle(title);
         setValue(experience);
-        setAuthor(author);
+        setPublishDate(publishdate);
+        const { uid, displayname } = author;
+        setUid(uid);
+        setDisplayname(displayname);
       } else {
         console.log('Could not get data for experience.');
       }
@@ -78,7 +89,11 @@ const ReadExperience = ({ slug }) => {
       </Flex>
 
       <Flex>
-        <AuthorDisplay {...author} />
+        <AuthorDisplay
+          uid={uid}
+          displayname={displayname}
+          publishdate={publishdate}
+        />
       </Flex>
       <Flex justify="left" py={5}>
         <Slate editor={editor} value={value}>

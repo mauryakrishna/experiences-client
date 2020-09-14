@@ -159,8 +159,8 @@ const AllOfAuthor = ({ authoruid }) => {
     <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '6rem' }} py={2}>
       <Flex py={2}>
         <Editable
-          fontSize="20px"
-          fontWeight="700"
+          fontSize="30px"
+          fontWeight="300"
           value={`${displayname}`}
           onChange={handleDisplayNameChange}
         >
@@ -174,7 +174,7 @@ const AllOfAuthor = ({ authoruid }) => {
           p={0}
           minHeight="0"
           fontSize="18px"
-          fontWeight="500"
+          fontWeight="300"
           borderWidth="0"
           resize="none"
           focusBorderColor="white"

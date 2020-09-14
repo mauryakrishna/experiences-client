@@ -8,6 +8,7 @@ import AlertPrompt from './AlertPrompt';
 import Divider from './Divider';
 import Input from './Input';
 import AutoResizeTextarea from './AutoResizeTextarea';
+import PublishDate from './PublishDate';
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   Divider,
   Input,
   AutoResizeTextarea,
+  PublishDate,
 };
