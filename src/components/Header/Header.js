@@ -12,8 +12,8 @@ export default function Header() {
       align="center"
       justify="space-between"
       wrap="wrap"
-      px="0.7rem"
-      py="0.5rem"
+      px="1rem"
+      py="0.8rem"
       bg="teal.500"
       color="white"
     >
