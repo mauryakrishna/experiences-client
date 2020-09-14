@@ -70,9 +70,9 @@ const ReadExperience = ({ slug }) => {
   }, [data]);
 
   return (
-    <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '6rem' }} py={2}>
+    <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
       <Flex align="left" pb={5}>
-        <Text fontWeight="400" fontSize={{ sm: '1.5rem', md: '2rem' }}>
+        <Text fontWeight="400" fontSize={{ sm: '1.5rem', md: '2.2rem' }}>
           {title}
         </Text>
       </Flex>
