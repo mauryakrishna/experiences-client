@@ -1,54 +1,52 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
-import { Flex, Text, Divider } from '@chakra-ui/core';
-import s from './Footer.css';
+import PropTypes from 'prop-types';
+import { Flex, Text } from '@chakra-ui/core';
+import { Divider } from '../UIElements';
 import Link from '../Link';
 
-export default function Footer() {
-  useStyles(s);
+const FooterText = props => {
+  return (
+    <Text
+      fontWeight="300"
+      pt={2}
+      fontSize={{ base: '0.7rem', sm: '0.7rem', md: '0.8rem' }}
+      maxWidth="100%"
+      color="black.100"
+      {...props}
+    >
+      {props.children}
+    </Text>
+  );
+};
 
+FooterText.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default function Footer() {
   return (
     <Flex bg="green.50">
-      <div className={s.root}>
-        <div className={s.container}>
-          <Flex align="flex-end">
-            <span className={s.text}>© Your Company</span>
-            <Divider
-              orientation="vertical"
-              borderColor="teal.500"
-              borderWidth="2"
-            />
-            <Link className={s.link} to="/">
-              Home
-            </Link>
-            <Divider
-              orientation="vertical"
-              borderColor="teal.500"
-              borderWidth="2"
-            />
-            <Link className={s.link} to="/about">
-              About
-            </Link>
-            <Divider
-              orientation="vertical"
-              borderColor="teal.500"
-              borderWidth="2"
-            />
-            <Link className={s.link} to="/privacy">
-              Privacy
-            </Link>
-          </Flex>
-        </div>
-      </div>
+      <Flex align="flex-end" p={5}>
+        <FooterText>
+          <Link to="/">Experiences</Link> © {new Date().getFullYear()}
+        </FooterText>
+        <Divider />
+        <FooterText>
+          <Link to="/about">About</Link>
+        </FooterText>
+        <Divider />
+        <FooterText>
+          <Link to="/privacy">Privacy</Link>
+        </FooterText>
+        <Divider />
+        <FooterText>
+          <Link to="/privacy">Terms</Link>
+        </FooterText>
+        <Divider />
+        <FooterText>
+          <Link to="/privacy">Help</Link>
+        </FooterText>
+      </Flex>
     </Flex>
   );
 }

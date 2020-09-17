@@ -1,31 +1,11 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-import useStyles from 'isomorphic-style-loader/useStyles';
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import {
-  Skeleton,
-  Grid,
-  Box,
-  PseudoBox,
-  Button,
-  Stack,
-  Text,
-} from '@chakra-ui/core';
+import { Skeleton, Box, Flex, Button, Stack, Text } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
-import s from './Home.css';
 
 export default function Home() {
-  useStyles(s);
   const [experiences, setExperiences] = useState([]);
   const experiencePerPage = 10;
   const [cursor, setCursor] = useState(null);
@@ -39,6 +19,9 @@ export default function Home() {
           slug
           slugkey
           publishdate
+          author {
+            displayname
+          }
         }
       }
     }
@@ -98,26 +81,44 @@ export default function Home() {
     if (experiences.length > 0) {
       return (
         <Stack spacing={3}>
-          {experiences.map(({ title, slug, slugkey }) => {
+          {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
+            const { displayname } = author;
             const link = `${slug}-${slugkey}`;
             return (
-              <PseudoBox
+              <Flex
                 key={slugkey}
-                borderColor="gray.50"
+                pointer="cursor"
+                borderColor="gray.200"
                 borderWidth={1}
-                _hover={{ borderColor: 'gray.200', bg: 'gray.50' }}
+                borderRadius="8px"
+                width="100%"
+                _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
               >
-                <Link to={link}>
-                  <Text
-                    fontWeight="800"
-                    height="18px"
-                    margin={3}
-                    color="gray.600"
-                  >
+                <Text
+                  fontWeight="500"
+                  fontSize={{ base: '1rem', md: '1.2rem' }}
+                  margin={3}
+                  width="100%"
+                  color="gray.600"
+                >
+                  <Link to={link} width="100%">
                     {title}
-                  </Text>
-                </Link>
-              </PseudoBox>
+                  </Link>
+
+                  <Flex>
+                    <Text
+                      fontWeight="400"
+                      pt={2}
+                      fontSize={{ base: '0.75rem', md: '0.8rem' }}
+                      maxWidth="100%"
+                      color="gray.600"
+                      // eslint-disable-next-line camelcase
+                    >
+                      {`${publishdate}`} | {displayname}
+                    </Text>
+                  </Flex>
+                </Text>
+              </Flex>
             );
           })}
           <Button
@@ -140,25 +141,19 @@ export default function Home() {
   }
 
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <Skeleton isLoaded>
-          <Grid templateColumns="repeat(2, 1fr)">
-            <Box>
-              <Text fontWeight="400" fontSize="24px" verticalAlign="center">
-                Experiences makes life. Share it so others can make theirs.
-              </Text>
-            </Box>
+    <Flex px="5">
+      <Box display={{ base: 'none', sm: 'none', md: 'block' }} w="50%">
+        <Text fontWeight="400" fontSize="24px" verticalAlign="center">
+          Experiences makes life. Share it so others can make theirs.
+        </Text>
+      </Box>
 
-            <Box>
-              {!loading && experiences.length === 0 && (
-                <h4>Get Started, share your experiences.</h4>
-              )}
-              {getExperiencesStack(experiences)}
-            </Box>
-          </Grid>
-        </Skeleton>
-      </div>
-    </div>
+      <Box w={{ base: '100%', sm: '100%', md: '50%' }}>
+        {!loading && experiences.length === 0 && (
+          <h4>Get Started, share your experiences.</h4>
+        )}
+        {getExperiencesStack(experiences)}
+      </Box>
+    </Flex>
   );
 }

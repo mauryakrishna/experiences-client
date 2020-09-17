@@ -7,13 +7,11 @@ import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
-import useStyles from 'isomorphic-style-loader/useStyles';
 
 import { useApolloClient } from 'react-apollo-hooks';
+import { Box } from '@chakra-ui/core';
 
 import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
-
-import s from './Editor.css';
 
 import HeadingToolbar, {
   plugins as pluginsHeading,
@@ -31,8 +29,6 @@ const plugins = [...pluginsHeading];
 const withPlugins = [withReact, withHistory, ...withPluginsHeading];
 
 const Editor = ({ cb }) => {
-  useStyles(s);
-
   const client = useApolloClient();
   const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
   const { ispublished } = client.readQuery({
@@ -80,14 +76,14 @@ const Editor = ({ cb }) => {
       }}
     >
       <HeadingToolbar />
-      <div className={s.editorcontainer}>
+      <Box w="100%" h="80vh" overflowY="scroll" px={2}>
         <EditablePlugins
           plugins={plugins}
           placeholder="that moment.."
           spellCheck
           renderLeaf={[renderLeafBold]}
         />
-      </div>
+      </Box>
     </Slate>
   );
 };

@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import localStorage from 'local-storage';
 
 import {
+  Text,
   Flex,
   Divider,
   Box,
@@ -74,7 +75,13 @@ export default () => {
               }}
               rightIcon="chevron-down"
             >
-              {authorname} <Icon name="chevron-down" color="white" />
+              <Text
+                fontSize={{ base: '0.9rem', sm: '1rem' }}
+                maxW={{ base: 40, sm: 48 }}
+              >
+                {authorname}
+                <Icon name="chevron-down" color="white" />
+              </Text>
             </PseudoBox>
           </PopoverTrigger>
           <PopoverContent zIndex={4} width="180px">

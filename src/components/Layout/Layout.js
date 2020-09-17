@@ -1,43 +1,47 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-import useStyles from 'isomorphic-style-loader/useStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider, CSSReset, theme, Grid, Divider } from '@chakra-ui/core';
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  Grid,
+  Divider,
+  PseudoBox,
+} from '@chakra-ui/core';
 
-// external-global styles must be imported in your JS.
-import s from './Layout.css';
 import Header from '../Header';
 import Footer from '../Footer';
 
 export default function Layout({ children }) {
-  useStyles(s);
+  const breakpoints = ['20em', '30em', '48em', '62em', '80em'];
+  breakpoints.xs = breakpoints[0];
+  breakpoints.sm = breakpoints[1];
+  breakpoints.md = breakpoints[2];
+  breakpoints.lg = breakpoints[3];
+  breakpoints.xl = breakpoints[4];
 
+  const customTheme = {
+    ...theme,
+    breakpoints,
+  };
+
+  console.log('breakpoints', theme);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
-      <div className={s.root}>
-        <div className={s.container}>
+      <PseudoBox maxW="1000px" my="0" mx="auto" lineHeight="1.3">
+        <Grid>
           <Grid>
-            <Grid>
-              <Header />
-            </Grid>
-            <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
-            <Grid>{children}</Grid>
-            <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
-            <Grid>
-              <Footer />
-            </Grid>
+            <Header />
           </Grid>
-        </div>
-      </div>
+          <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+          <Grid>{children}</Grid>
+          <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+          <Grid>
+            <Footer />
+          </Grid>
+        </Grid>
+      </PseudoBox>
     </ThemeProvider>
   );
 }

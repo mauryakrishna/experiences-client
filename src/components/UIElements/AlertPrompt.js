@@ -34,12 +34,11 @@ const AlertPrompt = React.forwardRef((props, ref) => {
   return (
     <AlertDialog
       isOpen={isOpen}
-      bg="green.50"
       leastDestructiveRef={cancelRef}
       blockScrollOnMount={false}
       onClose={() => {}}
     >
-      <AlertDialogOverlay bg="green.50" opacity="0.4" />
+      <AlertDialogOverlay bg="white" opacity="0.7" />
       <AlertDialogContent>
         <AlertDialogHeader fontSize="lg" fontWeight="bold">
           {header}

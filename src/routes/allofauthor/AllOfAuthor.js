@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-shadow */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -20,11 +20,12 @@ import {
 import {
   Button,
   SectionHeader,
-  TitleInList,
+  AutoResizeTextarea,
 } from '../../components/UIElements';
 import AuthorActions from './AuthorActions';
 import Link from '../../components/Link';
 import UpdateAuthorDetails from './UpdateAuthorDetails';
+import { SHORT_INTRO_MAX_CHARACTERS_LIMIT } from '../../ConfigConstants';
 
 const AllOfAuthor = ({ authoruid }) => {
   const [displayname, setDisplayname] = useState('');
@@ -32,6 +33,7 @@ const AllOfAuthor = ({ authoruid }) => {
   const [experiences, setExperiences] = useState([]);
   const [disableButton, setDisableButton] = useState(true);
   const [cursor, setCursor] = useState(null);
+  const [showShortIntroLimit, setShowShortIntroLimit] = useState(false);
   const allowActions = authoruid === localStorage.get('username');
   const experienceperpage = 10;
   const updateDebounce = UpdateAuthorDetails();
@@ -52,6 +54,7 @@ const AllOfAuthor = ({ authoruid }) => {
             slug
             slugkey
             ispublished
+            publishdate
             created_at
           }
         }
@@ -104,6 +107,9 @@ const AllOfAuthor = ({ authoruid }) => {
     }
   };
 
+  // for auto resizing the shortintro textarea
+  const ref = useRef();
+
   useEffect(() => {
     setData(data);
   }, [data]);
@@ -115,13 +121,14 @@ const AllOfAuthor = ({ authoruid }) => {
 
   const handleIntroChange = event => {
     const { value } = event.target;
-
-    if (value.length <= 500) {
+    if (value.length <= SHORT_INTRO_MAX_CHARACTERS_LIMIT) {
       setShortintro(value);
     } else {
+      // set allowed characters
+      setShortintro(value.substring(SHORT_INTRO_MAX_CHARACTERS_LIMIT, 0));
       // show the charecter limit
+      setShowShortIntroLimit(true);
     }
-
     setDisableButton(false);
   };
 
@@ -149,11 +156,11 @@ const AllOfAuthor = ({ authoruid }) => {
     return <h4>loading...</h4>;
   }
   return (
-    <PseudoBox px={24} py={2}>
+    <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '6rem' }} py={2}>
       <Flex py={2}>
         <Editable
-          fontSize="20px"
-          fontWeight="700"
+          fontSize="30px"
+          fontWeight="300"
           value={`${displayname}`}
           onChange={handleDisplayNameChange}
         >
@@ -163,15 +170,35 @@ const AllOfAuthor = ({ authoruid }) => {
       </Flex>
       <Flex>
         <Textarea
+          inputRef={ref}
           p={0}
+          minHeight="0"
           fontSize="18px"
-          fontWeight="500"
+          fontWeight="300"
           borderWidth="0"
           resize="none"
+          focusBorderColor="white"
+          as={AutoResizeTextarea}
           onChange={handleIntroChange}
+          onKeyPress={event => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+            }
+          }}
           value={`${shortintro}`}
         />
       </Flex>
+      {showShortIntroLimit && (
+        <Flex>
+          <Text
+            fontWeight="100"
+            pt={2}
+            fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
+            width="100%"
+            color="gray.600"
+          >{`Maximum ${SHORT_INTRO_MAX_CHARACTERS_LIMIT} characters allowed.`}</Text>
+        </Flex>
+      )}
       <Flex>
         {allowActions && (
           <Button isDisabled={disableButton} onClick={handleSaveAuthorDetails}>
@@ -185,7 +212,7 @@ const AllOfAuthor = ({ authoruid }) => {
         )}
       </Flex>
 
-      <SectionHeader>All Experiences </SectionHeader>
+      <SectionHeader>Experiences </SectionHeader>
 
       <Stack spacing={3}>
         {experiences &&
@@ -195,6 +222,7 @@ const AllOfAuthor = ({ authoruid }) => {
               slugkey,
               slug,
               ispublished,
+              publishdate,
               // eslint-disable-next-line camelcase
               created_at,
             } = experience;
@@ -203,17 +231,36 @@ const AllOfAuthor = ({ authoruid }) => {
                 key={slugkey}
                 p={2}
                 borderWidth="1px"
-                borderColor="gray.100"
+                borderColor="gray.200"
                 borderRadius="8px"
                 w="100%"
               >
-                <TitleInList w="100%">
+                <Text
+                  fontWeight="500"
+                  fontSize={{ base: '1rem', md: '1.2rem' }}
+                  margin={3}
+                  width="100%"
+                  color="gray.600"
+                >
                   <Link to={`/${slug}-${slugkey}`}>{title}</Link>
-                </TitleInList>
-                <Flex align="center" justify="center">
-                  {/* eslint-disable-next-line camelcase */}
-                  <Text>{`Started ${created_at}`}</Text>
 
+                  <Flex>
+                    <Text
+                      fontWeight="100"
+                      pt={2}
+                      fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
+                      width="100%"
+                      color="gray.600"
+                    >
+                      {ispublished
+                        ? `Published on ${publishdate}`
+                        : // eslint-disable-next-line camelcase
+                          `Started ${created_at}`}
+                    </Text>
+                  </Flex>
+                </Text>
+
+                <Flex align="center" justify="center">
                   {allowActions && (
                     <AuthorActions {...{ ispublished, slugkey }} />
                   )}

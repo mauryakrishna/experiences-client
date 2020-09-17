@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/core';
 
 const SectionHeader = props => {
   return (
-    <Text fontWeight="bold" fontSize="18px" py={5}>
+    <Text fontWeight="400" fontSize={{ sm: '1.4rem', md: '1.8rem' }} py={5}>
       {props.children}
     </Text>
   );

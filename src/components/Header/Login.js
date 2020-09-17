@@ -38,10 +38,7 @@ export default () => {
         <ModalOverlay bg="white" opacity="0.7" />
         <ModalContent>
           <ModalBody p={5}>
-            <PseudoBox align="center">
-              <Text fontWeight="bold" mb="1rem">
-                Choose to...
-              </Text>
+            <PseudoBox textAlign="center">
               <Button
                 onClick={facebook}
                 bg="#3b5998"
