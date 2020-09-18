@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Button } from '@chakra-ui/core';
 
 const CustomButton = props => {
@@ -8,6 +8,10 @@ const CustomButton = props => {
       {props.children}
     </Button>
   );
+};
+
+CustomButton.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default CustomButton;

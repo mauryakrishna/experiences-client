@@ -21,6 +21,8 @@ import {
   Button,
   SectionHeader,
   AutoResizeTextarea,
+  ExperienceTitleInList,
+  PublishDate,
 } from '../../components/UIElements';
 import AuthorActions from './AuthorActions';
 import Link from '../../components/Link';
@@ -235,30 +237,18 @@ const AllOfAuthor = ({ authoruid }) => {
                 borderRadius="8px"
                 w="100%"
               >
-                <Text
-                  fontWeight="500"
-                  fontSize={{ base: '1rem', md: '1.2rem' }}
-                  margin={3}
-                  width="100%"
-                  color="gray.600"
-                >
+                <ExperienceTitleInList>
                   <Link to={`/${slug}-${slugkey}`}>{title}</Link>
 
                   <Flex>
-                    <Text
-                      fontWeight="100"
-                      pt={2}
-                      fontSize={{ base: '0.5rem', sm: '0.7rem', md: '0.8rem' }}
-                      width="100%"
-                      color="gray.600"
-                    >
+                    <PublishDate>
                       {ispublished
                         ? `Published on ${publishdate}`
                         : // eslint-disable-next-line camelcase
                           `Started ${created_at}`}
-                    </Text>
+                    </PublishDate>
                   </Flex>
-                </Text>
+                </ExperienceTitleInList>
 
                 <Flex align="center" justify="center">
                   {allowActions && (

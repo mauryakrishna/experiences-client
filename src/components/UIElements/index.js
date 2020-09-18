@@ -9,6 +9,7 @@ import Divider from './Divider';
 import Input from './Input';
 import AutoResizeTextarea from './AutoResizeTextarea';
 import PublishDate from './PublishDate';
+import ExperienceTitleInList from './ExperienceTitleInList';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   Input,
   AutoResizeTextarea,
   PublishDate,
+  ExperienceTitleInList,
 };

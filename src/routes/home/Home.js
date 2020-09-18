@@ -4,6 +4,11 @@ import gql from 'graphql-tag';
 import { Skeleton, Box, Flex, Button, Stack, Text } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
+import Inspire from '../../components/Inspire';
+import {
+  ExperienceTitleInList,
+  PublishDate,
+} from '../../components/UIElements';
 
 export default function Home() {
   const [experiences, setExperiences] = useState([]);
@@ -94,30 +99,17 @@ export default function Home() {
                 width="100%"
                 _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
               >
-                <Text
-                  fontWeight="500"
-                  fontSize={{ base: '1rem', md: '1.2rem' }}
-                  margin={3}
-                  width="100%"
-                  color="gray.600"
-                >
+                <ExperienceTitleInList>
                   <Link to={link} width="100%">
                     {title}
                   </Link>
 
                   <Flex>
-                    <Text
-                      fontWeight="400"
-                      pt={2}
-                      fontSize={{ base: '0.75rem', md: '0.8rem' }}
-                      maxWidth="100%"
-                      color="gray.600"
-                      // eslint-disable-next-line camelcase
-                    >
+                    <PublishDate>
                       {`${publishdate}`} | {displayname}
-                    </Text>
+                    </PublishDate>
                   </Flex>
-                </Text>
+                </ExperienceTitleInList>
               </Flex>
             );
           })}
@@ -142,13 +134,15 @@ export default function Home() {
 
   return (
     <Flex px="5">
-      <Box display={{ base: 'none', sm: 'none', md: 'block' }} w="50%">
-        <Text fontWeight="400" fontSize="24px" verticalAlign="center">
-          Experiences makes life. Share it so others can make theirs.
-        </Text>
+      <Box
+        display={{ base: 'none', sm: 'none', md: 'block' }}
+        w="50%"
+        textAlign="center"
+      >
+        <Inspire />
       </Box>
 
-      <Box w={{ base: '100%', sm: '100%', md: '50%' }}>
+      <Box w={{ base: '100%', sm: '100%', md: '60%' }}>
         {!loading && experiences.length === 0 && (
           <h4>Get Started, share your experiences.</h4>
         )}

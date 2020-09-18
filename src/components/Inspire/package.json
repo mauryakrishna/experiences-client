@@ -1,0 +1,6 @@
+{
+  "name": "Inspire",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Inspire.js"
+}
