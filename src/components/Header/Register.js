@@ -25,7 +25,7 @@ export default () => {
   return (
     <Flex>
       <PseudoBox cursor="pointer" onClick={onOpen}>
-        <Text>Register</Text>
+        <Text>Get Started</Text>
       </PseudoBox>
       <Modal
         blockScrollOnMount={false}

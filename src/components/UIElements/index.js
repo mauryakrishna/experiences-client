@@ -10,6 +10,7 @@ import Input from './Input';
 import AutoResizeTextarea from './AutoResizeTextarea';
 import PublishDate from './PublishDate';
 import ExperienceTitleInList from './ExperienceTitleInList';
+import Dot from './Dot';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   AutoResizeTextarea,
   PublishDate,
   ExperienceTitleInList,
+  Dot,
 };

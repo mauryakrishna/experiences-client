@@ -1,11 +1,11 @@
 import React from 'react';
-import { Flex, Box, Stack } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/core';
 import GetStartedButton from './GetStartedButton';
 import InspireText from '../UIElements/InspireText';
 
 const Inspire = () => {
   const inspiringWords = [
-    ['Experiences....', 'makes life', 'share it to', 'make new.'],
+    ['Experiences..', 'makes life', 'share it to', 'make new.'],
   ];
 
   const { length } = inspiringWords;
@@ -14,18 +14,14 @@ const Inspire = () => {
   const wordsArray = inspiringWords[pick];
 
   const sentence = wordsArray.map(word => {
-    return (
-      <Flex>
-        <InspireText>{word}</InspireText>
-      </Flex>
-    );
+    return <InspireText>{word}</InspireText>;
   });
 
   return (
-    <Flex position="relative" top="10%" textAlign="center">
+    <Box position="relative" top="10%" textAlign="center">
       {sentence}
       <GetStartedButton />
-    </Flex>
+    </Box>
   );
 };
 

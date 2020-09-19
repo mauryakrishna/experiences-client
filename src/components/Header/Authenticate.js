@@ -16,6 +16,7 @@ import {
   PopoverBody,
   PopoverArrow,
 } from '@chakra-ui/core';
+
 import Login from './Login';
 import Link from '../Link';
 import Logout from './Logout';
@@ -108,9 +109,8 @@ export default () => {
           <Flex bg="transparent" align="flex-end">
             <Login />
           </Flex>
-          <Flex>
-            <Divider orientation="vertical" bg="white" borderWidth="2px" />
-          </Flex>
+          {/* The flex below may not be right but worked so continued */}
+          <Flex w="1px" h="20px" backgroundColor="white" mx={2} />
           <Flex
             bg="transparent"
             align="center"
