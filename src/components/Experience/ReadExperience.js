@@ -8,6 +8,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import { Flex, Text, PseudoBox } from '@chakra-ui/core';
+import { Loading } from '../UIElements';
 
 import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
 import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
@@ -49,7 +50,7 @@ const ReadExperience = ({ slug }) => {
     }
   `;
 
-  const { data, error } = useQuery(GET_AN_EXPERIENCE_QUERY, {
+  const { data, error, loading } = useQuery(GET_AN_EXPERIENCE_QUERY, {
     variables: {
       slugkey,
     },
@@ -79,6 +80,10 @@ const ReadExperience = ({ slug }) => {
       }
     }
   }, [data]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>

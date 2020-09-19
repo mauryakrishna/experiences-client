@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { Skeleton, Box, Flex, Button, Stack, Text } from '@chakra-ui/core';
+import { Box, Flex, Button, Stack } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
 import Inspire from '../../components/Inspire';
 import {
   ExperienceTitleInList,
   PublishDate,
+  Loading,
 } from '../../components/UIElements';
 
 export default function Home() {
@@ -63,24 +64,6 @@ export default function Home() {
     }
   }, [data]);
 
-  const getSkeleton = count => {
-    const allSkeleton = [];
-    const numberOfSkeleton = count || experiencePerPage;
-    // eslint-disable-next-line no-plusplus
-    for (let i = numberOfSkeleton; i >= 0; i--) {
-      allSkeleton.push(
-        <Skeleton
-          isLoaded={!loading}
-          color="teal.200"
-          height="20px"
-          my="5px"
-          key={i}
-        />,
-      );
-    }
-    return allSkeleton;
-  };
-
   // eslint-disable-next-line no-shadow
   const getExperiencesStack = experiences => {
     if (experiences.length > 0) {
@@ -129,7 +112,7 @@ export default function Home() {
   };
 
   if (loading) {
-    return getSkeleton();
+    return <Loading />;
   }
 
   return (

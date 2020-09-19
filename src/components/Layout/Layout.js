@@ -25,7 +25,6 @@ export default function Layout({ children }) {
     breakpoints,
   };
 
-  console.log('breakpoints', theme);
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
@@ -35,8 +34,11 @@ export default function Layout({ children }) {
             <Header />
           </Grid>
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+
           <Grid>{children}</Grid>
+
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+
           <Grid>
             <Footer />
           </Grid>
