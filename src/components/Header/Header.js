@@ -20,7 +20,7 @@ export default function Header() {
       <Flex align="center" mr={3}>
         <Heading as="h3">
           <Link to="/">
-            <Text fontSize="1.5rem" color="white">
+            <Text fontSize="1.8rem" color="white">
               Experiences
             </Text>
           </Link>
