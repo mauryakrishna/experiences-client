@@ -1,3 +1,7 @@
+/**
+ * the below is not getting used, as he authentication servic provider track the app
+ * and seems have one sided data privacy and handling policy.
+ */
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
@@ -88,7 +92,7 @@ authrouter.get(
 );
 
 /**
- * google
+ * google, did not do integration yet
  */
 
 authrouter.get(

@@ -17,7 +17,7 @@ import {
   PopoverArrow,
 } from '@chakra-ui/core';
 
-import Login from './Login';
+import Login from '../Login';
 import Link from '../Link';
 import Logout from './Logout';
 import Register from './Register';
