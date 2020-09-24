@@ -14,7 +14,7 @@ const Inspire = () => {
   const wordsArray = inspiringWords[pick];
 
   const sentence = wordsArray.map(word => {
-    return <InspireText>{word}</InspireText>;
+    return <InspireText key={word}>{word}</InspireText>;
   });
 
   return (

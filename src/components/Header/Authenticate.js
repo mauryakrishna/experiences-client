@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
+import React, { useState } from 'react';
 import localStorage from 'local-storage';
-
 import {
   Text,
   Flex,
@@ -19,46 +16,25 @@ import {
 
 import Login from '../Login';
 import Link from '../Link';
-import Logout from './Logout';
 import Register from '../Register';
+import { ClearLoginData } from '../SetLoginData';
 
 export default () => {
-  const [authorname, setAuthorname] = useState('');
-  const [isvalid, setIsValid] = useState(false);
+  const authorname = localStorage.get('displayname');
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.get('loggedin'));
 
-  const VERIFYME_QUERY = gql`
-    query verifyMe {
-      verifyMe {
-        valid
-        displayname
-        authoruid
-      }
-    }
-  `;
-  const { loading, data } = useQuery(VERIFYME_QUERY);
+  const logout = () => {
+    setIsLoggedIn(false);
+    ClearLoginData();
+  };
 
-  useEffect(() => {
-    if (data && data.verifyMe) {
-      const { valid, displayname, authoruid } = data.verifyMe;
-      // if token not valid
-      if (!valid) {
-        // clear cookie from client side
-      } else {
-        setAuthorname(displayname);
-        setIsValid(valid);
-      }
-      localStorage.set('username', authoruid);
-      localStorage.set('loggedin', valid);
-    }
-  }, [data]);
-
-  if (loading) {
-    return <span>...</span>;
-  }
+  const whenLogin = () => {
+    setIsLoggedIn(true);
+  };
 
   return (
     <>
-      {isvalid ? (
+      {isLoggedIn ? (
         <Popover usePortal>
           <PopoverTrigger>
             <PseudoBox
@@ -99,7 +75,9 @@ export default () => {
               </Box>
               <Divider />
               <Box textDecoration="none">
-                <Logout />
+                <PseudoBox as="button" onClick={logout}>
+                  Logout
+                </PseudoBox>
               </Box>
             </PopoverBody>
           </PopoverContent>
@@ -107,7 +85,7 @@ export default () => {
       ) : (
         <Flex align="center">
           <Flex bg="transparent" align="flex-end">
-            <Login />
+            <Login whenLoginSuccess={whenLogin} />
           </Flex>
           {/* The flex below may not be right but worked so continued */}
           <Flex w="1px" h="20px" backgroundColor="white" mx={2} />

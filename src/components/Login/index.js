@@ -11,14 +11,15 @@ import {
 } from '@chakra-ui/core';
 
 import LoginForm from './LoginForm';
+import { SetLoginData } from '../SetLoginData';
 
-export default () => {
+// eslint-disable-next-line react/prop-types
+export default ({ whenLoginSuccess }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
-  const LoginCallback = params => {
-    // set it into cache
-    console.log('login', params);
-
+  const LoginCallback = (author, token) => {
+    SetLoginData(author, token);
+    whenLoginSuccess();
     // and close the login modal
     onToggle();
   };

@@ -11,14 +11,14 @@ import {
 } from '@chakra-ui/core';
 
 import RegisterForm from './RegisterForm';
+import { SetLoginData } from '../SetLoginData';
 
 export default () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
-  const cb = params => {
-    console.log('register', params);
-
-    //
+  const cb = (author, token) => {
+    SetLoginData(author, token);
+    // and close the login modal
     onToggle();
   };
 
