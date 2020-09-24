@@ -12,6 +12,7 @@ import PublishDate from './PublishDate';
 import ExperienceTitleInList from './ExperienceTitleInList';
 import Dot from './Dot';
 import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
 
 export {
   Button,
@@ -28,4 +29,5 @@ export {
   ExperienceTitleInList,
   Dot,
   Loading,
+  ErrorMessage,
 };

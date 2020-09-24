@@ -3,7 +3,6 @@ import {
   Flex,
   PseudoBox,
   Text,
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -11,15 +10,16 @@ import {
   useDisclosure,
 } from '@chakra-ui/core';
 
+import RegisterForm from './RegisterForm';
+
 export default () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
-  const redirect = url => {
-    window.location.href = url;
-  };
+  const cb = params => {
+    console.log('register', params);
 
-  const facebook = () => {
-    redirect(`${window.location.origin}/login/facebook`);
+    //
+    onToggle();
   };
 
   return (
@@ -37,15 +37,7 @@ export default () => {
         <ModalOverlay bg="white" opacity="0.7" />
         <ModalContent>
           <ModalBody p={5}>
-            <PseudoBox textAlign="center">
-              <Button
-                onClick={facebook}
-                bg="#3b5998"
-                _hover={{ bg: '#2d4373' }}
-              >
-                <Text color="white">Register with facebook</Text>
-              </Button>
-            </PseudoBox>
+            <RegisterForm registerCallback={cb} />
           </ModalBody>
         </ModalContent>
       </Modal>

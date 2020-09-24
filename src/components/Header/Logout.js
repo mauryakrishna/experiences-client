@@ -1,9 +1,9 @@
 import React from 'react';
-import { PseudoBox, Link } from '@chakra-ui/core';
+import { PseudoBox } from '@chakra-ui/core';
 
 export default () => {
   const logout = () => {
-    window.location.href = `${window.location.origin}/logout`;
+    // window.location.href = `${window.location.origin}/logout`;
   };
 
   return (

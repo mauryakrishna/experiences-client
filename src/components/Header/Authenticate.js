@@ -20,7 +20,7 @@ import {
 import Login from '../Login';
 import Link from '../Link';
 import Logout from './Logout';
-import Register from './Register';
+import Register from '../Register';
 
 export default () => {
   const [authorname, setAuthorname] = useState('');

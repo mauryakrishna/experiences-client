@@ -13,12 +13,13 @@ import {
   Icon,
 } from '@chakra-ui/core';
 
-import LoginAPI from './LoginAPI';
+import RegisterAPI from './RegisterAPI';
 import ErrorMessage from '../UIElements/ErrorMessage';
 
-export default function Login({ loginCallback }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Register({ registerCallback }) {
+  const [email, setEmail] = useState('abc@gmail.com');
+  const [password, setPassword] = useState('pwd');
+  const [displayname, setDisplayname] = useState('display');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,20 +30,26 @@ export default function Login({ loginCallback }) {
     setIsLoading(true);
 
     try {
-      const { exist, author, token } = await LoginAPI(email, password);
-      if (!exist) {
-        setError('User did not exist.');
-      } else if (exist && author && token) {
+      const { exist, author, token, message } = await RegisterAPI(
+        email,
+        password,
+        displayname,
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+      );
+      console.log(token);
+      if (exist) {
+        setError('User already exists.');
+      } else if (!exist && author && token) {
         setError('');
-        loginCallback(author, token);
+        registerCallback(author, token);
       } else {
-        setError('Login failed.');
+        setError(`Regiration failed. ${message}`);
       }
       setIsLoading(false);
       setShowPassword(false);
       // eslint-disable-next-line no-shadow
     } catch (error) {
-      setError('Invalid username or password');
+      setError('Something went wrong. Try again in sometime.');
       setIsLoading(false);
       setShowPassword(false);
     }
@@ -54,11 +61,12 @@ export default function Login({ loginCallback }) {
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} width="100%">
         <Box textAlign="center">
-          <Heading>Login</Heading>
+          <Heading>Register</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
             {error && <ErrorMessage message={error} />}
+
             <FormControl isRequired mt={6}>
               <Input
                 type="email"
@@ -90,6 +98,14 @@ export default function Login({ loginCallback }) {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+            <FormControl isRequired mt={6}>
+              <Input
+                type="text"
+                placeholder="Display name"
+                size="lg"
+                onChange={event => setDisplayname(event.currentTarget.value)}
+              />
+            </FormControl>
             <Button
               variantColor="teal"
               variant="outline"
@@ -100,7 +116,7 @@ export default function Login({ loginCallback }) {
               {isLoading ? (
                 <CircularProgress isIndeterminate size="24px" color="teal" />
               ) : (
-                'Sign In'
+                'Register'
               )}
             </Button>
           </form>
@@ -110,6 +126,6 @@ export default function Login({ loginCallback }) {
   );
 }
 
-Login.propTypes = {
-  loginCallback: PropTypes.func.isRequired,
+Register.propTypes = {
+  registerCallback: PropTypes.func.isRequired,
 };
