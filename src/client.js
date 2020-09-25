@@ -23,6 +23,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
+import localStorage from 'local-storage';
 
 import App from './components/App';
 import history from './history';
@@ -94,9 +95,11 @@ async function onLocationChange(location, action) {
     }).restore(window.__APOLLO_STATE__);
 
     const authLink = setContext((_, { headers }) => {
+      const token = localStorage.get('token');
       return {
         headers: {
           ...headers,
+          ...(token && { authorization: token }),
         },
       };
     });

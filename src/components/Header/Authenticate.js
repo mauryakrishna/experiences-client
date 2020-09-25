@@ -26,6 +26,9 @@ export default () => {
   const logout = () => {
     setIsLoggedIn(false);
     ClearLoginData();
+
+    // redirect to home
+    window.location.href = window.location.origin;
   };
 
   const whenLogin = () => {

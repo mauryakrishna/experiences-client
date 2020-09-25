@@ -57,7 +57,7 @@ export default function Home() {
   };
 
   React.useEffect(() => {
-    if (data) {
+    if (data && data.getExperiences) {
       const updatedexperiences = data.getExperiences.experiences;
       setExperiences(updatedexperiences);
       setCursor(data.getExperiences.cursor);
