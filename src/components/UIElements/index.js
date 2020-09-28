@@ -13,6 +13,7 @@ import ExperienceTitleInList from './ExperienceTitleInList';
 import Dot from './Dot';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
+import TextLikeLink from './TextLikeLink';
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   Dot,
   Loading,
   ErrorMessage,
+  TextLikeLink,
 };

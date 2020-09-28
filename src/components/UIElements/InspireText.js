@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, Flex } from '@chakra-ui/core';
+import { Text } from '@chakra-ui/core';
 
 const InspireText = props => {
   return (

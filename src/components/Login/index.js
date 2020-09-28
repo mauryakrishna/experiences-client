@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   PseudoBox,
   Text,
@@ -11,10 +11,12 @@ import {
 } from '@chakra-ui/core';
 
 import LoginForm from './LoginForm';
+import ForgotPasswordForm from '../ForgotPassword';
 import { SetLoginData } from '../SetLoginData';
 
 // eslint-disable-next-line react/prop-types
 export default ({ whenLoginSuccess }) => {
+  const [toggleForm, setToggleForm] = useState(true);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
   const LoginCallback = (author, token) => {
@@ -39,7 +41,11 @@ export default ({ whenLoginSuccess }) => {
         <ModalOverlay bg="white" opacity="0.7" />
         <ModalContent borderWidth={1} borderRadius={8}>
           <ModalBody>
-            <LoginForm loginCallback={LoginCallback} />
+            {toggleForm ? (
+              <LoginForm loginCallback={LoginCallback} toggle={setToggleForm} />
+            ) : (
+              <ForgotPasswordForm toggle={setToggleForm} />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

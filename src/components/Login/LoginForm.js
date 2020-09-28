@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Text,
   Flex,
   Box,
   Heading,
@@ -14,14 +15,19 @@ import {
 } from '@chakra-ui/core';
 
 import LoginAPI from './LoginAPI';
-import ErrorMessage from '../UIElements/ErrorMessage';
+import { ErrorMessage, TextLikeLink } from '../UIElements';
 
-export default function Login({ loginCallback }) {
+export default function Login({ loginCallback, toggle }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const showForgotpasswordForm = () => {
+    // setting false will hide login form and make forgot password form visible
+    toggle(false);
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -54,7 +60,7 @@ export default function Login({ loginCallback }) {
     <Flex width="full" align="center" justifyContent="center">
       <Box p={8} width="100%">
         <Box textAlign="center">
-          <Heading>Login</Heading>
+          <Heading size="lg">Login</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
@@ -105,6 +111,11 @@ export default function Login({ loginCallback }) {
             </Button>
           </form>
         </Box>
+        <Box>
+          <TextLikeLink onClick={showForgotpasswordForm}>
+            Forgot password?
+          </TextLikeLink>
+        </Box>
       </Box>
     </Flex>
   );
@@ -112,4 +123,5 @@ export default function Login({ loginCallback }) {
 
 Login.propTypes = {
   loginCallback: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
