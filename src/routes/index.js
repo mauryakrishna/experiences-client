@@ -57,7 +57,11 @@ const routes = {
       protected: true,
       load: () => import(/* webpackChunkName: 'admin' */ './editor'),
     },
-
+    {
+      path: '/reset-password/:requestkey',
+      load: () =>
+        import(/* webpackChunkName: 'reset-password' */ './reset-password'),
+    },
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last), this will match just any route
     // be careful about this one and after
     {

@@ -1,4 +1,4 @@
-import gqloverhttp from '../gqloverhttp';
+import gqloverhttp from '../../gqloverhttp';
 
 export default async function(email) {
   const query = `

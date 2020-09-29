@@ -36,7 +36,7 @@ export default function Register({ registerCallback }) {
         displayname,
         Intl.DateTimeFormat().resolvedOptions().timeZone,
       );
-      console.log(token);
+
       if (exist) {
         setError('User already exists.');
       } else if (!exist && author && token) {
@@ -66,7 +66,6 @@ export default function Register({ registerCallback }) {
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
             {error && <ErrorMessage message={error} />}
-
             <FormControl isRequired mt={6}>
               <Input
                 type="email"
@@ -78,6 +77,8 @@ export default function Register({ registerCallback }) {
             <FormControl isRequired mt={6}>
               <InputGroup>
                 <Input
+                  minLength="6"
+                  maxLength="14"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   size="lg"
@@ -100,6 +101,8 @@ export default function Register({ registerCallback }) {
             </FormControl>
             <FormControl isRequired mt={6}>
               <Input
+                minHeight="3"
+                maxLength="30"
                 type="text"
                 placeholder="Display name"
                 size="lg"
