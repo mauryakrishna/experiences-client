@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Text,
   Flex,
@@ -14,7 +15,7 @@ import {
 import { ErrorMessage } from '../../components/UIElements';
 import ResetPasswordAPI from './ResetPasswordAPI';
 
-export default async ({ requestkey }) => {
+export default function ResetPassword({ requestkey }) {
   const [newpassword, setNewPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const [msgPwdMishmatch, setMsgPwdMisMatch] = useState('');
@@ -27,7 +28,7 @@ export default async ({ requestkey }) => {
 
     setIsLoading(true);
 
-    const { passwordupdated, validrequest } = await ResetPasswordAPI(
+    const { passwordupdated, requestexpired } = await ResetPasswordAPI(
       newpassword,
       requestkey,
     );
@@ -35,8 +36,10 @@ export default async ({ requestkey }) => {
     try {
       if (passwordupdated) {
         setShowMessage(true);
-      } else if (!validrequest) {
+      } else if (requestexpired) {
         setError('Request expired. Kindly request again and try.');
+      } else {
+        setError('Invalid request to reset password.');
       }
       setIsLoading(false);
     } catch (err) {
@@ -55,18 +58,18 @@ export default async ({ requestkey }) => {
   };
 
   return (
-    <Flex width="full" align="center" justifyContent="center">
+    <Flex width="full" align="center" justifyContent="center" maxWidth="500px">
       <Box p={8} width="100%">
         <Box textAlign="center">
-          <Heading as="h4">Login</Heading>
+          <Heading as="h4">Reset password</Heading>
         </Box>
         <Box my={4} textAlign="left">
           {!showMessage ? (
             <form onSubmit={handleSubmit}>
               {error && <ErrorMessage message={error} />}
               <FormControl isRequired mt={6}>
-                <FormLabel>
-                  Password length should be minimum 6 and maximum 14 characters.
+                <FormLabel fontSize="16px">
+                  Password should be min 6 and max 14 characters.
                 </FormLabel>
                 <Input
                   minLength="6"
@@ -79,6 +82,8 @@ export default async ({ requestkey }) => {
               </FormControl>
               <FormControl isRequired mt={6}>
                 <Input
+                  minLength="6"
+                  maxLength="14"
                   type="password"
                   placeholder="Confirm Password"
                   size="lg"
@@ -87,7 +92,9 @@ export default async ({ requestkey }) => {
                   }
                 />
               </FormControl>
-              {msgPwdMishmatch && <Text> Password did not match.</Text>}
+              {msgPwdMishmatch && (
+                <Text color="red.500"> Password did not match.</Text>
+              )}
               <Button
                 variantColor="teal"
                 variant="outline"
@@ -110,4 +117,7 @@ export default async ({ requestkey }) => {
       </Box>
     </Flex>
   );
+}
+ResetPassword.propTypes = {
+  requestkey: PropTypes.string.isRequired,
 };

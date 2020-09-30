@@ -5,11 +5,12 @@ export default async function(email) {
     mutation forgotPassword($input: ForgotPasswordInput) {
       forgotPassword(input: $input) {
         emailsent
+        userexist
       }
     }
   `;
 
-  const variables = { email };
+  const variables = { input: { email } };
 
   const data = await gqloverhttp({ variables, query });
 

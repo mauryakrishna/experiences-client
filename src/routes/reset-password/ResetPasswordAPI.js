@@ -5,12 +5,12 @@ export default async function(newpassword, requestkey) {
     mutation resetPassword($input: ResetPasswordInput) {
       resetPassword(input: $input) {
         passwordupdated
-        validrequest
+        requestexpired
       }
     }
   `;
 
-  const variables = { newpassword, resetrequestkey: requestkey };
+  const variables = { input: { newpassword, resetrequestkey: requestkey } };
 
   const data = await gqloverhttp({ variables, query });
 

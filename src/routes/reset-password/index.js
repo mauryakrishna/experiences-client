@@ -5,7 +5,7 @@ import Layout from '../../components/Layout/Layout';
 async function action(context, params) {
   return {
     title: 'Reset password',
-    chunks: ['resetpassword'],
+    chunks: ['reset-password'],
     component: (
       <Layout>
         <ResetPassword requestkey={params.requestkey} />

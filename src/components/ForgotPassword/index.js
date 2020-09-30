@@ -30,15 +30,14 @@ export default function ForgotPassword({ toggle }) {
     setIsLoading(true);
 
     try {
-      const { emailsent } = await ForgotPasswordAPI(email);
+      const { emailsent, userexist } = await ForgotPasswordAPI(email);
       if (emailsent) {
         setShowMessage(true);
-      } else {
-        setError('');
+      } else if (!userexist) {
+        setError('We coud not recognize the user with given email id.');
       }
       setIsLoading(false);
     } catch (err) {
-      setError('');
       setIsLoading(false);
     }
   };
