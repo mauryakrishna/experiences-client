@@ -35,7 +35,7 @@ export default function Layout({ children }) {
           </Grid>
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
 
-          <Grid>{children}</Grid>
+          <Grid height="calc(90vh)">{children}</Grid>
 
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
 
