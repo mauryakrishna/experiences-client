@@ -10,12 +10,12 @@ import {
   CircularProgress,
 } from '@chakra-ui/core';
 
-import ForgotPasswordAPI from './ForgotPasswordAPI';
+import ResendActivationEmailAPI from './ResendActivationEmailAPI';
 import { ErrorMessage, TextLikeLink } from '../UIElements';
 import SuccessMessage from '../UIElements/AuthFlow/SuccessMessage';
 
-export default function ForgotPassword({ toggle }) {
-  const [email, setEmail] = useState('');
+export default function ResendActivationEmail({ toggle, resendemail }) {
+  const [email, setEmail] = useState(resendemail || '');
   const [error, setError] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,12 +31,11 @@ export default function ForgotPassword({ toggle }) {
     setIsLoading(true);
 
     try {
-      const { emailsent, userexist } = await ForgotPasswordAPI(email);
-      if (emailsent) {
-        setShowMessage(true);
-      } else if (!userexist) {
-        setError('We coud not recognize the user with given email id.');
+      const { resendsuccess } = await ResendActivationEmailAPI(email);
+      if (!resendsuccess) {
+        setError('Could not sent an email.');
       }
+      setShowMessage(true);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -47,12 +46,12 @@ export default function ForgotPassword({ toggle }) {
     <Flex width="full" align="center" justifyContent="center">
       <Box p={4} width="100%">
         <Box textAlign="center">
-          <Heading size="lg">Forgot Password</Heading>
+          <Heading size="lg">Resend verification email</Heading>
         </Box>
         {showMessage ? (
           <SuccessMessage>
-            An email has been sent to your registered email id. Kindly follow
-            the link therein to reset your password.
+            An email has been sent to your registered email addrees. Kindly
+            follow the instruction to activate your account..
           </SuccessMessage>
         ) : (
           <>
@@ -98,6 +97,11 @@ export default function ForgotPassword({ toggle }) {
   );
 }
 
-ForgotPassword.propTypes = {
+ResendActivationEmail.defaultProps = {
+  resendemail: null,
+};
+
+ResendActivationEmail.propTypes = {
   toggle: PropTypes.func.isRequired,
+  resendemail: PropTypes.string,
 };

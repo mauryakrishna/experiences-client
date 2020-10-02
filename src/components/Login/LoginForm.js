@@ -13,6 +13,8 @@ import {
   Icon,
 } from '@chakra-ui/core';
 
+import ResendActivationEmail from '../ResendActivation';
+
 import LoginAPI from './LoginAPI';
 import { ErrorMessage, TextLikeLink } from '../UIElements';
 import InfoMessage from '../UIElements/AuthFlow/InfoMessage';
@@ -23,6 +25,7 @@ export default function Login({ loginCallback, toggle }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showActivationForm, setShowActivationForm] = useState(false);
   const [
     showMsgForEmailVerification,
     setShowMsgForEmailVerification,
@@ -62,9 +65,18 @@ export default function Login({ loginCallback, toggle }) {
     }
   };
 
+  const resendEmailVerification = () => {
+    setShowActivationForm(!showActivationForm);
+  };
+
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
 
-  return (
+  return showActivationForm ? (
+    <ResendActivationEmail
+      resendemail={email}
+      toggle={resendEmailVerification}
+    />
+  ) : (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={4} width="100%">
         <Box textAlign="center">
@@ -73,7 +85,11 @@ export default function Login({ loginCallback, toggle }) {
         {showMsgForEmailVerification && (
           <InfoMessage>
             This email address is not verified. Follow the link in verification
-            email. You can request to send it again.
+            email to verify it. You can request to{' '}
+            <TextLikeLink onClick={resendEmailVerification}>
+              send it again
+            </TextLikeLink>
+            .
           </InfoMessage>
         )}
         <Box my={4} textAlign="left">
@@ -81,6 +97,7 @@ export default function Login({ loginCallback, toggle }) {
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <FormControl isRequired mt={6}>
               <Input
+                autoComplete
                 type="email"
                 placeholder="Email address"
                 size="lg"
@@ -109,6 +126,9 @@ export default function Login({ loginCallback, toggle }) {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <TextLikeLink onClick={showForgotpasswordForm}>
+                Forgot password?
+              </TextLikeLink>
             </FormControl>
             <Button
               variantColor="teal"
@@ -124,11 +144,6 @@ export default function Login({ loginCallback, toggle }) {
               )}
             </Button>
           </form>
-        </Box>
-        <Box>
-          <TextLikeLink onClick={showForgotpasswordForm}>
-            Forgot password?
-          </TextLikeLink>
         </Box>
       </Box>
     </Flex>
