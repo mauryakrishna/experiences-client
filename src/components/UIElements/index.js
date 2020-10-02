@@ -12,7 +12,7 @@ import PublishDate from './PublishDate';
 import ExperienceTitleInList from './ExperienceTitleInList';
 import Dot from './Dot';
 import Loading from './Loading';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './AuthFlow/ErrorMessage';
 import TextLikeLink from './TextLikeLink';
 
 export {

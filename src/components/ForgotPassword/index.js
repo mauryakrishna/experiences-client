@@ -44,7 +44,10 @@ export default function ForgotPassword({ toggle }) {
 
   return (
     <Flex width="full" align="center" justifyContent="center">
-      <Box p={8} width="100%">
+      <Box p={4} width="100%">
+        <Box textAlign="center">
+          <Heading size="lg">Forgot Password</Heading>
+        </Box>
         {showMessage ? (
           <Box>
             An email has been sent to your registered email id. Kindly follow
@@ -52,12 +55,9 @@ export default function ForgotPassword({ toggle }) {
           </Box>
         ) : (
           <>
-            <Box textAlign="center">
-              <Heading size="lg">Forgot Password</Heading>
-            </Box>
             <Box my={4} textAlign="left">
               <form onSubmit={handleSubmit}>
-                {error && <ErrorMessage message={error} />}
+                {error && <ErrorMessage>{error}</ErrorMessage>}
                 <FormControl isRequired mt={6}>
                   <Input
                     type="email"

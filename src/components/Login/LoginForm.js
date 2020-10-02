@@ -15,6 +15,7 @@ import {
 
 import LoginAPI from './LoginAPI';
 import { ErrorMessage, TextLikeLink } from '../UIElements';
+import InfoMessage from '../UIElements/AuthFlow/InfoMessage';
 
 export default function Login({ loginCallback, toggle }) {
   const [email, setEmail] = useState('');
@@ -22,7 +23,10 @@ export default function Login({ loginCallback, toggle }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [
+    showMsgForEmailVerification,
+    setShowMsgForEmailVerification,
+  ] = useState(false);
   const showForgotpasswordForm = () => {
     // setting false will hide login form and make forgot password form visible
     toggle(false);
@@ -34,9 +38,14 @@ export default function Login({ loginCallback, toggle }) {
     setIsLoading(true);
 
     try {
-      const { exist, author, token } = await LoginAPI(email, password);
+      const { exist, author, token, isemailverified } = await LoginAPI(
+        email,
+        password,
+      );
       if (!exist) {
         setError('User did not exist.');
+      } else if (exist && !isemailverified) {
+        setShowMsgForEmailVerification(true);
       } else if (exist && author && token) {
         setError('');
         loginCallback(author, token);
@@ -57,13 +66,19 @@ export default function Login({ loginCallback, toggle }) {
 
   return (
     <Flex width="full" align="center" justifyContent="center">
-      <Box p={8} width="100%">
+      <Box p={4} width="100%">
         <Box textAlign="center">
           <Heading size="lg">Login</Heading>
         </Box>
+        {showMsgForEmailVerification && (
+          <InfoMessage>
+            This email address is not verified. Follow the link in verification
+            email. You can request to send it again.
+          </InfoMessage>
+        )}
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
-            {error && <ErrorMessage message={error} />}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <FormControl isRequired mt={6}>
               <Input
                 type="email"

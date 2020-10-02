@@ -66,7 +66,7 @@ export default function ResetPassword({ requestkey }) {
         <Box my={4} textAlign="left">
           {!showMessage ? (
             <form onSubmit={handleSubmit}>
-              {error && <ErrorMessage message={error} />}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
               <FormControl isRequired mt={6}>
                 <FormLabel fontSize="16px">
                   Password should be min 6 and max 14 characters.

@@ -35,7 +35,7 @@ export default () => {
         size="500px"
       >
         <ModalOverlay bg="white" opacity="0.7" />
-        <ModalContent>
+        <ModalContent borderWidth={1} borderRadius={8}>
           <ModalBody p={5}>
             <RegisterForm registerCallback={cb} />
           </ModalBody>
