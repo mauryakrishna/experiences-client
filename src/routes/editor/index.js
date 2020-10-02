@@ -9,7 +9,7 @@ function action(context, params) {
     chunks: ['editor'],
     title,
     component: (
-      <Layout>
+      <Layout pathname={context.pathname}>
         <Editor slugkey={params.slugkey} />
       </Layout>
     ),

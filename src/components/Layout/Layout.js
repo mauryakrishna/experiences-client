@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   ThemeProvider,
@@ -12,7 +12,7 @@ import {
 import Header from '../Header';
 import Footer from '../Footer';
 
-export default function Layout({ children }) {
+export default function Layout({ children, pathname }) {
   const breakpoints = ['20em', '30em', '48em', '62em', '80em'];
   breakpoints.xs = breakpoints[0];
   breakpoints.sm = breakpoints[1];
@@ -24,6 +24,8 @@ export default function Layout({ children }) {
     ...theme,
     breakpoints,
   };
+
+  const [showFooter] = useState(pathname !== '/writeanexperience');
 
   return (
     <ThemeProvider theme={customTheme}>
@@ -39,15 +41,21 @@ export default function Layout({ children }) {
 
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
 
-          <Grid>
-            <Footer />
-          </Grid>
+          {showFooter && (
+            <Grid>
+              <Footer />
+            </Grid>
+          )}
         </Grid>
       </PseudoBox>
     </ThemeProvider>
   );
 }
 
+Layout.defaultProps = {
+  pathname: null,
+};
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  pathname: PropTypes.string,
 };

@@ -97,7 +97,6 @@ export default function Login({ loginCallback, toggle }) {
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <FormControl isRequired mt={6}>
               <Input
-                autoComplete
                 type="email"
                 placeholder="Email address"
                 size="lg"
