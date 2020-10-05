@@ -88,7 +88,10 @@ const ReadExperience = ({ slug }) => {
   return (
     <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
       <Flex align="left" pb={5}>
-        <Text fontWeight="400" fontSize={{ sm: '1.5rem', md: '2.2rem' }}>
+        <Text
+          fontWeight="400"
+          fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
+        >
           {title}
         </Text>
       </Flex>
@@ -107,6 +110,7 @@ const ReadExperience = ({ slug }) => {
             readOnly
             autoFocus
             placeholder="Read here."
+            style={{ fontSize: '1.5rem' }}
             renderLeaf={[renderLeafBold]}
           />
         </Slate>

@@ -63,7 +63,7 @@ const Title = ({ cb }) => {
           focusBorderColor="white"
           resize="none"
           fontWeight="400"
-          fontSize={{ sm: '1.5rem', md: '2rem' }}
+          fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
           bg="transparent"
           placeholder="Start with the title..."
           value={title}

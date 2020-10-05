@@ -81,6 +81,7 @@ const Editor = ({ cb }) => {
           plugins={plugins}
           placeholder="that moment.."
           spellCheck
+          style={{ fontSize: '1.5rem' }}
           renderLeaf={[renderLeafBold]}
         />
       </Box>
