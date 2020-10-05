@@ -15,8 +15,9 @@ import routes from './routes';
 export default new UniversalRouter(routes, {
   resolveRoute(context, params) {
     const loggedin = localStorage.get('loggedin');
-    if (context.route.protected && loggedin === false) {
-      return { redirect: '/login', from: context.pathname };
+    if (context.route.protected && !loggedin) {
+      // this redirection needs to present the proper messge like GetStarted, SignIn
+      return { redirect: '/', from: context.pathname };
     }
     if (typeof context.route.load === 'function') {
       return context.route
