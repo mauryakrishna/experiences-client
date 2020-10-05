@@ -23,6 +23,7 @@ import {
   AutoResizeTextarea,
   ExperienceTitleInList,
   PublishDate,
+  Loading,
 } from '../../components/UIElements';
 import AuthorActions from './AuthorActions';
 import Link from '../../components/Link';
@@ -155,7 +156,7 @@ const AllOfAuthor = ({ authoruid }) => {
   };
 
   if (loading) {
-    return <h4>loading...</h4>;
+    return <Loading />;
   }
   return (
     <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '6rem' }} py={2}>
@@ -172,6 +173,7 @@ const AllOfAuthor = ({ authoruid }) => {
       </Flex>
       <Flex>
         <Textarea
+          placeholder="A short bio about you."
           inputRef={ref}
           p={0}
           minHeight="0"
@@ -187,7 +189,7 @@ const AllOfAuthor = ({ authoruid }) => {
               event.preventDefault();
             }
           }}
-          value={`${shortintro}`}
+          value={`${shortintro || ''}`}
         />
       </Flex>
       {showShortIntroLimit && (
