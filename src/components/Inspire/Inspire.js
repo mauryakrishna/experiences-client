@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@chakra-ui/core';
-import GetStartedButton from './GetStartedButton';
+// import GetStartedButton from './GetStartedButton';
 import InspireText from '../UIElements/InspireText';
 
 const Inspire = () => {
@@ -20,7 +20,7 @@ const Inspire = () => {
   return (
     <Box position="relative" top="10%" textAlign="center">
       {sentence}
-      <GetStartedButton />
+      {/* <GetStartedButton /> */}
     </Box>
   );
 };
