@@ -62,6 +62,11 @@ const routes = {
       load: () =>
         import(/* webpackChunkName: 'reset-password' */ './reset-password'),
     },
+    {
+      path: '/verify/:verifykey',
+      load: () =>
+        import(/* webpackChunkName: 'verify-email' */ './verify-email'),
+    },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last), this will match just any route
     // be careful about this one and after
