@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Heading } from '@chakra-ui/core';
+import { Box, Text as TextMsg } from '@chakra-ui/core';
 
 import history from '../../history';
 import VerifyAPI from './VerifyAPI';
 import Loading from '../../components/UIElements/Loading';
 
 const Text = props => {
-  return <Heading as="h3">{props.children}</Heading>;
+  return (
+    <TextMsg fontWeight="bold" fontSize="2rem">
+      {props.children}
+    </TextMsg>
+  );
+};
+Text.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 class Verify extends React.Component {
@@ -29,16 +36,23 @@ class Verify extends React.Component {
         const { verifysuccess, requestvalid, isemailverified } = data;
         if (verifysuccess) {
           this.setState({ showVerifySuccess: true });
-
-          history.push('/');
+          this.redirectToHome();
         } else if (isemailverified) {
           this.setState({ showEmailAlreadyVerified: true });
+          this.redirectToHome();
         } else if (!requestvalid) {
           this.setState({ showInvalidRequest: true });
         }
       }
       this.setState({ showLoader: false });
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  redirectToHome() {
+    setTimeout(() => {
+      history.push('/');
+    }, 3000);
   }
 
   render() {
