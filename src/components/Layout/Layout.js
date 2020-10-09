@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   ThemeProvider,
@@ -25,8 +25,7 @@ export default function Layout({ children, pathname }) {
     breakpoints,
   };
 
-  // eslint-disable-next-line eqeqeq
-  const [showFooter] = useState(pathname != '/writeanexperience');
+  const showFooter = pathname !== '/writeanexperience';
 
   return (
     <ThemeProvider theme={customTheme}>
