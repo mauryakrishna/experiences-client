@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { Box, Flex, Button, Stack } from '@chakra-ui/core';
+import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
 
 import Link from '../../components/Link';
 import Inspire from '../../components/Inspire';
@@ -15,6 +15,7 @@ export default function Home() {
   const [experiences, setExperiences] = useState([]);
   const experiencePerPage = 10;
   const [cursor, setCursor] = useState(null);
+  const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
   const GET_EXPERIENCES_QUERY = gql`
     query getExperiences($cursor: String, $experienceperpage: Int!) {
@@ -38,10 +39,12 @@ export default function Home() {
   });
 
   const loadMoreExperiences = () => {
+    setFetchMoreLoading(true);
     fetchMore({
       query: GET_EXPERIENCES_QUERY,
       variables: { cursor, experienceperpage: experiencePerPage },
       updateQuery: (prev, { fetchMoreResult }) => {
+        setFetchMoreLoading(false);
         const prevExp = prev.getExperiences.experiences;
         const newExp = fetchMoreResult.getExperiences.experiences;
         const updatedcursor = fetchMoreResult.getExperiences.cursor;
@@ -97,12 +100,15 @@ export default function Home() {
             );
           })}
           <Button
-            isLoading={loading}
             onClick={loadMoreExperiences}
             variantColor="teal"
             variant="outline"
           >
-            Load more
+            {fetchMoreLoading ? (
+              <CircularProgress isIndeterminate size="24px" color="teal" />
+            ) : (
+              'Load more'
+            )}
           </Button>
         </Stack>
       );
