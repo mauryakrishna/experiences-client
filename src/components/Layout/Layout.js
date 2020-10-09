@@ -25,7 +25,8 @@ export default function Layout({ children, pathname }) {
     breakpoints,
   };
 
-  const [showFooter] = useState(pathname !== '/writeanexperience');
+  // eslint-disable-next-line eqeqeq
+  const [showFooter] = useState(pathname != '/writeanexperience');
 
   return (
     <ThemeProvider theme={customTheme}>
