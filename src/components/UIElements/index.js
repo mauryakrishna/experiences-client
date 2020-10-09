@@ -13,6 +13,8 @@ import ExperienceTitleInList from './ExperienceTitleInList';
 import Dot from './Dot';
 import Loading from './Loading';
 import ErrorMessage from './AuthFlow/ErrorMessage';
+import InfoMessage from './AuthFlow/InfoMessage';
+import SuccessMessage from './AuthFlow/SuccessMessage';
 import TextLikeLink from './TextLikeLink';
 
 export {
@@ -31,5 +33,7 @@ export {
   Dot,
   Loading,
   ErrorMessage,
+  InfoMessage,
+  SuccessMessage,
   TextLikeLink,
 };

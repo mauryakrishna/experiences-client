@@ -30,6 +30,7 @@ const ReadExperience = ({ slug }) => {
   const [publishdate, setPublishDate] = useState('');
   const [uid, setUid] = useState('');
   const [displayname, setDisplayname] = useState('');
+  const [experienceNotFound, setExperienceNotFound] = useState(false);
   const editor = useMemo(() => pipe(createEditor()), []);
 
   const slugWords = slug.split('-');
@@ -38,13 +39,19 @@ const ReadExperience = ({ slug }) => {
   const GET_AN_EXPERIENCE_QUERY = gql`
     query getAnExperienceForRead($slugkey: String!) {
       getAnExperienceForRead(slugkey: $slugkey) {
-        title
-        experience
-        publishdate
-        author {
-          uid
-          displayname
-          shortintro
+        __typename
+        ... on Experience {
+          title
+          experience
+          publishdate
+          author {
+            uid
+            displayname
+            shortintro
+          }
+        }
+        ... on ExperienceNotFound {
+          experiencefound
         }
       }
     }
@@ -67,16 +74,17 @@ const ReadExperience = ({ slug }) => {
         experience,
         author,
         publishdate,
+        experiencefound,
       } = data.getAnExperienceForRead;
-      if (title && experience && author) {
+      if (experiencefound === false) {
+        setExperienceNotFound(true);
+      } else if (title && experience && author) {
         setTitle(title);
         setValue(experience);
         setPublishDate(publishdate);
         const { uid, displayname } = author;
         setUid(uid);
         setDisplayname(displayname);
-      } else {
-        console.log('Could not get data for experience.');
       }
     }
   }, [data]);
@@ -86,36 +94,45 @@ const ReadExperience = ({ slug }) => {
   }
 
   return (
-    <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
-      <Flex align="left" pb={5}>
-        <Text
-          fontWeight="400"
-          fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
-        >
-          {title}
+    <>
+      {experienceNotFound ? (
+        <Text fontSize="1rem" fontWeight="bold">
+          {' '}
+          Something went wrong.
         </Text>
-      </Flex>
+      ) : (
+        <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
+          <Flex align="left" pb={5}>
+            <Text
+              fontWeight="400"
+              fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
+            >
+              {title}
+            </Text>
+          </Flex>
 
-      <Flex pb="2rem">
-        <AuthorDisplay
-          uid={uid}
-          displayname={displayname}
-          publishdate={publishdate}
-        />
-      </Flex>
-      <Flex justify="left" py={5}>
-        <Slate editor={editor} value={value}>
-          <EditablePlugins
-            plugins={plugins}
-            readOnly
-            autoFocus
-            placeholder="Read here."
-            style={{ fontSize: '1.5rem' }}
-            renderLeaf={[renderLeafBold]}
-          />
-        </Slate>
-      </Flex>
-    </PseudoBox>
+          <Flex pb="2rem">
+            <AuthorDisplay
+              uid={uid}
+              displayname={displayname}
+              publishdate={publishdate}
+            />
+          </Flex>
+          <Flex justify="left" py={5}>
+            <Slate editor={editor} value={value}>
+              <EditablePlugins
+                plugins={plugins}
+                readOnly
+                autoFocus
+                placeholder="Read here."
+                style={{ fontSize: '1.5rem' }}
+                renderLeaf={[renderLeafBold]}
+              />
+            </Slate>
+          </Flex>
+        </PseudoBox>
+      )}
+    </>
   );
 };
 

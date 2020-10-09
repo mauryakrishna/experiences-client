@@ -19,7 +19,10 @@ import { ApolloClient } from 'apollo-client';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher,
+} from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
@@ -89,8 +92,18 @@ async function onLocationChange(location, action) {
       return;
     }
 
+    // fragmentMatcher https://github.com/apollographql/apollo-client/issues/3397
+    const fragmentMatcher = new IntrospectionFragmentMatcher({
+      introspectionQueryResultData: {
+        __schema: {
+          types: [], // no types provided
+        },
+      },
+    });
+
     const cache = new InMemoryCache({
-      addTypename: false,
+      addTypename: true,
+      fragmentMatcher,
       // eslint-disable-next-line no-underscore-dangle
     }).restore(window.__APOLLO_STATE__);
 
