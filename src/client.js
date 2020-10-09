@@ -102,7 +102,7 @@ async function onLocationChange(location, action) {
     });
 
     const cache = new InMemoryCache({
-      addTypename: true,
+      addTypename: false,
       fragmentMatcher,
       // eslint-disable-next-line no-underscore-dangle
     }).restore(window.__APOLLO_STATE__);

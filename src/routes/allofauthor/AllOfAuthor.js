@@ -15,6 +15,7 @@ import {
   Editable,
   EditablePreview,
   EditableInput,
+  CircularProgress,
 } from '@chakra-ui/core';
 
 import {
@@ -37,6 +38,8 @@ const AllOfAuthor = ({ authoruid }) => {
   const [disableButton, setDisableButton] = useState(true);
   const [cursor, setCursor] = useState(null);
   const [showShortIntroLimit, setShowShortIntroLimit] = useState(false);
+  const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
+
   const allowActions = authoruid === localStorage.get('username');
   const experienceperpage = 10;
   const updateDebounce = UpdateAuthorDetails();
@@ -73,6 +76,7 @@ const AllOfAuthor = ({ authoruid }) => {
   });
 
   const loadMoreExperiences = () => {
+    setFetchMoreLoading(true);
     fetchMore({
       query: GET_AUTHOR_QUERY,
       variables: {
@@ -81,6 +85,7 @@ const AllOfAuthor = ({ authoruid }) => {
         uid: authoruid,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
+        setFetchMoreLoading(false);
         const prevExp = prev.getAuthor.author.experiences;
         const newExp = fetchMoreResult.getAuthor.author.experiences;
         const updatedcursor = fetchMoreResult.getAuthor.cursor;
@@ -262,7 +267,13 @@ const AllOfAuthor = ({ authoruid }) => {
           })}
       </Stack>
 
-      <Button onClick={loadMoreExperiences}>Load more...</Button>
+      <Button onClick={loadMoreExperiences}>
+        {fetchMoreLoading ? (
+          <CircularProgress isIndeterminate size="24px" color="teal" />
+        ) : (
+          'Load more'
+        )}
+      </Button>
     </PseudoBox>
   );
 };

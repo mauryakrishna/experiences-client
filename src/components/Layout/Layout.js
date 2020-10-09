@@ -37,7 +37,7 @@ export default function Layout({ children, pathname }) {
           </Grid>
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
 
-          <Grid height="calc(90vh)">{children}</Grid>
+          <Grid minHeight="calc(90vh)">{children}</Grid>
 
           <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
 
