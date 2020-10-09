@@ -96,7 +96,7 @@ const ReadExperience = ({ slug }) => {
         </Text>
       </Flex>
 
-      <Flex>
+      <Flex pb="2rem">
         <AuthorDisplay
           uid={uid}
           displayname={displayname}
