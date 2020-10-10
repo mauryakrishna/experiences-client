@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   PseudoBox,
   Text,
@@ -10,18 +10,22 @@ import {
   ModalContent,
 } from '@chakra-ui/core';
 
+import UserContext from '../UserContext';
 import LoginForm from './LoginForm';
 import ForgotPasswordForm from '../ForgotPassword';
 import { SetLoginData } from '../SetLoginData';
 
 // eslint-disable-next-line react/prop-types
 export default ({ whenLoginSuccess }) => {
+  const { setLoggedIn } = useContext(UserContext);
   const [toggleForm, setToggleForm] = useState(true);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
   const LoginCallback = (author, token) => {
     SetLoginData(author, token);
     whenLoginSuccess();
+    // set loggedin context value
+    setLoggedIn(true);
     // and close the login modal
     onToggle();
   };
