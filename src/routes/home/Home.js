@@ -71,7 +71,7 @@ export default function Home() {
   const getExperiencesStack = experiences => {
     if (experiences.length > 0) {
       return (
-        <Stack spacing={3}>
+        <Stack spacing={3} pr="5px">
           {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
             const { displayname } = author;
             const link = `${slug}-${slugkey}`;
@@ -121,22 +121,32 @@ export default function Home() {
     return <Loading />;
   }
 
+  const expCountZero = experiences.length === 0;
+  const inspireBoxWidth = expCountZero ? '100%' : '50%';
+
   return (
     <Flex px="5">
       <Box
-        display={{ base: 'none', sm: 'none', md: 'block' }}
-        w="50%"
+        display={{
+          base: expCountZero ? 'block' : 'none',
+          sm: expCountZero ? 'block' : 'none',
+          md: 'block',
+        }}
+        w={inspireBoxWidth}
         textAlign="center"
       >
         <Inspire />
       </Box>
 
-      <Box w={{ base: '100%', sm: '100%', md: '60%' }}>
-        {!loading && experiences.length === 0 && (
-          <h4>Get Started, share your experiences.</h4>
-        )}
-        {getExperiencesStack(experiences)}
-      </Box>
+      {!loading && !expCountZero && (
+        <Box
+          w={{ base: '100%', sm: '100%', md: '60%' }}
+          maxHeight="calc(87vh)"
+          overflowY="scroll"
+        >
+          {getExperiencesStack(experiences)}
+        </Box>
+      )}
     </Flex>
   );
 }
