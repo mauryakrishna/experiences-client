@@ -6,6 +6,15 @@ import InspireText from '../UIElements/InspireText';
 const Inspire = () => {
   const inspiringWords = [
     ['Experiences..', 'makes life', 'share it to', 'make new.'],
+    ['Be the first', 'to share', 'your experiences.'],
+    ['Feel glad,', 'share your experiences.'],
+    ['Speak', 'your ideas', 'to the world.'],
+    [
+      'It really makes',
+      'feel lighthearted',
+      'when you share',
+      'your learnings',
+    ],
   ];
 
   const { length } = inspiringWords;
