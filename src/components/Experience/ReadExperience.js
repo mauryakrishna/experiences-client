@@ -125,7 +125,7 @@ const ReadExperience = ({ slug }) => {
                 readOnly
                 autoFocus
                 placeholder="Read here."
-                style={{ fontSize: '1.5rem' }}
+                style={{ fontSize: '1.1rem', fontWeight: '400' }}
                 renderLeaf={[renderLeafBold]}
               />
             </Slate>
