@@ -43,9 +43,6 @@ export default function Footer() {
           <Link to="/privacy">Terms</Link>
         </FooterText>
         <Divider />
-        <FooterText>
-          <Link to="/privacy">Help</Link>
-        </FooterText>
       </Flex>
     </Flex>
   );
