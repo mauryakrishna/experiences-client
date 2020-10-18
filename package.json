@@ -1,6 +1,6 @@
 {
-  "name": "web",
-  "version": "0.0.0",
+  "name": "experiences-client",
+  "version": "0.0.1",
   "private": true,
   "engines": {
     "node": ">=8.16.2",
@@ -63,7 +63,6 @@
     "slate-hyperscript": "0.58.1",
     "slate-react": "0.58.1",
     "source-map-support": "^0.5.9",
-    "sqlite3": "5.0.0",
     "styled-components": "5.1.1",
     "universal-router": "^8.3.0",
     "use-debounce": "3.4.2",
