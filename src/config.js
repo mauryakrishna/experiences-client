@@ -15,23 +15,25 @@ if (process.env.BROWSER) {
   );
 }
 
+if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
+  require('env2')('./devenv.json');
+}
+
 module.exports = {
   // Node.js app
-  port: process.env.PORT || 3000,
+  port: process.env.PORT,
 
   // https://expressjs.com/en/guide/behind-proxies.html
-  trustProxy: process.env.TRUST_PROXY || 'loopback',
+  trustProxy: process.env.TRUST_PROXY,
 
   // API Gateway
   api: {
     // API URL to be used in the client-side code
-    clientUrl: process.env.API_CLIENT_URL || 'http://localhost:3000/gql',
+    clientUrl: process.env.API_CLIENT_URL,
     // API URL to be used in the server-side code
-    serverUrl: process.env.API_SERVER_URL || `http://localhost:4000/gql`,
+    serverUrl: process.env.API_SERVER_URL,
   },
-
-  // Database
-  databaseUrl: process.env.DATABASE_URL || 'sqlite:database.sqlite',
 
   // Web analytics
   analytics: {
@@ -41,7 +43,7 @@ module.exports = {
 
   // Authentication
   auth: {
-    jwt: { secret: process.env.JWT_SECRET || 'React Starter Kit' },
+    jwt: { secret: process.env.JWT_SECRET },
 
     // https://developers.facebook.com/
     facebook: {

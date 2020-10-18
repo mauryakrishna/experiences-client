@@ -1,0 +1,9 @@
+{
+  "NODE_ENV": "development",
+  "PORT": 3000,
+  "TRUST_PROXY": "loopback",
+  "API_CLIENT_URL": "http://localhost:3000/gql",
+  "API_SERVER_URL": "http://localhost:4000/gql",
+  "GOOGLE_TRACKING_ID": "",
+  "JWT_SECRET": "React Starter Kit"
+}
