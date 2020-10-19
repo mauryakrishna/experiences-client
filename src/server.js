@@ -11,7 +11,7 @@ import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
+// import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -68,28 +68,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //
-// Authentication
+// Authentication -- This was particularly useful when using OAuth authentication
 // -----------------------------------------------------------------------------
-app.use(
-  expressJwt({
-    secret: config.auth.jwt.secret,
-    credentialsRequired: false,
-    getToken: req => req.cookies.id_token,
-  }),
-);
-// Error handler for express-jwt
-app.use((err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
-  if (err instanceof Jwt401Error) {
-    console.error('[express-jwt-error]', req.cookies.id_token);
-    // `clearCookie`, otherwise user can't use web-app until cookie expires
-    res.clearCookie('id_token');
-  }
-  next(err);
-});
+// app.use(
+//   expressJwt({
+//     secret: config.auth.jwt.secret,
+//     credentialsRequired: false,
+//     getToken: req => req.cookies.id_token,
+//   }),
+// );
+// // Error handler for express-jwt
+// app.use((err, req, res, next) => {
+//   // eslint-disable-line no-unused-vars
+//   if (err instanceof Jwt401Error) {
+//     console.error('[express-jwt-error]', req.cookies.id_token);
+//     // `clearCookie`, otherwise user can't use web-app until cookie expires
+//     res.clearCookie('id_token');
+//   }
+//   next(err);
+// });
 
-app.use(passport.initialize());
-app.use(authrouter);
+// for integrating OAuth Authentication via FB
+// app.use(passport.initialize());
+// app.use(authrouter);
 
 //
 // Register API middleware
