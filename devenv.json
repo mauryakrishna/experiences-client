@@ -2,6 +2,7 @@
   "NODE_ENV": "development",
   "PORT": 3000,
   "TRUST_PROXY": "loopback",
+  "APP_URL": "http://localhost",
   "API_CLIENT_URL": "http://localhost:3000/gql",
   "API_SERVER_URL": "http://localhost:4000/gql",
   "GOOGLE_TRACKING_ID": "",

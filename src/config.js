@@ -23,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 module.exports = {
   // Node.js app
   port: process.env.PORT,
+  appURL: process.env.APP_URL,
 
   // https://expressjs.com/en/guide/behind-proxies.html
   trustProxy: process.env.TRUST_PROXY,
