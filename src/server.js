@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
@@ -29,8 +28,8 @@ import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
-// import passport from './auth/passport';
-// import authrouter from './auth/routes';
+import passport from './auth/passport';
+import authrouter from './auth/routes';
 import router from './router';
 
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
@@ -201,40 +200,9 @@ app.use((err, req, res, next) => {
 // Launch the server
 // -----------------------------------------------------------------------------
 if (!module.hot) {
-  if (process.env.NODE_ENV === 'production') {
-    const https = require('https');
-    const http = require('http');
-    const fs = require('fs');
-
-    const sslOpts = {
-      key: fs.readFileSync(process.env.SSL_KEY_PATH),
-      cert: fs.readFileSync(process.env.SSL_CERT_PATH),
-    };
-
-    // https://gaboesquivel.com/blog/2014/nodejs-https-and-ssl-certificate-for-development/
-    https.createServer(sslOpts, app).listen(443, () => {
-      // eslint-disable-next-line no-console
-      console.log(`App running in production on https.`);
-    });
-
-    // for redirecting http to https
-    const httpApp = express();
-
-    // eslint-disable-next-line consistent-return
-    httpApp.use((req, res, next) => {
-      if (!req.secure) {
-        // FYI this should work for local development as well
-        return res.redirect(302, `https://${req.get('host')}`);
-      }
-      next();
-    });
-
-    http.createServer(httpApp).listen(80);
-  } else {
-    app.listen(config.port, () => {
-      console.info(`The server is running at ${config.appURL}:${config.port}`);
-    });
-  }
+  app.listen(config.port, () => {
+    console.info(`The server is running at ${config.appURL}:${config.port}`);
+  });
 }
 
 //
