@@ -28,6 +28,7 @@ export default function Home() {
           publishdate
           author {
             displayname
+            uid
           }
         }
       }
@@ -73,8 +74,8 @@ export default function Home() {
       return (
         <Stack spacing={3} pr="5px">
           {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
-            const { displayname } = author;
-            const link = `${slug}-${slugkey}`;
+            const { displayname, uid } = author;
+            const link = `/${uid}/${slug}-${slugkey}`;
             return (
               <Flex
                 key={slugkey}

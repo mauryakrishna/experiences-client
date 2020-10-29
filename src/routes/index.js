@@ -22,32 +22,32 @@ const routes = {
     {
       path: '/writeanexperience',
       protected: true,
-      load: () => import(/* webpackChunkName: 'editor' */ './editor'),
+      load: () => import(/* webpackChunkName: 'write-editor' */ './editor'),
     },
-    {
-      path: '/contact',
-      load: () => import(/* webpackChunkName: 'contact' */ './contact'),
-    },
-    {
-      path: '/login',
-      load: () => import(/* webpackChunkName: 'login' */ './login'),
-    },
-    {
-      path: '/register',
-      load: () => import(/* webpackChunkName: 'register' */ './register'),
-    },
-    {
-      path: '/about',
-      load: () => import(/* webpackChunkName: 'about' */ './about'),
-    },
-    {
-      path: '/privacy',
-      load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
-    },
-    {
-      path: '/admin',
-      load: () => import(/* webpackChunkName: 'admin' */ './admin'),
-    },
+    // {
+    //   path: '/contact',
+    //   load: () => import(/* webpackChunkName: 'contact' */ './contact'),
+    // },
+    // {
+    //   path: '/login',
+    //   load: () => import(/* webpackChunkName: 'login' */ './login'),
+    // },
+    // {
+    //   path: '/register',
+    //   load: () => import(/* webpackChunkName: 'register' */ './register'),
+    // },
+    // {
+    //   path: '/about',
+    //   load: () => import(/* webpackChunkName: 'about' */ './about'),
+    // },
+    // {
+    //   path: '/privacy',
+    //   load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
+    // },
+    // {
+    //   path: '/admin',
+    //   load: () => import(/* webpackChunkName: 'admin' */ './admin'),
+    // },
     {
       path: '/author/:authoruid',
       load: () => import(/* webpackChunkName: 'allofauthor' */ './allofauthor'),
@@ -55,7 +55,7 @@ const routes = {
     {
       path: '/edit/:slugkey',
       protected: true,
-      load: () => import(/* webpackChunkName: 'admin' */ './editor'),
+      load: () => import(/* webpackChunkName: 'edit-editor' */ './editor'),
     },
     {
       path: '/reset-password/:requestkey',
@@ -67,14 +67,17 @@ const routes = {
       load: () =>
         import(/* webpackChunkName: 'verify-email' */ './verify-email'),
     },
-
+    {
+      path: '/:authoruid/:slug',
+      load: () =>
+        import(/* webpackChunkName: 'read-experience' */ './read-experience'),
+    },
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last), this will match just any route
     // be careful about this one and after
     {
       path: '(.*)',
-      name: 'dynamic-routing',
-      load: () =>
-        import(/* webpackChunkName: 'dynamic-routing' */ './dynamic-routing'),
+      name: 'not-found',
+      load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
     },
   ],
 

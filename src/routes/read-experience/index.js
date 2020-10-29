@@ -1,16 +1,16 @@
 import React from 'react';
 import Layout from '../../components/Layout';
-import Editor from './Editor';
+import ReadExperience from '../../components/Experience/ReadExperience';
 
 const title = 'Write an experience';
 
 function action(context, params) {
   return {
-    chunks: ['edit-editor', 'write-editor'],
+    chunks: ['read-experience'],
     title,
     component: (
-      <Layout pathname={context.pathname}>
-        <Editor slugkey={params.slugkey} />
+      <Layout>
+        <ReadExperience slug={params.slug} />
       </Layout>
     ),
   };
