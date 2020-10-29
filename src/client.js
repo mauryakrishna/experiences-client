@@ -111,7 +111,7 @@ async function onLocationChange(location, action) {
       const token = localStorage.get('token');
       return {
         headers: {
-          'Accept-Encoding': 'gzip',
+          'Accept-Encoding': 'gzip,deflate',
           ...headers,
           ...(token && { authorization: token }),
         },
