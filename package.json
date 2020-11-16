@@ -86,6 +86,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.18",
     "browser-sync": "^2.24.7",
     "chokidar": "^3.3.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "enzyme": "^3.6.0",
@@ -182,6 +183,6 @@
     "deploy": "babel-node tools/run deploy",
     "render": "babel-node tools/run render",
     "serve": "babel-node tools/run runServer",
-    "start": "NODE_ENV=development babel-node tools/run start"
+    "start": "cross-env NODE_ENV=development babel-node tools/run start"
   }
 }

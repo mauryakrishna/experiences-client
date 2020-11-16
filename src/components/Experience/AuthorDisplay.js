@@ -12,7 +12,7 @@ const AuthorDisplay = ({ uid, displayname, publishdate }) => {
         <Avatar mr={3} />
         <Flex display="block">
           <Link to={`/author/${uid}`}>{displayname}</Link>
-          <PublishDate>{publishdate}</PublishDate>
+          <PublishDate>{publishdate || 'Not published yet.'}</PublishDate>
         </Flex>
       </Flex>
     </PseudoBox>

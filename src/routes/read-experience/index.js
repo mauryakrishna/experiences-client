@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import ReadExperience from '../../components/Experience/ReadExperience';
 
-const title = 'Write an experience';
+const title = 'An experience';
 
 function action(context, params) {
   return {

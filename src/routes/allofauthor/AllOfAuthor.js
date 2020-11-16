@@ -245,14 +245,14 @@ const AllOfAuthor = ({ authoruid }) => {
                 w="100%"
               >
                 <ExperienceTitleInList>
-                  <Link to={`/${slug}-${slugkey}`}>{title}</Link>
+                  <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
 
                   <Flex>
                     <PublishDate>
                       {ispublished
                         ? `Published on ${publishdate}`
                         : // eslint-disable-next-line camelcase
-                          `Started ${created_at}`}
+                        `Started ${created_at}`}
                     </PublishDate>
                   </Flex>
                 </ExperienceTitleInList>
@@ -271,8 +271,8 @@ const AllOfAuthor = ({ authoruid }) => {
         {fetchMoreLoading ? (
           <CircularProgress isIndeterminate size="24px" color="teal" />
         ) : (
-          'Load more'
-        )}
+            'Load more'
+          )}
       </Button>
     </PseudoBox>
   );
