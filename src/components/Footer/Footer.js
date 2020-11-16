@@ -32,15 +32,15 @@ export default function Footer() {
         </FooterText>
         <Divider />
         <FooterText>
-          <Link to="/about">About</Link>
+          <Link to="/@team/about-ru97dtbga1e">About</Link>
         </FooterText>
         <Divider />
         <FooterText>
-          <Link to="/privacy">Privacy</Link>
+          <Link to="/@team/privacy-s66ekejmekn">Privacy</Link>
         </FooterText>
         <Divider />
         <FooterText>
-          <Link to="/privacy">Terms</Link>
+          <Link to="/@team/terms-of-use-uoirf3l3b2">Terms of Use</Link>
         </FooterText>
         <Divider />
       </Flex>
