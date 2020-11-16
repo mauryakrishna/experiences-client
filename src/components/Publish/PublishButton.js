@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useApolloClient } from 'react-apollo-hooks';
+import localStorage from 'local-storage';
 
 import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
@@ -26,7 +27,7 @@ const PublishExperience = () => {
 
   const cb = ({ slug, slugkey }) => {
     if (slug && slugkey) {
-      history.push(`/${slug}-${slugkey}`);
+      history.push(`/${localStorage.get('username')}/${slug}-${slugkey}`);
     }
   };
 
@@ -48,7 +49,7 @@ const PublishExperience = () => {
     if (!title) {
       setErrMessage('Kindly give a title.');
     } else if (!experience) {
-      setErrMessage('Kindly add an experience');
+      setErrMessage('Kindly add an experience.');
     } else {
       setButtonText('Publishing....');
       // hit api for publish
