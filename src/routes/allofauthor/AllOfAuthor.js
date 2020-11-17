@@ -24,8 +24,9 @@ import {
   AutoResizeTextarea,
   ExperienceTitleInList,
   PublishDate,
-  Loading,
+  Loading
 } from '../../components/UIElements';
+import history from './../../history';
 import AuthorActions from './AuthorActions';
 import Link from '../../components/Link';
 import UpdateAuthorDetails from './UpdateAuthorDetails';
@@ -152,6 +153,10 @@ const AllOfAuthor = ({ authoruid }) => {
     });
   });
 
+  const handleGetStartedClick = () => {
+    history.push('/writeanexperience');
+  };
+
   const handleCancelChanges = () => {
     // reverse changes
     setData(data);
@@ -220,61 +225,76 @@ const AllOfAuthor = ({ authoruid }) => {
           </Button>
         )}
       </Flex>
+      {
+        experiences.length == 0 ?
+          (
+            <>
+              <Text fontSize={{ sm: '1.4rem', md: '1.8rem' }} my={3} mr={1} color="gray.600">
+                All the experiences you publish or draft will appear here.
+              </Text>
+              <Button position="relative" variant="solid" onClick={handleGetStartedClick}>
+                Get Started
+              </Button>
+            </>
+          )
+          :
+          (<>
+            <SectionHeader>Experiences </SectionHeader>
+            <Stack spacing={3}>
+              {experiences &&
+                experiences.map(experience => {
+                  const {
+                    title,
+                    slugkey,
+                    slug,
+                    ispublished,
+                    publishdate,
+                    // eslint-disable-next-line camelcase
+                    created_at,
+                  } = experience;
+                  return (
+                    <Flex
+                      key={slugkey}
+                      p={2}
+                      borderWidth="1px"
+                      borderColor="gray.200"
+                      borderRadius="8px"
+                      w="100%"
+                    >
+                      <ExperienceTitleInList>
+                        <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
 
-      <SectionHeader>Experiences </SectionHeader>
+                        <Flex>
+                          <PublishDate>
+                            {ispublished
+                              ? `Published on ${publishdate}`
+                              : // eslint-disable-next-line camelcase
+                              `Started ${created_at}`}
+                          </PublishDate>
+                        </Flex>
+                      </ExperienceTitleInList>
 
-      <Stack spacing={3}>
-        {experiences &&
-          experiences.map(experience => {
-            const {
-              title,
-              slugkey,
-              slug,
-              ispublished,
-              publishdate,
-              // eslint-disable-next-line camelcase
-              created_at,
-            } = experience;
-            return (
-              <Flex
-                key={slugkey}
-                p={2}
-                borderWidth="1px"
-                borderColor="gray.200"
-                borderRadius="8px"
-                w="100%"
-              >
-                <ExperienceTitleInList>
-                  <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
+                      <Flex align="center" justify="center">
+                        {allowActions && (
+                          <AuthorActions {...{ ispublished, slugkey }} />
+                        )}
+                      </Flex>
+                    </Flex>
+                  );
+                })}
+            </Stack>
 
-                  <Flex>
-                    <PublishDate>
-                      {ispublished
-                        ? `Published on ${publishdate}`
-                        : // eslint-disable-next-line camelcase
-                        `Started ${created_at}`}
-                    </PublishDate>
-                  </Flex>
-                </ExperienceTitleInList>
-
-                <Flex align="center" justify="center">
-                  {allowActions && (
-                    <AuthorActions {...{ ispublished, slugkey }} />
-                  )}
-                </Flex>
-              </Flex>
-            );
-          })}
-      </Stack>
-
-      <Button onClick={loadMoreExperiences}>
-        {fetchMoreLoading ? (
-          <CircularProgress isIndeterminate size="24px" color="teal" />
-        ) : (
-            'Load more'
-          )}
-      </Button>
-    </PseudoBox>
+            <Button onClick={loadMoreExperiences}>
+              {fetchMoreLoading ? (
+                <CircularProgress isIndeterminate size="24px" color="teal" />
+              ) : (
+                  'Load more'
+                )}
+            </Button>
+          </>
+          )
+      }
+    </PseudoBox >
   );
 };
 
