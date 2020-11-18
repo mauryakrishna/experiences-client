@@ -6,6 +6,7 @@ import { Slate } from 'slate-react';
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import { Helmet } from 'react-helmet';
 
 import { Flex, Text, PseudoBox } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
@@ -95,43 +96,47 @@ const ReadExperience = ({ slug }) => {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="Description" content={title} />
+      </Helmet>
       {experienceNotFound ? (
         <Text fontSize="1rem" fontWeight="bold">
           {' '}
           Something went wrong.
         </Text>
       ) : (
-        <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
-          <Flex align="left" pb={5}>
-            <Text
-              fontWeight="400"
-              fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
-            >
-              {title}
-            </Text>
-          </Flex>
+          <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
+            <Flex align="left" pb={5}>
+              <Text
+                fontWeight="400"
+                fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
+              >
+                {title}
+              </Text>
+            </Flex>
 
-          <Flex pb="2rem">
-            <AuthorDisplay
-              uid={uid}
-              displayname={displayname}
-              publishdate={publishdate}
-            />
-          </Flex>
-          <Flex justify="left" py={5}>
-            <Slate editor={editor} value={value}>
-              <EditablePlugins
-                plugins={plugins}
-                readOnly
-                autoFocus
-                placeholder="Read here."
-                style={{ fontSize: '1.1rem', fontWeight: '400' }}
-                renderLeaf={[renderLeafBold]}
+            <Flex pb="2rem">
+              <AuthorDisplay
+                uid={uid}
+                displayname={displayname}
+                publishdate={publishdate}
               />
-            </Slate>
-          </Flex>
-        </PseudoBox>
-      )}
+            </Flex>
+            <Flex justify="left" py={5}>
+              <Slate editor={editor} value={value}>
+                <EditablePlugins
+                  plugins={plugins}
+                  readOnly
+                  autoFocus
+                  placeholder="Read here."
+                  style={{ fontSize: '1.1rem', fontWeight: '400' }}
+                  renderLeaf={[renderLeafBold]}
+                />
+              </Slate>
+            </Flex>
+          </PseudoBox>
+        )}
     </>
   );
 };
