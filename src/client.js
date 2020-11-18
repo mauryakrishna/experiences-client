@@ -12,7 +12,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
-import { createPath } from 'history';
+// import { createPath } from 'history';
 
 // Apollo settings
 import { ApolloClient } from 'apollo-client';
@@ -200,9 +200,9 @@ async function onLocationChange(location, action) {
 
         // Google Analytics tracking. Don't send 'pageview' event after
         // the initial rendering, as it was already sent
-        if (window.ga) {
-          window.ga('send', 'pageview', createPath(location));
-        }
+        // if (window.ga) {
+        //   window.ga('send', 'pageview', createPath(location));
+        // }
       },
     );
   } catch (error) {
