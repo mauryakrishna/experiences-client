@@ -14,7 +14,7 @@ import ResendActivationEmailAPI from './ResendActivationEmailAPI';
 import { ErrorMessage, TextLikeLink } from '../UIElements';
 import SuccessMessage from '../UIElements/AuthFlow/SuccessMessage';
 
-export default function ResendActivationEmail({ toggle, resendemail }) {
+export default function ResendActivationEmail({ toggle, resendemail, resendinvitetext }) {
   const [email, setEmail] = useState(resendemail || '');
   const [error, setError] = useState('');
   const [showMessage, setShowMessage] = useState(false);
@@ -54,44 +54,44 @@ export default function ResendActivationEmail({ toggle, resendemail }) {
             follow the instruction to activate your account..
           </SuccessMessage>
         ) : (
-          <>
-            <Box my={4} textAlign="left">
-              <form onSubmit={handleSubmit}>
-                {error && <ErrorMessage>{error}</ErrorMessage>}
-                <FormControl isRequired mt={6}>
-                  <Input
-                    type="email"
-                    placeholder="Email address"
-                    size="lg"
-                    onChange={event => setEmail(event.currentTarget.value)}
-                  />
-                </FormControl>
-                <Button
-                  variantColor="teal"
-                  variant="outline"
-                  type="submit"
-                  width="full"
-                  mt={4}
-                >
-                  {isLoading ? (
-                    <CircularProgress
-                      isIndeterminate
-                      size="24px"
-                      color="teal"
+            <>
+              <Box my={4} textAlign="left">
+                <form onSubmit={handleSubmit}>
+                  {error && <ErrorMessage>{error}</ErrorMessage>}
+                  <FormControl isRequired mt={6}>
+                    <Input
+                      type="email"
+                      placeholder="Email address"
+                      size="lg"
+                      onChange={event => setEmail(event.currentTarget.value)}
                     />
-                  ) : (
-                    'Submit'
-                  )}
-                </Button>
-              </form>
-            </Box>
-            <Box>
-              <TextLikeLink onClick={showLoginForm}>
-                Login with credentials.
-              </TextLikeLink>
-            </Box>
-          </>
-        )}
+                  </FormControl>
+                  <Button
+                    variantColor="teal"
+                    variant="outline"
+                    type="submit"
+                    width="full"
+                    mt={4}
+                  >
+                    {isLoading ? (
+                      <CircularProgress
+                        isIndeterminate
+                        size="24px"
+                        color="teal"
+                      />
+                    ) : (
+                        'Submit'
+                      )}
+                  </Button>
+                </form>
+              </Box>
+              <Box>
+                <TextLikeLink onClick={showLoginForm}>
+                  {resendinvitetext}
+                </TextLikeLink>
+              </Box>
+            </>
+          )}
       </Box>
     </Flex>
   );

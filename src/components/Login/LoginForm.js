@@ -74,79 +74,80 @@ export default function Login({ loginCallback, toggle }) {
   return showActivationForm ? (
     <ResendActivationEmail
       resendemail={email}
+      resendinvitetext="Login with credentials."
       toggle={resendEmailVerification}
     />
   ) : (
-    <Flex width="full" align="center" justifyContent="center">
-      <Box p={4} width="100%">
-        <Box textAlign="center">
-          <Heading size="lg">Login</Heading>
-        </Box>
-        {showMsgForEmailVerification && (
-          <InfoMessage>
-            This email address is not verified. Follow the link in verification
+      <Flex width="full" align="center" justifyContent="center">
+        <Box p={4} width="100%">
+          <Box textAlign="center">
+            <Heading size="lg">Login</Heading>
+          </Box>
+          {showMsgForEmailVerification && (
+            <InfoMessage>
+              This email address is not verified. Follow the link in verification
             email to verify it. You can request to{' '}
-            <TextLikeLink onClick={resendEmailVerification}>
-              send it again
+              <TextLikeLink onClick={resendEmailVerification}>
+                send it again
             </TextLikeLink>
             .
-          </InfoMessage>
-        )}
-        <Box my={4} textAlign="left">
-          <form onSubmit={handleSubmit}>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-            <FormControl isRequired mt={6}>
-              <Input
-                type="email"
-                placeholder="Email address"
-                size="lg"
-                onChange={event => setEmail(event.currentTarget.value)}
-              />
-            </FormControl>
-            <FormControl isRequired mt={6}>
-              <InputGroup>
+            </InfoMessage>
+          )}
+          <Box my={4} textAlign="left">
+            <form onSubmit={handleSubmit}>
+              {error && <ErrorMessage>{error}</ErrorMessage>}
+              <FormControl isRequired mt={6}>
                 <Input
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
+                  type="email"
+                  placeholder="Email address"
                   size="lg"
-                  onChange={event => setPassword(event.currentTarget.value)}
+                  onChange={event => setEmail(event.currentTarget.value)}
                 />
-                <InputRightElement width="3rem">
-                  <Button
-                    h="1.5rem"
-                    size="sm"
-                    onClick={handlePasswordVisibility}
-                  >
-                    {showPassword ? (
-                      <Icon name="view-off" />
-                    ) : (
-                      <Icon name="view" />
-                    )}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              <TextLikeLink onClick={showForgotpasswordForm}>
-                Forgot password?
+              </FormControl>
+              <FormControl isRequired mt={6}>
+                <InputGroup>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password"
+                    size="lg"
+                    onChange={event => setPassword(event.currentTarget.value)}
+                  />
+                  <InputRightElement width="3rem">
+                    <Button
+                      h="1.5rem"
+                      size="sm"
+                      onClick={handlePasswordVisibility}
+                    >
+                      {showPassword ? (
+                        <Icon name="view-off" />
+                      ) : (
+                          <Icon name="view" />
+                        )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                <TextLikeLink onClick={showForgotpasswordForm}>
+                  Forgot password?
               </TextLikeLink>
-            </FormControl>
-            <Button
-              variantColor="teal"
-              variant="outline"
-              type="submit"
-              width="full"
-              mt={4}
-            >
-              {isLoading ? (
-                <CircularProgress isIndeterminate size="24px" color="teal" />
-              ) : (
-                'Sign In'
-              )}
-            </Button>
-          </form>
+              </FormControl>
+              <Button
+                variantColor="teal"
+                variant="outline"
+                type="submit"
+                width="full"
+                mt={4}
+              >
+                {isLoading ? (
+                  <CircularProgress isIndeterminate size="24px" color="teal" />
+                ) : (
+                    'Sign In'
+                  )}
+              </Button>
+            </form>
+          </Box>
         </Box>
-      </Box>
-    </Flex>
-  );
+      </Flex>
+    );
 }
 
 Login.propTypes = {
