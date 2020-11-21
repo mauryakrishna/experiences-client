@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { Box } from '@chakra-ui/core';
 import { InfoMessage } from '../../components/UIElements';
 
