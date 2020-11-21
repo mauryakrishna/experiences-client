@@ -17,14 +17,12 @@ export default function Header() {
       bg="teal.500"
       color="white"
     >
-      <Flex align="center" mr={3}>
-        <Heading as="h3">
-          <Link to="/">
-            <Text fontSize="1.8rem" color="white">
-              Experiences
+      <Flex align="center" mr={3} fontWeight="500">
+        <Link to="/">
+          <Text fontSize="1.8rem" color="white">
+            Experiences
             </Text>
-          </Link>
-        </Heading>
+        </Link>
       </Flex>
 
       <Box>
