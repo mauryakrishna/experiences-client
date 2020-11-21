@@ -7,17 +7,13 @@ import MobileNotSupported from './MobileNotSupported';
 const title = 'Write an experience';
 
 function action(context, params) {
-  const IsMobile = DetectMobile();
+  const component = DetectMobile() ? <MobileNotSupported /> : <Editor slugkey={params.slugkey} />
   return {
     chunks: ['edit-editor', 'write-editor'],
     title,
     component: (
       <Layout pathname={context.pathname}>
-        {
-          IsMobile ? <MobileNotSupported /> :
-            <Editor slugkey={params.slugkey} />
-        }
-
+        {component}
       </Layout>
     ),
   };
