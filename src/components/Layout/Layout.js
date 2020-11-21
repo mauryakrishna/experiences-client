@@ -9,6 +9,7 @@ import {
   PseudoBox,
 } from '@chakra-ui/core';
 
+import ErrorBoundary from '../ErrorBoundry';
 import { UserProvider } from '../UserContext';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -31,26 +32,28 @@ export default function Layout({ children, pathname }) {
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
-      <UserProvider>
-        <PseudoBox maxW="1000px" my="0" mx="auto" lineHeight="1.3">
-          <Grid>
+      <ErrorBoundary>
+        <UserProvider>
+          <PseudoBox maxW="1000px" my="0" mx="auto" lineHeight="1.3">
             <Grid>
-              <Header />
-            </Grid>
-            <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
-
-            <Grid minHeight="calc(90vh)">{children}</Grid>
-
-            <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
-
-            {showFooter && (
               <Grid>
-                <Footer />
+                <Header />
               </Grid>
-            )}
-          </Grid>
-        </PseudoBox>
-      </UserProvider>
+              <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+
+              <Grid minHeight="calc(90vh)">{children}</Grid>
+
+              <Divider borderColor="gray.200" marginTop="0" opacity="0.1" />
+
+              {showFooter && (
+                <Grid>
+                  <Footer />
+                </Grid>
+              )}
+            </Grid>
+          </PseudoBox>
+        </UserProvider>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }
