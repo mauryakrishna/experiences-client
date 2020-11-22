@@ -279,7 +279,8 @@ const config = {
 
   // Choose a developer tool to enhance debugging
   // https://webpack.js.org/configuration/devtool/#devtool
-  devtool: isDebug ? 'cheap-module-inline-source-map' : 'source-map',
+  // 'source-map' <- removed this as do not want source map in production
+  devtool: isDebug ? 'cheap-module-inline-source-map' : false,
 };
 
 //
@@ -455,7 +456,7 @@ const serverConfig = {
     './chunk-manifest.json',
     './asset-manifest.json',
     nodeExternals({
-      whitelist: [reStyle, reImage],
+      allowlist: [reStyle, reImage],
     }),
   ],
 
