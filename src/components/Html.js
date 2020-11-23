@@ -30,6 +30,8 @@ export default function Html({
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <title>{title}</title>
         <meta name="google-site-verification" content="UZYrsB1BXHH_HQD8QpPlyJJZZYUCVPIOrkO4XLXhqII" />
+        <meta name="description" 
+          content="Write you experiences, life learnings, lessons of day to day life, blog, share feeling, keep a draft, publish and many more." />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {scripts.map(script => (
