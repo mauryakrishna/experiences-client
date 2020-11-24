@@ -9,7 +9,7 @@ import {
   HeadingPlugin,
   CodeBlockPlugin,
   BlockquotePlugin,
-  ImagePlugin,
+  // ImagePlugin,
   LinkPlugin,
 } from '@udecode/slate-plugins';
 
@@ -19,7 +19,7 @@ const nodeTypes = {
   typeH3: ELEMENT_H3,
   typeBlockquote: ELEMENT_BLOCKQUOTE,
   typeLink: ELEMENT_LINK,
-  typeImg: ELEMENT_IMAGE,
+  // typeImg: ELEMENT_IMAGE,
   typeP: ELEMENT_PARAGRAPH,
 };
 
@@ -28,7 +28,7 @@ const plugins = [
   CodeBlockPlugin(nodeTypes),
   BlockquotePlugin(nodeTypes),
   LinkPlugin(nodeTypes),
-  ImagePlugin(nodeTypes),
+  // ImagePlugin(nodeTypes),
 ];
 
 export { plugins, nodeTypes };

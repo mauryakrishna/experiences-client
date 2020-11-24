@@ -5,18 +5,18 @@ import {
   LooksTwo,
   Looks3,
   Link,
-  Image,
+  // Image,
 } from '@styled-icons/material';
 
 import {
   HeadingToolbar,
   ToolbarElement,
-  ToolbarImage,
+  // ToolbarImage,
   ToolbarLink,
   withToggleType,
   withDeleteStartReset,
   withBreakEmptyReset,
-  withImageUpload,
+  // withImageUpload,
   withLink,
 } from '@udecode/slate-plugins';
 
@@ -63,7 +63,7 @@ const withPlugins = [
   ...withPluginsToolbarMarks,
   withDeleteStartReset(resetOptions),
   withBreakEmptyReset(resetOptions),
-  withImageUpload(nodeTypes),
+  // withImageUpload(nodeTypes),
   withToggleType(nodeTypes),
   withLink(nodeTypes),
 ];
@@ -80,7 +80,8 @@ export default () => {
       <ToolbarList />
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <ToolbarLink {...nodeTypes} icon={<Link />} />
-      <ToolbarImage {...nodeTypes} icon={<Image />} />
+      {/* ToolbarImage commented for this release, will be enabled once url adding and uploading both done */}
+      {/* <ToolbarImage {...nodeTypes} icon={<Image />} /> */}
     </HeadingToolbar>
   );
 };
