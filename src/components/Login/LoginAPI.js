@@ -19,7 +19,6 @@ export default async function(email, password) {
 
   const { data } = await fetch(`${window.location.origin}/gql`, {
     method: 'POST',
-    Accept: 'application/json',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: QUERY,
