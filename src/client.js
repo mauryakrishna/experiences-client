@@ -17,7 +17,7 @@ import queryString from 'query-string';
 // Apollo settings
 import { ApolloClient } from 'apollo-client';
 import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, fromPromise } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import {
   InMemoryCache,
@@ -33,6 +33,7 @@ import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
 import resolvers from './resolvers';
+import refreshUserToken from './refreshUserToken';
 
 // Enables critical path CSS rendering
 // https://github.com/kriasoft/isomorphic-style-loader
@@ -109,6 +110,7 @@ async function onLocationChange(location, action) {
 
     const authLink = setContext((_, { headers }) => {
       const token = localStorage.get('token');
+      
       return {
         headers: {
           'Accept-Encoding': 'gzip,deflate',
@@ -120,6 +122,7 @@ async function onLocationChange(location, action) {
 
     const httpLink = createHttpLink({
       uri: window.App.apiUrl,
+      credentials: 'same-origin'
     });
 
     const stateLink = withClientState({
@@ -127,9 +130,69 @@ async function onLocationChange(location, action) {
       resolvers,
     });
 
-    const errorLink = onError(({ graphQLErrors }) => {
-      if (graphQLErrors)
-        graphQLErrors.map(({ message }) => console.log(message));
+    let isRefreshing = false;
+    let pendingRequests = [];
+
+    const resolvePendingRequests = () => {
+      pendingRequests.map(callback => callback());
+      pendingRequests = [];
+    };
+
+    const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+      if (graphQLErrors) {
+        for (let err of graphQLErrors) {
+          switch(err.StatusCode) {
+            case 401:
+              // refresh token - 
+              // - https://able.bio/AnasT/apollo-graphql-async-access-token-refresh--470t1c8
+              // - https://www.apollographql.com/docs/link/links/error/#retrying-failed-requests
+              let forward$;
+
+              if (!isRefreshing) {
+                isRefreshing = true;
+                forward$ = fromPromise(
+                  refreshUserToken()
+                    .then((newAccessToken)=> {
+                        const oldHeaders = operation.getContext().headers;
+                        operation.setContext({
+                          headers: {
+                            ...oldHeaders,
+                            authorization: newAccessToken,
+                          },
+                        });
+                      resolvePendingRequests();
+                      return newAccessToken;
+                    })
+                    .catch((err)=> {
+                      pendingRequests = [];
+                      return;
+                    })
+                    .finally(() => {
+                      isRefreshing = false;
+                    })
+                )
+                .filter(value => Boolean(value))
+                .flatMap(() => {
+                  // retry the request, returning the new observable
+                  return forward(operation);
+                });
+              }
+              else {
+                forward$ = fromPromise(
+                  new Promise(resolve => {
+                    pendingRequests.push(() => resolve());
+                  })
+                );
+              }
+
+              return forward$.flatMap(() => forward(operation));
+              
+            default:
+              graphQLErrors.map(({ message }) => console.log(message));
+          }
+        }
+      }
+        
     });
 
     const client = new ApolloClient({
