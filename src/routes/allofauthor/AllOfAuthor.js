@@ -141,17 +141,19 @@ const AllOfAuthor = ({ authoruid }) => {
     setDisableButton(false);
   };
 
-  const handleSaveAuthorDetails = useCallback(() => {
+  const handleSaveAuthorDetails = () => {
     // make a mutation call
     updateDebounce({
       displayname,
       shortintro,
       authoruid,
       cb: updated => {
+        // update the local storage so as to reflect correctly on header ui
+        localStorage.set('displayname', displayname);
         setDisableButton(updated);
       },
     });
-  });
+  };
 
   const handleGetStartedClick = () => {
     history.push('/writeanexperience');
