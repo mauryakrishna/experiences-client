@@ -17,7 +17,6 @@ const refreshUserToken = async () => {
   const {refreshUserToken} = data;
 
   if(refreshUserToken && refreshUserToken.token) {
-    console.log('token renewed.');
     localStorage.set('token', refreshUserToken.token);
     return refreshUserToken.token;
   }
