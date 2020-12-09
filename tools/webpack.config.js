@@ -13,6 +13,7 @@ import webpack from 'webpack';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
 import nodeExternals from 'webpack-node-externals';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import LoadablePlugin from '@loadable/webpack-plugin';
 import overrideRules from './lib/overrideRules';
 import pkg from '../package.json';
 
@@ -105,6 +106,7 @@ const config = {
             // Experimental ECMAScript proposals
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-syntax-dynamic-import',
+            '@loadable/babel-plugin',
             // Treat React JSX elements as value types and hoist them to the highest scope
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
             ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
@@ -461,6 +463,10 @@ const serverConfig = {
   ],
 
   plugins: [
+    new LoadablePlugin({
+      writeToDisk: true,
+      filename: "./loadable-stats.json",
+    }),
     // Define free variables
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({

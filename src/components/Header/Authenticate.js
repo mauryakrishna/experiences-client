@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import localStorage from 'local-storage';
+import loadable from '@loadable/component';
 import {
   Text,
   Flex,
@@ -14,9 +15,9 @@ import {
   PopoverArrow,
 } from '@chakra-ui/core';
 
-import Login from '../Login';
-import Link from '../Link';
-import Register from '../Register';
+const Login = loadable(()=> import('../Login'));
+const Link = loadable(()=> import('../Link'));
+const Register = loadable(()=> import('../Register'));
 import { ClearLoginData } from '../SetLoginData';
 
 export default () => {

@@ -15,6 +15,7 @@ import bodyParser from 'body-parser';
 import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 import PrettyError from 'pretty-error';
 import proxy from 'express-http-proxy';
 import { LocalStorage } from 'node-localstorage';
@@ -66,6 +67,14 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+/***************Loadable components setup starts ************************/
+
+const statsFile = path.resolve('./build/loadable-stats.json');
+// extractor is used in renderToString below
+const extractor = new ChunkExtractor({ statsFile });
+
+/***************Loadable components setup ends ************************/
 
 //
 // Authentication -- This was particularly useful when using OAuth authentication
@@ -133,11 +142,13 @@ app.get('*', async (req, res, next) => {
 
     getDataFromTree(App).then(() => {
       const stringApp = ReactDOM.renderToString(
-        <ApolloProvider client={apolloClient}>
-          <App context={context} insertCss={insertCss}>
-            {route.component}
-          </App>
-        </ApolloProvider>,
+        <ChunkExtractorManager extractor={extractor}>
+          <ApolloProvider client={apolloClient}>
+            <App context={context} insertCss={insertCss}>
+              {route.component}
+            </App>
+          </ApolloProvider>
+        </ChunkExtractorManager>
       );
 
       const initialState = apolloClient.extract();

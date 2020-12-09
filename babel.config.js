@@ -9,6 +9,8 @@
 
 // Babel configuration
 // https://babeljs.io/docs/usage/api/
+//const LoadablePlugin = require('@loadable/webpack-plugin').default;
+
 module.exports = {
   presets: [
     [
@@ -25,6 +27,12 @@ module.exports = {
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
+    ["@loadable/babel-plugin", {
+      "opts": {
+        "filename": "loadable-stats.json",
+        "outputAsset": true
+      },
+    }]
   ],
   ignore: ['node_modules', 'build'],
 };
