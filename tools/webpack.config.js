@@ -457,6 +457,7 @@ const serverConfig = {
   externals: [
     './chunk-manifest.json',
     './asset-manifest.json',
+    '@loadable/component',
     nodeExternals({
       allowlist: [reStyle, reImage],
     }),
