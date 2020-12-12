@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import loadable from '@loadable/component'
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
 
-import Link from '../../components/Link';
-import Inspire from '../../components/Inspire';
+const Link = loadable(()=> import('../../components/Link'));
+const Inspire = loadable(()=> import('../../components/Inspire'));
 import {
   ExperienceTitleInList,
   PublishDate,

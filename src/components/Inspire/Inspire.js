@@ -1,7 +1,8 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { Box } from '@chakra-ui/core';
-import GetStartedButton from './GetStartedButton';
-import InspireText from '../UIElements/InspireText';
+const GetStartedButton = loadable(()=> import('./GetStartedButton'));
+const InspireText = loadable(()=> import('../UIElements/InspireText'));
 
 const Inspire = () => {
   const inspiringWords = [
