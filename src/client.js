@@ -209,8 +209,8 @@ async function onLocationChange(location, action) {
 
     // hydrate - should be only enable in prod, Need to figure out a way to differentiate when dev and prod
     // use render in dev even for ssr
-    const renderReactApp = ReactDOM.hydrate;
-      //isInitialRender && !__DEV__ ? ReactDOM.hydrate : ReactDOM.render;
+    const renderReactApp = 
+      isInitialRender && !__DEV__ ? ReactDOM.hydrate : ReactDOM.render;
     appInstance = loadableReady(()=> renderReactApp(
       <ApolloHooksProvider client={client}>
         <App context={context} insertCss={insertCss}>
