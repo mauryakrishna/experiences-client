@@ -6,7 +6,7 @@ import localStorage from 'local-storage';
 import history from '../../history';
 import { Tooltip, Icon, AlertPrompt } from '../../components/UIElements';
 
-const AuthorActions = ({ slugkey }) => {
+const AuthorActions = ({ slugkey, onDeleteExperienceCb }) => {
   const [isAlertPromptOpen, setAlertPropmtOpen] = useState(false);
   const edit = () => {
     history.push(`/edit/${slugkey}`);
@@ -16,6 +16,7 @@ const AuthorActions = ({ slugkey }) => {
     mutation deleteAnExperience($input: DeleteExperienceInput) {
       deleteAnExperience(input: $input) {
         deleted
+        slugkey
       }
     }
   `;
@@ -23,9 +24,10 @@ const AuthorActions = ({ slugkey }) => {
   const [deleteAnExperience] = useMutation(mutaton, {
     update: (cached, { data }) => {
       if (data.deleteAnExperience) {
-        const { deleted } = data.deleteAnExperience;
+        const { deleted, slugkey } = data.deleteAnExperience;
         if (deleted) {
           // refresh the list
+          onDeleteExperienceCb(slugkey);
         }
       }
     },
@@ -75,5 +77,6 @@ const AuthorActions = ({ slugkey }) => {
 
 AuthorActions.propTypes = {
   slugkey: PropTypes.string.isRequired,
+  func: PropTypes.func.isRequired
 };
 export default AuthorActions;

@@ -167,6 +167,22 @@ const AllOfAuthor = ({ authoruid }) => {
     setDisableButton(true);
   };
 
+  /**
+   * delete the experience from the server and remove that particular entry from
+   * client side experiences list and update the UI
+   * downside: we do not make a call to get the latest 10 record to display
+   * upside: did not affect much, will give good experience
+   */
+  const onDeleteExperienceCb = (slugkey) => { 
+    for (var i = experiences.length; i--;) {
+      if (experiences[i].slugkey === slugkey) {
+        experiences.splice(i, 1);
+        break;
+      }
+    }
+    setExperiences(experiences);
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -278,7 +294,7 @@ const AllOfAuthor = ({ authoruid }) => {
 
                       <Flex align="center" justify="center">
                         {allowActions && (
-                          <AuthorActions {...{ ispublished, slugkey }} />
+                          <AuthorActions {...{ ispublished, slugkey, onDeleteExperienceCb }} />
                         )}
                       </Flex>
                     </Flex>
