@@ -356,7 +356,6 @@ const clientConfig = {
 
   // Move modules that occur in multiple entry chunks to a new entry chunk (the commons chunk).
   optimization: {
-    minimize: __DEV__, //minimize the bundle
     splitChunks: {
       cacheGroups: {
         commons: {
