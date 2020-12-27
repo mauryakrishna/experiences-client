@@ -16,7 +16,7 @@ const routes = {
   // Keep in mind, routes are evaluated in order
   children: [
     {
-      path: '',
+      path: '/',
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
     {
@@ -55,7 +55,7 @@ const routes = {
     {
       path: '/edit/:slugkey',
       protected: true,
-      load: () => import(/* webpackChunkName: 'edit-editor' */ './editor'),
+      load: () => import(/* webpackChunkName: 'write-editor' */ './editor'),
     },
     {
       path: '/reset-password/:requestkey',

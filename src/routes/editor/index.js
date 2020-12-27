@@ -10,7 +10,7 @@ const title = 'Write an experience';
 function action(context, params) {
   const component = DetectMobileBrowser() ? <MobileNotSupported /> : <Editor slugkey={params.slugkey} />
   return {
-    chunks: ['edit-editor', 'write-editor'],
+    chunks: ['write-editor'],
     title,
     component: (
       <Layout pathname={context.pathname}>
