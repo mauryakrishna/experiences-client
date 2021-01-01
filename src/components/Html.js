@@ -10,7 +10,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
-import config from '../config';
 
 /* eslint-disable react/no-danger */
 
@@ -50,7 +49,10 @@ export default function Html({
             dangerouslySetInnerHTML={{ __html: style.cssText }}
           />
         ))}
-
+        {/* the below script added to resolve the issue of global not defined from the local-storage npmjs in client.js*/}
+        <script>
+          global = window.globalThis
+        </script>
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: children }} />

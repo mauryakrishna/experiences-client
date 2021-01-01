@@ -13,6 +13,7 @@ import webpack from 'webpack';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
 import nodeExternals from 'webpack-node-externals';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import LoadablePlugin from '@loadable/webpack-plugin';
 import overrideRules from './lib/overrideRules';
 import pkg from '../package.json';
 
@@ -60,6 +61,7 @@ const config = {
     // Allow absolute paths in imports, e.g. import Button from 'components/Button'
     // Keep in sync with .flowconfig and .eslintrc
     modules: ['node_modules', 'src'],
+    extensions: ['.wasm', '.mjs', '.js', '.jsx', '.json']
   },
 
   module: {
@@ -68,6 +70,12 @@ const config = {
 
     rules: [
       // Rules for JS / JSX
+      {
+        test: /\.m?js/,
+        resolve: {
+            fullySpecified: false
+        }
+      },
       {
         test: reScript,
         include: [SRC_DIR, resolvePath('tools')],
@@ -105,6 +113,7 @@ const config = {
             // Experimental ECMAScript proposals
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-syntax-dynamic-import',
+            '@loadable/babel-plugin',
             // Treat React JSX elements as value types and hoist them to the highest scope
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
             ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
@@ -280,7 +289,7 @@ const config = {
   // Choose a developer tool to enhance debugging
   // https://webpack.js.org/configuration/devtool/#devtool
   // 'source-map' <- removed this as do not want source map in production
-  devtool: isDebug ? 'cheap-module-inline-source-map' : false,
+  devtool: isDebug ? 'source-map' :  false,
 };
 
 //
@@ -304,7 +313,10 @@ const clientConfig = {
       'process.env.BROWSER': true,
       __DEV__: isDebug,
     }),
-
+    // https://stackoverflow.com/questions/41359504/webpack-bundle-js-uncaught-referenceerror-process-is-not-defined
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     // Emit a file with assets paths
     // https://github.com/webdeveric/webpack-assets-manifest#options
     new WebpackAssetsManifest({
@@ -369,11 +381,7 @@ const clientConfig = {
   // Tell Webpack to provide empty mocks for them so importing them works.
   // https://webpack.js.org/configuration/node/
   // https://github.com/webpack/node-libs-browser/tree/master/mock
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-  },
+  node: false,
 };
 
 //
@@ -455,19 +463,23 @@ const serverConfig = {
   externals: [
     './chunk-manifest.json',
     './asset-manifest.json',
+    '@loadable/component',
     nodeExternals({
       allowlist: [reStyle, reImage],
     }),
   ],
 
   plugins: [
+    new LoadablePlugin({
+      writeToDisk: true,
+      filename: "./loadable-stats.json",
+    }),
     // Define free variables
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
       'process.env.BROWSER': false,
       __DEV__: isDebug,
     }),
-
     // Adds a banner to the top of each generated chunk
     // https://webpack.js.org/plugins/banner-plugin/
     new webpack.BannerPlugin({
@@ -479,14 +491,7 @@ const serverConfig = {
 
   // Do not replace node globals with polyfills
   // https://webpack.js.org/configuration/node/
-  node: {
-    console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false,
-  },
+  node: false,
 };
 
 export default [clientConfig, serverConfig];

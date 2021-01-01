@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import loadable from '@loadable/component'
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
+import { DetectMobileBrowser } from '../../detectmobilebrowser';
 
-import Link from '../../components/Link';
-import Inspire from '../../components/Inspire';
+const Link = loadable(()=> import('../../components/Link'));
+const Inspire = loadable(()=> import('../../components/Inspire'));
+
 import {
   ExperienceTitleInList,
   PublishDate,
@@ -127,6 +130,7 @@ export default function Home() {
 
   return (
     <Flex px="5">
+      { !DetectMobileBrowser() && 
       <Box
         display={{
           base: expCountZero ? 'block' : 'none',
@@ -138,7 +142,7 @@ export default function Home() {
       >
         <Inspire />
       </Box>
-
+      }
       {!loading && !expCountZero && (
         <Box
           w={{ base: '100%', sm: '100%', md: '60%' }}

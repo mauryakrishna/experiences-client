@@ -30,3 +30,6 @@ yarn-error.log*
 
 # node-localstorage
 scratch
+
+# build files
+loadable-stats.json

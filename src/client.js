@@ -10,6 +10,7 @@
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { loadableReady } from "@loadable/component";
 import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
 // import { createPath } from 'history';
@@ -208,9 +209,9 @@ async function onLocationChange(location, action) {
 
     // hydrate - should be only enable in prod, Need to figure out a way to differentiate when dev and prod
     // use render in dev even for ssr
-    const renderReactApp =
+    const renderReactApp = 
       isInitialRender && !__DEV__ ? ReactDOM.hydrate : ReactDOM.render;
-    appInstance = renderReactApp(
+    appInstance = loadableReady(()=> renderReactApp(
       <ApolloHooksProvider client={client}>
         <App context={context} insertCss={insertCss}>
           {route.component}
@@ -267,7 +268,7 @@ async function onLocationChange(location, action) {
         //   window.ga('send', 'pageview', createPath(location));
         // }
       },
-    );
+    ));
   } catch (error) {
     if (__DEV__) {
       throw error;
