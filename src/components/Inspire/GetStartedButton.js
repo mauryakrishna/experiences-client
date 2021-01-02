@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import history from '../../history';
+import loadable from '@loadable/component';
+const history = loadable(()=> import('../../history'));
+const Register = loadable(()=> import('../Register'));
 import UserContext from '../UserContext';
-import Register from '../Register';
 import { Button } from '../UIElements';
 
 const GetStarted = () => {
