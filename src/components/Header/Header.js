@@ -1,9 +1,9 @@
 import React from 'react';
-
+import loadable from "@loadable/component";
 import { Box, Flex, Heading, Text } from '@chakra-ui/core';
 
 import Link from '../Link';
-import Authenticate from './Authenticate';
+const Authenticate = loadable(()=> import('./Authenticate'))
 
 export default function Header() {
   return (
