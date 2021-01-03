@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalOverlay,
   ModalContent,
+  ModalCloseButton,
 } from '@chakra-ui/core';
 
 import UserContext from '../UserContext';
@@ -44,6 +45,7 @@ export default ({ whenLoginSuccess }) => {
       >
         <ModalOverlay bg="white" opacity="0.7" />
         <ModalContent borderWidth={1} borderRadius={8}>
+          <ModalCloseButton />
           <ModalBody>
             {toggleForm ? (
               <LoginForm loginCallback={LoginCallback} toggle={setToggleForm} />

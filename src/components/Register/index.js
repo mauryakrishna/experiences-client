@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure,
+  ModalCloseButton,
 } from '@chakra-ui/core';
 
 import RegisterForm from './RegisterForm';
@@ -36,6 +37,7 @@ export default () => {
       >
         <ModalOverlay bg="white" opacity="0.7" />
         <ModalContent borderWidth={1} borderRadius={8}>
+          <ModalCloseButton />
           <ModalBody p={5}>
             <RegisterForm registerCallback={cb} />
           </ModalBody>
