@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
@@ -51,10 +51,6 @@ const Editor = ({ cb }) => {
   );
 
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
-
-  const isDifferent = (value1, value2) => {
-    return !isEqual(value1, value2);
-  };
 
   return (
     <Slate

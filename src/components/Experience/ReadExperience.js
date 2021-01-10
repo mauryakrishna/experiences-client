@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react';
+import loadable from "@loadable/component";
 import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
 import { Slate } from 'slate-react';
@@ -10,22 +11,13 @@ import { Helmet } from 'react-helmet';
 
 import { Flex, Text, PseudoBox } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
-
-import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
-import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
-import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
-import { plugins as pluginsToolbarAlignment } from '../SlatePluginsNext/ToolbarAlignmentPlugins';
-import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
+import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
 
-const ReadExperience = ({ slug }) => {
-  const plugins = [
-    ...pluginsToolbarAlignment,
-    ...pluginsHeadingToolbar,
-    ...pluginsToolbarList,
-    ...pluginsToolbarMarks,
-  ];
+const ReadThoughts = loadable(()=> import("./ReadThoughts"));
+const ExpressThoughts = loadable(()=> import('./ExpressThoughts'));
 
+const ReadExperience = ({ slug }) => {
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
   const [title, setTitle] = useState('');
   const [publishdate, setPublishDate] = useState('');
@@ -135,6 +127,8 @@ const ReadExperience = ({ slug }) => {
                 />
               </Slate>
             </Flex>
+            <ReadThoughts slugkey={slugkey}/>
+            <ExpressThoughts slugkey={slugkey} thoughtauthoruid={uid} />
           </PseudoBox>
         )}
     </>
