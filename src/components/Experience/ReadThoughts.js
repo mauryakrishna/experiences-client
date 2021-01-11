@@ -37,7 +37,7 @@ const Thoughts = ({ slugkey }) => {
     variables: { experienceslugkey: slugkey },
   });
 
-  const loadMoreExperiences = () => {
+  const loadMoreThoughts = () => {
     setFetchMoreLoading(true);
     fetchMore({
       query: GET_THOUGHTS_FOR_EXPERIENCE,
@@ -75,7 +75,7 @@ const Thoughts = ({ slugkey }) => {
       const thought = item.thought;
       const { displayname, uid } = item.thoughtauthor;
       return (
-        <Slate editor={editor} value={thought}>
+        <Slate editor={editor} value={JSON.parse(thought)}>
           <EditablePlugins
             plugins={plugins}
             readOnly
@@ -92,7 +92,7 @@ const Thoughts = ({ slugkey }) => {
       <Stack spacing={3} pr="5px">
         {displayThoughts()}
         <Button
-            onClick={loadMoreExperiences}
+            onClick={loadMoreThoughts}
             variantColor="teal"
             variant="outline"
           >

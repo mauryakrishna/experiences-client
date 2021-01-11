@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
+import { Box } from '@chakra-ui/core';
 
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
@@ -24,10 +25,10 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
     },
   ]);
 
-  const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
-  const plugins = [...pluginsHeading];
   const withPlugins = [withReact, withHistory, ...withPluginsHeading];
-
+  const plugins = [...pluginsHeading];
+  const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
+  
   return (
     <Slate
       editor={editor}

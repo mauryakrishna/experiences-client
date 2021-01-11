@@ -1,29 +1,40 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
+
 import WriteEditor from '../PureEditors/WriteEditor';
-import gqloverhttp from '../../gqloverhttp';
 
 import Button from '../UIElements/Button';
 
 const ExpressThoughts = ({ slugkey, thoughtauthoruid }) => {
   const [value, setValue] = useState('');
 
-  const saveNewThought = async () => {
-    const SAVE_NEW_THOUGHT_MUTATION = gql`
-      mutation saveNewThought($input: SaveNewThoughtInput) {
-        saveNewThought(input: $input) {
-          saved
-        }
+  const SAVE_NEW_THOUGHT_MUTATION = gql`
+    mutation saveNewThought($input: SaveNewThoughtInput) {
+      saveNewThought(input: $input) {
+        saved
       }
-    `;
-
-    const variables = { input: { experienceslugkey: slugkey, thought: value, thoughtauthoruid}};
-    const response = await gqloverhttp({ variables, query: SAVE_NEW_THOUGHT_MUTATION })
-    if(response) {
-      console.log('savenewthought response', response);
     }
+  `;
+
+  const [saveNewThoughtMutation] = useMutation(SAVE_NEW_THOUGHT_MUTATION, {
+    update: (cached, { data }) => {
+      if(data.saveNewThought) {
+        const { saved } = data.saveNewThought;
+        console.log("Saved", saved);
+      }
+    }
+  })
+
+  const saveNewThought = async () => {    
+    saveNewThoughtMutation({
+      variables: {
+        input: { experienceslugkey: slugkey, thought: JSON.stringify(value), thoughtauthoruid }
+      }
+    })
   }
- 
+
   return (
     <>
       <WriteEditor

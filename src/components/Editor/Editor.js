@@ -16,7 +16,7 @@ import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
 import HeadingToolbar, {
   plugins as pluginsHeading,
   withPlugins as withPluginsHeading,
-} from './HeadingToolbar';
+} from '../PureEditors/HeadingToolbar';
 
 import SaveExperience from './SaveExperiance';
 import {
