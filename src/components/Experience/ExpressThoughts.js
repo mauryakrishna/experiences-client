@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';

@@ -7,8 +7,8 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { plugins, renderLeafBold } from './SlatePlugins';
 
-import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
-
+import { Box, Flex, Button, Stack, CircularProgress, Tooltip, Icon } from '@chakra-ui/core';
+import DeleteAThought from "./DeleteThought";
 import Loading from '../UIElements/Loading';
 
 const Thoughts = ({ slugkey }) => {
@@ -16,6 +16,7 @@ const Thoughts = ({ slugkey }) => {
   const [cursor, setCursor] = useState(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
+  const deleteThought = DeleteAThought();
   const editor = useMemo(() => pipe(createEditor()), []);
   const GET_THOUGHTS_FOR_EXPERIENCE = gql`
     query getThoughtsOfExperience($cursor: String, $experienceslugkey: String!) {
@@ -23,6 +24,7 @@ const Thoughts = ({ slugkey }) => {
         cursor
         thoughts {
           thought
+          thoughtid
           created_at
           thoughtauthor {
             displayname
@@ -72,17 +74,31 @@ const Thoughts = ({ slugkey }) => {
 
   const displayThoughts = () => {
     return thoughtsdata.map((item)=> {
-      const thought = item.thought;
+      const { thought, thoughtid } = item;
       const { displayname, uid } = item.thoughtauthor;
       return (
-        <Slate editor={editor} value={JSON.parse(thought)}>
-          <EditablePlugins
-            plugins={plugins}
-            readOnly
-            style={{ fontSize: '1.1rem', fontWeight: '400' }}
-            renderLeaf={[renderLeafBold]}
-          />
-        </Slate>
+        <Box>
+          <Box>
+            <Slate editor={editor} value={JSON.parse(thought)}>
+              <EditablePlugins
+                plugins={plugins}
+                readOnly
+                style={{ fontSize: '1.1rem', fontWeight: '400' }}
+                renderLeaf={[renderLeafBold]}
+              />
+            </Slate>
+          </Box>
+          <Box>
+            <Tooltip label="Delete">
+              <Icon
+                name="delete"
+                onClick={() => {
+                  deleteThought(slugkey, thoughtid)
+                }}
+              />
+            </Tooltip>
+          </Box>
+        </Box>
       );
     });
   }
