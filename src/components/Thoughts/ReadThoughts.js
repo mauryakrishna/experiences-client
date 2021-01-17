@@ -5,10 +5,10 @@ import { Slate } from 'slate-react';
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { plugins, renderLeafBold } from './SlatePlugins';
+import { plugins, renderLeafBold } from '../Experience/SlatePlugins';
 
 import { Box, Flex, Button, Stack, CircularProgress, Tooltip, Icon } from '@chakra-ui/core';
-import DeleteAThought from "./DeleteThought";
+import DeleteAThought from "./DeleteAThought";
 import Loading from '../UIElements/Loading';
 
 const Thoughts = ({ slugkey }) => {

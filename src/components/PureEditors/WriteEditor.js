@@ -14,17 +14,6 @@ import HeadingToolbar, {
 } from './HeadingToolbar';
 
 const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
-  const [value, setValue] = useState([
-    {
-      children: [
-        {
-          type: 'paragraph',
-          children: [{ text: '' }],
-        },
-      ],
-    },
-  ]);
-
   const withPlugins = [withReact, withHistory, ...withPluginsHeading];
   const plugins = [...pluginsHeading];
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
@@ -32,10 +21,9 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
   return (
     <Slate
       editor={editor}
-      value={initialValue || value}
+      value={initialValue}
       onChange={newValue => {
         onChangeCb(newValue);
-        setValue(newValue);
       }}
     >
       <HeadingToolbar />
@@ -53,16 +41,15 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
 }
 
 WriteEditor.defaultProps = {
-  initialValue: null,
   onChangeCb: ()=> {},
   placeholder: '',
   style: {}
 }
 
 WriteEditor.propTypes = {
-  initialValue: PropTypes.array,
+  initialValue: PropTypes.array.isRequired,
   onChangeCb: PropTypes.func,
-  placeholder: PropTypes.string, 
+  placeholder: PropTypes.string,
   style: PropTypes.object
 };
 

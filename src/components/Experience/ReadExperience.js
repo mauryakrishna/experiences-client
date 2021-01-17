@@ -14,8 +14,7 @@ import { Loading } from '../UIElements';
 import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
 
-const ReadThoughts = loadable(()=> import("./ReadThoughts"));
-const ExpressThoughts = loadable(()=> import('./ExpressThoughts'));
+const Thoughts =  loadable(()=> import("../Thoughts"));
 
 const ReadExperience = ({ slug }) => {
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
@@ -23,6 +22,8 @@ const ReadExperience = ({ slug }) => {
   const [publishdate, setPublishDate] = useState('');
   const [uid, setUid] = useState('');
   const [displayname, setDisplayname] = useState('');
+  const [thoughtsenabled, setThoughtsenabled] = useState(false);
+
   const [experienceNotFound, setExperienceNotFound] = useState(false);
   const editor = useMemo(() => pipe(createEditor()), []);
 
@@ -37,6 +38,7 @@ const ReadExperience = ({ slug }) => {
           title
           experience
           publishdate
+          thoughtsenabled
           author {
             uid
             displayname
@@ -65,6 +67,7 @@ const ReadExperience = ({ slug }) => {
       const {
         title,
         experience,
+        thoughtsenabled,
         author,
         publishdate,
         experiencefound,
@@ -74,6 +77,7 @@ const ReadExperience = ({ slug }) => {
       } else if (title && experience && author) {
         setTitle(title);
         setValue(experience);
+        setThoughtsenabled(thoughtsenabled);
         setPublishDate(publishdate);
         const { uid, displayname } = author;
         setUid(uid);
@@ -127,8 +131,7 @@ const ReadExperience = ({ slug }) => {
                 />
               </Slate>
             </Flex>
-            <ReadThoughts slugkey={slugkey}/>
-            <ExpressThoughts slugkey={slugkey} thoughtauthoruid={uid} />
+            { thoughtsenabled && <Thoughts slugkey={slugkey} thoughtauthoruid={uid} /> }
           </PseudoBox>
         )}
     </>

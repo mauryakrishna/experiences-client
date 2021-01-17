@@ -7,8 +7,19 @@ import WriteEditor from '../PureEditors/WriteEditor';
 
 import Button from '../UIElements/Button';
 
-const ExpressThoughts = ({ slugkey, thoughtauthoruid }) => {
-  const [value, setValue] = useState('');
+const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) => {
+  const initialValue = [
+    {
+      children: [
+        {
+          type: 'paragraph',
+          children: [{ text: '' }],
+        },
+      ],
+    },
+  ];
+
+  const [value, setValue] = useState(initialValue);
 
   const SAVE_NEW_THOUGHT_MUTATION = gql`
     mutation saveNewThought($input: SaveNewThoughtInput) {
@@ -28,17 +39,30 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid }) => {
   })
 
   const saveNewThought = async () => {    
+    onSaveCb();
     saveNewThoughtMutation({
       variables: {
         input: { experienceslugkey: slugkey, thought: JSON.stringify(value), thoughtauthoruid }
       }
-    })
+    });
+  }
+
+  const notNow = () => {
+    setValue(initialValue);
+    onCancelCb();
+  }
+
+  const setEditorContent = (newValue) => {
+    // to reun some validation or restrict the content in thoughts section
+    // to be done later
+    setValue(newValue);
   }
 
   return (
     <>
       <WriteEditor
-        onChangeCb={(newValue)=> {setValue(newValue)}}
+        initialValue={value}
+        onChangeCb={(newValue)=> {setEditorContent(newValue)}}
         placeholder="express your thoughts.."
         style={{ fontSize: '1.1rem', fontWeight: '400' }}
       />
@@ -49,13 +73,22 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid }) => {
       >
         Save
       </Button>
+      <Button 
+        onClick={notNow} 
+        variantColor="teal"
+        variant="outline"
+      >
+        Cancel
+      </Button>
     </>
   );
 }
 
 ExpressThoughts.propTypes = {
   slugkey: PropTypes.string.isRequired,
-  thoughtauthoruid: PropTypes.string.isRequired
+  thoughtauthoruid: PropTypes.string.isRequired,
+  onSaveCb: ()=> {},
+  onCancelCb: ()=> {}
 };
 
 export default ExpressThoughts;
