@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import loadable from "@loadable/component";
 import localStorage from "local-storage";
-import { Divider } from "@chakra-ui/core";
-import { SectionHeader, TextLikeLink, Button } from "./../UIElements";
-import DeleteAThought from "./DeleteAThought";
+import { Divider, Flex } from "@chakra-ui/core";
+import { SectionHeader, TextLikeLink } from "./../UIElements";
 
 const ReadThoughts = loadable(()=> import("./ReadThoughts"));
 const ExpressThoughts = loadable(()=> import("./ExpressThoughts"));
@@ -17,8 +16,15 @@ const Thoughts = ({slugkey}) => {
   return (
     <>
       <Divider pt={'2rem'} orientation="horizontal"/>
-      <SectionHeader>Thoughts</SectionHeader>
-      <TextLikeLink onClick={handleExpressThoughtClick}>Express Thoughts</TextLikeLink>
+      <Flex>
+        <Flex>
+          <SectionHeader>Thoughts</SectionHeader> 
+        </Flex>
+        <Flex><Divider orientation="vertical"/></Flex>
+        <Flex align="flex-end" align="center">
+          <TextLikeLink onClick={handleExpressThoughtClick}>Express Thoughts</TextLikeLink>
+        </Flex>
+      </Flex>
       { 
         expressThoughts && <ExpressThoughts 
         slugkey={slugkey} 

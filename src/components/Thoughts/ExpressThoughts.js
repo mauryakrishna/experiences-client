@@ -64,7 +64,7 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
         initialValue={value}
         onChangeCb={(newValue)=> {setEditorContent(newValue)}}
         placeholder="express your thoughts.."
-        style={{ fontSize: '1.1rem', fontWeight: '400' }}
+        style={{ fontSize: '0.9rem', fontWeight: '400' }}
       />
       <Button 
         onClick={saveNewThought} 
