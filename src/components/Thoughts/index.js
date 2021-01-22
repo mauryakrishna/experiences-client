@@ -3,6 +3,8 @@ import loadable from "@loadable/component";
 import localStorage from "local-storage";
 import { Divider, Flex } from "@chakra-ui/core";
 import { SectionHeader, TextLikeLink } from "./../UIElements";
+import { DetectMobileBrowser } from '../../detectmobilebrowser';
+const MobileNotSupported = loadable(()=> import('../UIElements/MobileNotSupported')) ;
 
 const ReadThoughts = loadable(()=> import("./ReadThoughts"));
 const ExpressThoughts = loadable(()=> import("./ExpressThoughts"));
@@ -26,6 +28,7 @@ const Thoughts = ({slugkey}) => {
         </Flex>
       </Flex>
       { 
+        DetectMobileBrowser() ? <MobileNotSupported /> : 
         expressThoughts && <ExpressThoughts 
         slugkey={slugkey} 
         thoughtauthoruid={localStorage.get("username")} 
