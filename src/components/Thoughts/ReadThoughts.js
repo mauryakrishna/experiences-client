@@ -7,7 +7,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { plugins, renderLeafBold } from '../Experience/SlatePlugins';
 
-import { Flex, Stack, Tooltip, Icon, Divider } from '@chakra-ui/core';
+import { Box, Flex, Stack, Tooltip, Icon, Divider } from '@chakra-ui/core';
 import DeleteAThought from "./DeleteAThought";
 import { Loading, TextLikeLink } from '../UIElements';
 import history from "../../history";
@@ -82,30 +82,15 @@ const Thoughts = ({ slugkey }) => {
       const { thought, thoughtid } = item;
       const { displayname, uid } = item.thoughtauthor;
       return (
-        <Flex key={thoughtid} p='8px' borderRadius='8px' border="1px" borderColor="teal.100">
-          <Flex>
-            <Slate editor={editor} value={JSON.parse(thought)}>
-              <EditablePlugins
-                plugins={plugins}
-                readOnly
-                style={{ fontSize: '0.9rem', fontWeight: '400' }}
-                renderLeaf={[renderLeafBold]}
-              />
-            </Slate>
-          </Flex>
-          <Flex>
-            <Divider orientation="vertical"/>
-          </Flex>
-          <Flex px={'5px'} pt="5px">
+        <Box key={thoughtid} p={'8px'} pt="5px" borderRadius='5px' border="1px" borderColor="teal.100">
+          <Box pb="10px">
             <TextLikeLink 
               fontSize={{ base: '0.7rem', sm: '0.7rem', md: '0.7rem' }} 
               onClick={()=> {goToThoughtAuthor(uid)}} to={`/author/${uid}`}
             >
               {displayname}
             </TextLikeLink>
-          </Flex>
-          <Flex px={'5px'} pt="7px">
-            <Tooltip label="Delete this thought">
+            <Tooltip label="Delete this thought" >
               <Icon
                 size="12px"
                 name="delete"
@@ -114,8 +99,16 @@ const Thoughts = ({ slugkey }) => {
                 }}
               />
             </Tooltip>
-          </Flex>
-        </Flex>
+          </Box>
+          <Slate editor={editor} value={JSON.parse(thought)}>
+            <EditablePlugins
+              plugins={plugins}
+              readOnly
+              style={{ fontSize: '0.9rem', fontWeight: '400' }}
+              renderLeaf={[renderLeafBold]}
+            />
+          </Slate>
+        </Box>
       );
     });
   }
