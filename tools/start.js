@@ -212,20 +212,21 @@ async function start() {
 
   const port = process.env.PORT ? Number(process.env.PORT) : undefined;
 
+  // uncomment the below code for browserSync functionality, not needed now
   // Launch the development server with Browsersync and HMR
-  await new Promise((resolve, reject) =>
-    browserSync.create().init(
-      {
-        // https://www.browsersync.io/docs/options
-        server: 'src/server.js',
-        middleware: [server],
-        open: !process.argv.includes('--silent'),
-        ...(isDebug ? {} : { notify: false, ui: false }),
-        ...(port ? { port } : null),
-      },
-      (error, bs) => (error ? reject(error) : resolve(bs)),
-    ),
-  );
+  // await new Promise((resolve, reject) =>
+  //   browserSync.create().init(
+  //     {
+  //       // https://www.browsersync.io/docs/options
+  //       server: 'src/server.js',
+  //       middleware: [server],
+  //       open: !process.argv.includes('--silent'),
+  //       ...(isDebug ? {} : { notify: false, ui: false }),
+  //       ...(port ? { port } : null),
+  //     },
+  //     (error, bs) => (error ? reject(error) : resolve(bs)),
+  //   ),
+  // );
 
   const timeEnd = new Date();
   const time = timeEnd.getTime() - timeStart.getTime();
