@@ -1,8 +1,12 @@
+import React from "react";
 import { useMutation } from 'react-apollo-hooks';
+import PropTypes from "prop-types";
 import gql from 'graphql-tag';
 import localStorage from 'local-storage';
 
-const DeleteAThought = () => {
+import { Tooltip, Icon} from '@chakra-ui/core';
+
+const DeleteAThought = ({ slugkey, thoughtid, deletedCb }) => {
   const DELETE_THOUGHT_MUTATION = gql`
     mutation deleteAThought($input: DeleteAThoughtInput) {
       deleteAThought(input: $input) {
@@ -16,7 +20,12 @@ const DeleteAThought = () => {
     update: (cached, { data }) => {
       if(data.deleteAThought) {
         const { deleted, thoughtid } = data.deleteAThought;
-        console.log("deleted", deleted, thoughtid);
+        if(deleted) {
+          deletedCb(thoughtid);
+        }
+        else {
+          console.log("Could not delete a thought.")
+        }
       }
     }
   });
@@ -32,7 +41,22 @@ const DeleteAThought = () => {
     })
   }
 
-  return deleteThought;
+  return (
+    <Tooltip label="Delete this thought">
+      <Icon
+        size="10px"
+        name="delete"
+        ml="10px"
+        onClick={()=> deleteThought(slugkey, thoughtid)}
+      />
+    </Tooltip>
+  );
+}
+
+DeleteAThought.propTypes = {
+  slugkey: PropTypes.string.isRequired,
+  thoughtid: PropTypes.number.isRequired,
+  deletedCb: PropTypes.func.isRequired
 }
 
 export default DeleteAThought;

@@ -7,9 +7,9 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { plugins, renderLeafBold } from '../Experience/SlatePlugins';
 
-import { Box, Flex, Stack, Tooltip, Icon, Divider } from '@chakra-ui/core';
+import { Box, Flex, Stack, CircularProgress } from '@chakra-ui/core';
 import DeleteAThought from "./DeleteAThought";
-import { Loading, TextLikeLink } from '../UIElements';
+import { Button, Loading, TextLikeLink } from '../UIElements';
 import history from "../../history";
 
 const Thoughts = ({ slugkey }) => {
@@ -17,7 +17,6 @@ const Thoughts = ({ slugkey }) => {
   const [cursor, setCursor] = useState(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
-  const deleteThought = DeleteAThought();
   const editor = useMemo(() => pipe(createEditor()), []);
   const GET_THOUGHTS_FOR_EXPERIENCE = gql`
     query getThoughtsOfExperience($cursor: String, $experienceslugkey: String!) {
@@ -25,6 +24,7 @@ const Thoughts = ({ slugkey }) => {
         cursor
         thoughts {
           thought
+          isauthor
           thoughtid
           created_at
           thoughtauthor {
@@ -73,32 +73,44 @@ const Thoughts = ({ slugkey }) => {
     return <Loading />;
   }
 
+  /**
+   * delete thoughts from the server and remove that particular entry from
+   * client side thoughts list and update the UI
+   * downside: we do not make a call to get the latest 10 record to display
+   * upside: did not affect much, will give good experience
+   */
+  const deletedCb = (thoughtid) => { 
+    for (var i = thoughtsdata.length; i--;) {
+      if (thoughtsdata[i].thoughtid === thoughtid) {
+        thoughtsdata.splice(i, 1);
+        break;
+      }
+    }
+    setThoughtsData(thoughtsdata);
+  }
+
+
   const goToThoughtAuthor = (uid) => {
     history.push(`/author/${uid}`)
   }
 
   const displayThoughts = () => {
     return thoughtsdata.map((item)=> {
-      const { thought, thoughtid } = item;
+      const { thought, thoughtid, isauthor } = item;
       const { displayname, uid } = item.thoughtauthor;
       return (
-        <Box key={thoughtid} p={'8px'} pt="5px" borderRadius='5px' border="1px" borderColor="teal.100">
+        <Box key={thoughtid} py={'8px'} px={'16px'} pt="5px" borderRadius='5px' border="1px" borderColor="teal.100">
           <Box pb="10px">
             <TextLikeLink 
               fontSize={{ base: '0.7rem', sm: '0.7rem', md: '0.7rem' }} 
-              onClick={()=> {goToThoughtAuthor(uid)}} to={`/author/${uid}`}
+              onClick={()=> {goToThoughtAuthor(uid)}}
             >
               {displayname}
             </TextLikeLink>
-            <Tooltip label="Delete this thought" >
-              <Icon
-                size="12px"
-                name="delete"
-                onClick={() => {
-                  deleteThought(slugkey, thoughtid)
-                }}
-              />
-            </Tooltip>
+            {
+              isauthor && <DeleteAThought {...{ slugkey, thoughtid, isauthor, deletedCb }} />
+            }
+            
           </Box>
           <Slate editor={editor} value={JSON.parse(thought)}>
             <EditablePlugins
@@ -114,11 +126,18 @@ const Thoughts = ({ slugkey }) => {
   }
 
   return (
-    <Flex justify="left" py={5}>
-      <Stack spacing={3} pr="5px">
+    <Box justify="left" py={5}>
+      <Stack spacing={3} pr="5px" width="100%">
         {displayThoughts()}
       </Stack>
-    </Flex>
+      <Button onClick={loadMoreThoughts}>
+        {fetchMoreLoading ? (
+          <CircularProgress isIndeterminate size="24px" color="teal" />
+        ) : (
+            'Load more'
+          )}
+      </Button>
+    </Box>
   );
 }
 
