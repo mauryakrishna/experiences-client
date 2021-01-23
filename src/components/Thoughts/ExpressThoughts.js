@@ -33,13 +33,12 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
     update: (cached, { data }) => {
       if(data.saveNewThought) {
         const { saved } = data.saveNewThought;
-        console.log("Saved", saved);
+        onSaveCb(saved);
       }
     }
   })
 
   const saveNewThought = async () => {    
-    onSaveCb();
     saveNewThoughtMutation({
       variables: {
         input: { experienceslugkey: slugkey, thought: JSON.stringify(value), thoughtauthoruid }
@@ -69,14 +68,12 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
       <Button 
         onClick={saveNewThought} 
         variantColor="teal"
-        variant="outline"
       >
         Save
       </Button>
       <Button 
         onClick={notNow} 
         variantColor="teal"
-        variant="outline"
       >
         Cancel
       </Button>
