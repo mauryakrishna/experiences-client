@@ -13,12 +13,14 @@ const ExpressThoughts = loadable(()=> import("./ExpressThoughts"));
 const Thoughts = ({slugkey}) => {
   const [thoughtSavedErr, setThoughtSavedErr] = useState(false);
   const [expressThoughts, toggleExpressThoughts] = useState(false);
+
   const onSaveThought = (saved) => {
     setThoughtSavedErr(!saved);
-    toggleExpressThoughts(saved && !expressThoughts);
+    toggleExpressThoughts(!saved);
   }
 
   const toggleExpressThought = () => {
+    setThoughtSavedErr(false);
     toggleExpressThoughts(!expressThoughts);
   }
 
