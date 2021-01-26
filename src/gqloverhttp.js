@@ -2,7 +2,7 @@ import localStorage from "local-storage";
 
 export default async ({ variables, query }) => {
   const token = localStorage.get('token');
-  const { data } = await fetch(`${window.location.origin}/gql`, {
+  const response = await fetch(`${window.location.origin}/gql`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -15,5 +15,5 @@ export default async ({ variables, query }) => {
     }),
   }).then(res => res.json());
 
-  return data;
+  return response && response.data;
 };
