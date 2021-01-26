@@ -78,7 +78,7 @@ const Thoughts = ({ slugkey, refreshCursor }) => {
         break;
       }
     }
-    setThoughtsData(thoughtsdata);
+    setThoughtsData([...thoughtsdata]);
   }
 
   const goToThoughtAuthor = (uid) => {
