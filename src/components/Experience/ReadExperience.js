@@ -9,7 +9,7 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Helmet } from 'react-helmet';
 
-import { Flex, Text, PseudoBox } from '@chakra-ui/core';
+import { Flex, Text, PseudoBox, Divider } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
 import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
@@ -131,7 +131,15 @@ const ReadExperience = ({ slug }) => {
                 />
               </Slate>
             </Flex>
+            <Divider pt={'2rem'} orientation="horizontal"/>
             { thoughtsenabled && <Thoughts slugkey={slugkey} thoughtauthoruid={uid} /> }
+            { !thoughtsenabled && <Text textAlign="center"
+              m="15px"
+              fontWeight="400"
+              color="gray.300"
+            >
+              Author has turned off thoughts for this experience.
+            </Text>}
           </PseudoBox>
         )}
     </>

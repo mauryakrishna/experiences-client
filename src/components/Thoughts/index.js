@@ -35,7 +35,6 @@ const Thoughts = ({slugkey}) => {
 
   return (
     <>
-      <Divider pt={'2rem'} orientation="horizontal"/>
       <Flex>
         <Flex>
           <SectionHeader>Thoughts</SectionHeader> 
