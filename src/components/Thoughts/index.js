@@ -40,10 +40,15 @@ const Thoughts = ({slugkey}) => {
         <Flex>
           <SectionHeader>Thoughts</SectionHeader> 
         </Flex>
-        <Flex><Divider orientation="vertical"/></Flex>
-        <Flex align="flex-end" align="center">
-          <TextLikeLink onClick={toggleExpressThought}>Express Thoughts</TextLikeLink>
-        </Flex>
+        {
+          localStorage.get('loggedin') && 
+          <>
+            <Flex><Divider orientation="vertical"/></Flex>
+            <Flex align="flex-end" align="center">
+              <TextLikeLink onClick={toggleExpressThought}>Express Thoughts</TextLikeLink>
+            </Flex>
+          </>
+        }
       </Flex>
       { 
         DetectMobileBrowser() ? <MobileNotSupported /> : 
