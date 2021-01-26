@@ -1,24 +1,24 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import gqloverhttp from '../../gqloverhttp';
 import { createEditor } from 'slate';
 import { Slate } from 'slate-react';
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
-import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
 import { plugins, renderLeafBold } from '../Experience/SlatePlugins';
 
-import { Box, Flex, Stack, CircularProgress } from '@chakra-ui/core';
+import { Box, Stack, CircularProgress } from '@chakra-ui/core';
 import DeleteAThought from "./DeleteAThought";
 import { Button, Loading, TextLikeLink } from '../UIElements';
 import history from "../../history";
 
-const Thoughts = ({ slugkey }) => {
+const Thoughts = ({ slugkey, refreshCursor }) => {
   const [thoughtsdata, setThoughtsData] = useState([]);
   const [cursor, setCursor] = useState(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(true)
 
   const editor = useMemo(() => pipe(createEditor()), []);
-  const GET_THOUGHTS_FOR_EXPERIENCE = gql`
+  const GET_THOUGHTS_FOR_EXPERIENCE = `
     query getThoughtsOfExperience($cursor: String, $experienceslugkey: String!) {
       getThoughtsOfExperience(cursor: $cursor, experienceslugkey: $experienceslugkey) {
         cursor
@@ -36,42 +36,34 @@ const Thoughts = ({ slugkey }) => {
     }
   `;
 
-  const { loading, data, fetchMore } = useQuery(GET_THOUGHTS_FOR_EXPERIENCE, {
-    variables: { experienceslugkey: slugkey },
-  });
-
-  const loadMoreThoughts = () => {
-    setFetchMoreLoading(true);
-    fetchMore({
-      query: GET_THOUGHTS_FOR_EXPERIENCE,
-      variables: { cursor, experienceslugkey: slugkey },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        setFetchMoreLoading(false);
-        const prevExp = prev.getThoughtsOfExperience.thoughts;
-        const newExp = fetchMoreResult.getThoughtsOfExperience.thoughts;
-        const updatedcursor = fetchMoreResult.getThoughtsOfExperience.cursor;
-        const combined = [...prevExp, ...newExp];
-        return {
-          getThoughtsOfExperience: {
-            cursor: updatedcursor,
-            thoughts: combined,
-          },
-        };
-      },
-    });
-  };
-
-  useEffect(()=> {
+  const getListOfThoughts = async (cursor2) => {
+    const data = await gqloverhttp({ variables: { cursor:cursor2, experienceslugkey: slugkey }, query: GET_THOUGHTS_FOR_EXPERIENCE });
     if(data && data.getThoughtsOfExperience) {
       const { cursor, thoughts } = data.getThoughtsOfExperience;
       setCursor(cursor);
-      setThoughtsData(thoughts);
+      return thoughts;
     }
-  }, [data])
+    else {
+      return thoughtsdata;
+    }
+  };
   
-  if (loading) {
-    return <Loading />;
+  const loadMoreThoughts = async () => {
+    setFetchMoreLoading(true);
+    const thoughts = await getListOfThoughts(cursor);
+    setThoughtsData([...thoughtsdata, ...thoughts]);
+    setFetchMoreLoading(false);
   }
+
+  useEffect(()=> {
+    async function getListOnLoad() {
+      setShowLoading(true);
+      const thoughts = await getListOfThoughts(refreshCursor);
+      setThoughtsData(thoughts);
+      setShowLoading(false);
+    }
+    getListOnLoad();
+  }, [refreshCursor]);
 
   /**
    * delete thoughts from the server and remove that particular entry from
@@ -88,7 +80,6 @@ const Thoughts = ({ slugkey }) => {
     }
     setThoughtsData(thoughtsdata);
   }
-
 
   const goToThoughtAuthor = (uid) => {
     history.push(`/author/${uid}`)
@@ -110,7 +101,6 @@ const Thoughts = ({ slugkey }) => {
             {
               isauthor && <DeleteAThought {...{ slugkey, thoughtid, isauthor, deletedCb }} />
             }
-            
           </Box>
           <Slate editor={editor} value={JSON.parse(thought)}>
             <EditablePlugins
@@ -126,18 +116,23 @@ const Thoughts = ({ slugkey }) => {
   }
 
   return (
-    <Box justify="left" py={5}>
-      <Stack spacing={3} pr="5px" width="100%">
-        {displayThoughts()}
-      </Stack>
-      <Button onClick={loadMoreThoughts}>
-        {fetchMoreLoading ? (
-          <CircularProgress isIndeterminate size="24px" color="teal" />
-        ) : (
-            'Load more'
-          )}
-      </Button>
-    </Box>
+    <>
+      { showLoading && <Loading />}
+      { !showLoading && 
+        <Box justify="left" py={5}>
+          <Stack spacing={3} pr="5px" width="100%">
+            {displayThoughts()}
+          </Stack>
+          <Button onClick={loadMoreThoughts}>
+            {fetchMoreLoading ? (
+              <CircularProgress isIndeterminate size="24px" color="teal" />
+            ) : (
+                'Load more'
+              )}
+          </Button>
+        </Box>
+      }
+    </>
   );
 }
 
