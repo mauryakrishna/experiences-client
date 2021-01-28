@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import useStyles from 'isomorphic-style-loader/useStyles';
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -8,6 +8,7 @@ import gql from 'graphql-tag';
 import s from './Editor.css';
 import Layout from '../../components/Editor/Layout';
 import PublishExperience from '../../components/Publish/PublishButton';
+import { SAVE_NOTHING } from '../../ConfigConstants';
 
 export default function Editor({ slugkey }) {
   useStyles(s);
@@ -61,11 +62,16 @@ export default function Editor({ slugkey }) {
     client.writeData(cacheData);
   }
 
+  const [state, setState] = useState(SAVE_NOTHING);
+
+  const cb = newstate => {
+    setState(newstate);
+  };
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <PublishExperience />
-        <Layout />
+        <PublishExperience saveState={state} />
+        <Layout cb={cb}/>
       </div>
     </div>
   );

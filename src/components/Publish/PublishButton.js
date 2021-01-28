@@ -1,21 +1,35 @@
 import React, { useState, useCallback } from 'react';
 import { useApolloClient } from 'react-apollo-hooks';
 import localStorage from 'local-storage';
+import {
+  PseudoBox,
+  Text,
+  Flex,
+  Box,
+  Code,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+} from '@chakra-ui/core';
 
 import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
 import history from '../../history';
-
 import { Button } from '../UIElements';
-
+import PublishModal from './PublishModal';
+import ShowSaveState from './ShowSaveState';
 import {
   GET_EXPERIENCE_TITLE,
   GET_EXPERIENCE_EXPERIENCE,
   GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
 
-const PublishExperience = () => {
+const PublishExperience = ({ saveState }) => {
   const client = useApolloClient();
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { ispublished } = client.readQuery({
     query: GET_EXPERIENCE_ISPUBLISHED,
   });
@@ -51,19 +65,45 @@ const PublishExperience = () => {
     } else if (!experience) {
       setErrMessage('Kindly add an experience.');
     } else {
-      setButtonText('Publishing....');
-      // hit api for publish
-      publishDebounce();
+      ispublished ? continuePublishing() : onOpen();
     }
   });
 
+  const continuePublish = () => {
+    setButtonText('Publishing....');
+    // hit api for publish
+    publishDebounce();
+  }
+
   return (
-    <>
-      <Button disabled={disableButton} onClick={handlePublish}>
-        {buttonText}
-      </Button>
-      <span>{errMessage}</span>
-    </>
+    <Flex>
+      <Flex>
+        <Button disabled={disableButton} cursor="pointer" onClick={handlePublish}>
+          <Text>{buttonText}</Text>
+        </Button>
+
+        <Modal
+          blockScrollOnMount={false}
+          isOpen={isOpen}
+          onClose={onClose}
+          isCentered
+        >
+          <ModalOverlay bg="white" opacity="0.7" />
+          <ModalContent borderWidth={1} borderRadius={8}>
+            <ModalCloseButton />
+            <ModalBody>
+              <PublishModal onPublishCb={continuePublish}/>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Flex>
+      <Flex>
+        <Text display="flex" alignItems="center">{errMessage}</Text>
+      </Flex>
+      <Flex justify="flex-end">
+        <ShowSaveState state={saveState} />
+      </Flex>
+    </Flex>
   );
 };
 

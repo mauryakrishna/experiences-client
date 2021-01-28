@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+import React from 'react';
+import { Code } from '@chakra-ui/core';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,18 +11,23 @@ import {
 
 const ShowSaveState = ({ state }) => {
   let retState = null;
+  let color = null;
   if (state === SAVE_INITIATED) {
     retState = 'Saving...';
+    color = 'yellow';
   }
-
-  if (state === SAVE_COMPLETED) {
+  else if (state === SAVE_COMPLETED) {
     retState = 'Saved';
+    color = 'green';
+  }
+  else if (state === SAVE_NOTHING) {
+    retState = '';
+    color = 'gray'
   }
 
-  if (state === SAVE_NOTHING) {
-    retState = '';
-  }
-  return retState;
+  return (
+    <Code display="flex" alignItems="center" variantColor={color} children={retState} />
+  );
 };
 
 ShowSaveState.propTypes = {
