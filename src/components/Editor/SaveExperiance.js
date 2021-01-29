@@ -9,6 +9,7 @@ import {
   MAX_WAIT,
   SAVE_INITIATED,
   SAVE_COMPLETED,
+  SAVE_ERROR,
 } from '../../ConfigConstants';
 
 const Save = ({ cb }) => {
@@ -34,12 +35,12 @@ const Save = ({ cb }) => {
           cache.writeData({
             data: { slugkey, experience: JSON.stringify(experience) },
           });
+          cb(SAVE_COMPLETED);
         } else {
+          cb(SAVE_ERROR);
           console.log('Could not save.');
         }
       }
-
-      cb(SAVE_COMPLETED);
     },
   });
 

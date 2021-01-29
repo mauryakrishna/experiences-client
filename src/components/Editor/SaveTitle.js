@@ -40,8 +40,6 @@ function SaveTitle({ cb }) {
           console.log('Could not save title');
         }
       }
-
-      
     },
   });
 
