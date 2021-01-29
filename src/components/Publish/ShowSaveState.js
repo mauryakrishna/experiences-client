@@ -7,6 +7,7 @@ import {
   SAVE_NOTHING,
   SAVE_INITIATED,
   SAVE_COMPLETED,
+  SAVE_ERROR,
 } from '../../ConfigConstants';
 
 const ShowSaveState = ({ state }) => {
@@ -22,7 +23,11 @@ const ShowSaveState = ({ state }) => {
   }
   else if (state === SAVE_NOTHING) {
     retState = '';
-    color = 'gray'
+    color = 'gray';
+  }
+  else if(state === SAVE_ERROR) {
+    retState = 'Could not save..'
+    color = 'red';
   }
 
   return (
