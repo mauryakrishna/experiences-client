@@ -100,7 +100,7 @@ const PublishExperience = ({ saveState }) => {
       <Flex>
         <Text display="flex" alignItems="center">{errMessage}</Text>
       </Flex>
-      <Flex justify="flex-end">
+      <Flex ml="auto" mr="0">
         <ShowSaveState state={saveState} />
       </Flex>
     </Flex>

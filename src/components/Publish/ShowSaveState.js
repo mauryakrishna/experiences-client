@@ -26,7 +26,7 @@ const ShowSaveState = ({ state }) => {
   }
 
   return (
-    <Code display="flex" alignItems="center" variantColor={color} children={retState} />
+    <Code display="flex" alignItems="center" my={'0.75rem'} px={'0.75rem'} variantColor={color} children={retState} />
   );
 };
 
