@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Flex,
@@ -20,6 +20,7 @@ import { ErrorMessage, TextLikeLink } from '../UIElements';
 import InfoMessage from '../UIElements/AuthFlow/InfoMessage';
 
 export default function Login({ loginCallback, toggle }) {
+  const loginInputRef = useRef();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,6 +35,10 @@ export default function Login({ loginCallback, toggle }) {
     // setting false will hide login form and make forgot password form visible
     toggle(false);
   };
+
+  useEffect(()=> {
+    loginInputRef.current.focus();
+  }, []);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -98,6 +103,7 @@ export default function Login({ loginCallback, toggle }) {
               {error && <ErrorMessage>{error}</ErrorMessage>}
               <FormControl isRequired mt={6}>
                 <Input
+                  ref={loginInputRef}
                   type="email"
                   placeholder="Email address"
                   size="lg"

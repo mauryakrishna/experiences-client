@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import {
   Flex,
@@ -18,6 +18,7 @@ import { ErrorMessage, InfoMessage, SuccessMessage, DisplayAcceptText, TextLikeL
 import ResendActivationEmail from '../ResendActivation';
 
 export default function Register() {
+  const emailAddressRef = useRef();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayname, setDisplayname] = useState('');
@@ -63,6 +64,10 @@ export default function Register() {
     }
   };
 
+  useEffect(()=> {
+    emailAddressRef.current.focus();
+  }, []);
+
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
@@ -88,6 +93,7 @@ export default function Register() {
                   }
                   <FormControl isRequired mt={6}>
                     <Input
+                      ref={emailAddressRef}
                       type="email"
                       placeholder="Email address"
                       size="lg"
