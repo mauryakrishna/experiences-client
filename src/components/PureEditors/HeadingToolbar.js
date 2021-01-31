@@ -31,17 +31,17 @@ import {
 import ToolbarAlignment, {
   plugins as pluginsToolbarAlignment,
   nodeTypes as nodeTypesAlign,
-} from './ToolbarAlignment';
+} from '../Editor/ToolbarAlignment';
 
 import ToolbarMarks, {
   plugins as pluginsToolbarMarks,
   withPlugins as withPluginsToolbarMarks,
-} from './ToolbarMarks';
+} from '../Editor/ToolbarMarks';
 
 import ToolbarList, {
   plugins as pluginsToolbarList,
   withPlugins as withPluginsToolbarList,
-} from './ToolbarList';
+} from '../Editor/ToolbarList';
 
 const resetOptions = {
   ...nodeTypes,

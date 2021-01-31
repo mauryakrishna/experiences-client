@@ -212,6 +212,7 @@ async function start() {
 
   const port = process.env.PORT ? Number(process.env.PORT) : undefined;
 
+  // uncomment the below code for browserSync functionality, not needed now
   // Launch the development server with Browsersync and HMR
   await new Promise((resolve, reject) =>
     browserSync.create().init(

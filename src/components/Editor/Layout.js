@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-
 import Editor from './Editor';
 import Title from './Title';
 
-import ShowSaveState from './ShowSaveState';
+import PublishExperience from '../../components/Publish/PublishButton';
 import { SAVE_NOTHING } from '../../ConfigConstants';
 
 const Layout = () => {
@@ -16,7 +15,7 @@ const Layout = () => {
 
   return (
     <React.Fragment>
-      <ShowSaveState state={state} />
+      <PublishExperience saveState={state}/>
       <Title cb={cb} />
       <Editor cb={cb} />
     </React.Fragment>

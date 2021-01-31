@@ -87,4 +87,4 @@ Title.propTypes = {
   cb: PropTypes.func.isRequired,
 };
 
-export default Title;
+export default React.memo(Title);

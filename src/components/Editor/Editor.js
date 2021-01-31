@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
@@ -16,7 +16,7 @@ import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
 import HeadingToolbar, {
   plugins as pluginsHeading,
   withPlugins as withPluginsHeading,
-} from './HeadingToolbar';
+} from '../PureEditors/HeadingToolbar';
 
 import SaveExperience from './SaveExperiance';
 import {
@@ -51,10 +51,6 @@ const Editor = ({ cb }) => {
   );
 
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
-
-  const isDifferent = (value1, value2) => {
-    return !isEqual(value1, value2);
-  };
 
   return (
     <Slate
@@ -92,4 +88,4 @@ const Editor = ({ cb }) => {
 Editor.propTypes = {
   cb: PropTypes.func.isRequired,
 };
-export default Editor;
+export default React.memo(Editor);

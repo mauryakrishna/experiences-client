@@ -1,17 +1,15 @@
 /* eslint-disable no-shadow */
 import useStyles from 'isomorphic-style-loader/useStyles';
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
 import s from './Editor.css';
 import Layout from '../../components/Editor/Layout';
-import PublishExperience from '../../components/Publish/PublishButton';
 
 export default function Editor({ slugkey }) {
   useStyles(s);
-
   const client = useApolloClient();
   const cacheData = {
     data: {
@@ -61,10 +59,10 @@ export default function Editor({ slugkey }) {
     client.writeData(cacheData);
   }
 
+  
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <PublishExperience />
         <Layout />
       </div>
     </div>

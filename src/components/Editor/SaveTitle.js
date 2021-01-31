@@ -8,6 +8,7 @@ import {
   MAX_WAIT,
   SAVE_INITIATED,
   SAVE_COMPLETED,
+  SAVE_ERROR,
 } from '../../ConfigConstants';
 
 import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
@@ -33,12 +34,12 @@ function SaveTitle({ cb }) {
         if (saved) {
           // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
           cache.writeData({ data: { slugkey, title } });
+          cb(SAVE_COMPLETED);
         } else {
+          cb(SAVE_ERROR);
           console.log('Could not save title');
         }
       }
-
-      cb(SAVE_COMPLETED);
     },
   });
 

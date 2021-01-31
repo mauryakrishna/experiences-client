@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import React, { useState, useMemo } from 'react';
+import loadable from "@loadable/component";
 import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
 import { Slate } from 'slate-react';
@@ -8,29 +9,21 @@ import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Helmet } from 'react-helmet';
 
-import { Flex, Text, PseudoBox } from '@chakra-ui/core';
+import { Flex, Text, PseudoBox, Divider } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
-
-import { plugins as pluginsHeadingToolbar } from '../SlatePluginsNext/HeadingToolbarPlugins';
-import { plugins as pluginsToolbarList } from '../SlatePluginsNext/ToolbarListPlugins';
-import { plugins as pluginsToolbarMarks } from '../SlatePluginsNext/ToolbarMarksPlugins';
-import { plugins as pluginsToolbarAlignment } from '../SlatePluginsNext/ToolbarAlignmentPlugins';
-import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
+import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
 
-const ReadExperience = ({ slug }) => {
-  const plugins = [
-    ...pluginsToolbarAlignment,
-    ...pluginsHeadingToolbar,
-    ...pluginsToolbarList,
-    ...pluginsToolbarMarks,
-  ];
+const Thoughts =  loadable(()=> import("../Thoughts"));
 
+const ReadExperience = ({ slug }) => {
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
   const [title, setTitle] = useState('');
   const [publishdate, setPublishDate] = useState('');
   const [uid, setUid] = useState('');
   const [displayname, setDisplayname] = useState('');
+  const [thoughtsenabled, setThoughtsenabled] = useState(false);
+
   const [experienceNotFound, setExperienceNotFound] = useState(false);
   const editor = useMemo(() => pipe(createEditor()), []);
 
@@ -45,6 +38,7 @@ const ReadExperience = ({ slug }) => {
           title
           experience
           publishdate
+          thoughtsenabled
           author {
             uid
             displayname
@@ -73,6 +67,7 @@ const ReadExperience = ({ slug }) => {
       const {
         title,
         experience,
+        thoughtsenabled,
         author,
         publishdate,
         experiencefound,
@@ -82,6 +77,7 @@ const ReadExperience = ({ slug }) => {
       } else if (title && experience && author) {
         setTitle(title);
         setValue(experience);
+        setThoughtsenabled(thoughtsenabled);
         setPublishDate(publishdate);
         const { uid, displayname } = author;
         setUid(uid);
@@ -135,6 +131,15 @@ const ReadExperience = ({ slug }) => {
                 />
               </Slate>
             </Flex>
+            <Divider pt={'2rem'} orientation="horizontal"/>
+            { thoughtsenabled && <Thoughts slugkey={slugkey} thoughtauthoruid={uid} /> }
+            { !thoughtsenabled && <Text textAlign="center"
+              m="15px"
+              fontWeight="400"
+              color="gray.300"
+            >
+              Author has turned off thoughts for this experience.
+            </Text>}
           </PseudoBox>
         )}
     </>
