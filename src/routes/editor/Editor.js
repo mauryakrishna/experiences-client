@@ -7,12 +7,9 @@ import gql from 'graphql-tag';
 
 import s from './Editor.css';
 import Layout from '../../components/Editor/Layout';
-import PublishExperience from '../../components/Publish/PublishButton';
-import { SAVE_NOTHING } from '../../ConfigConstants';
 
 export default function Editor({ slugkey }) {
   useStyles(s);
-
   const client = useApolloClient();
   const cacheData = {
     data: {
@@ -62,16 +59,11 @@ export default function Editor({ slugkey }) {
     client.writeData(cacheData);
   }
 
-  const [state, setState] = useState(SAVE_NOTHING);
-
-  const cb = newstate => {
-    setState(newstate);
-  };
+  
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <PublishExperience saveState={state} />
-        <Layout cb={cb}/>
+        <Layout />
       </div>
     </div>
   );
