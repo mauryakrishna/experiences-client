@@ -17,19 +17,22 @@ const Publish = ({ cb }) => {
   `;
 
   const [publish] = useMutation(mutation, {
-    update: (cache, { data }) => {
+    update: (cache, { data, error }) => {
       if (data && data.publishExperience) {
         const { slug, slugkey, published } = data.publishExperience;
         if (published) {
           cb({ slug, slugkey });
         }
+        else {
+          console.log("Could not publish experience.", error);
+        }
       }
     },
   });
 
-  const [debouncedCallback] = useDebouncedCallback(async () => {
+  const [debouncedCallback] = useDebouncedCallback(async (enablethoughts) => {
     const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
-    await publish({ variables: { input: { slugkey } } });
+    await publish({ variables: { input: { slugkey, enablethoughts } } });
   }, 0);
 
   return debouncedCallback;

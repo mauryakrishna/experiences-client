@@ -69,10 +69,11 @@ const PublishExperience = ({ saveState }) => {
     }
   });
 
-  const continuePublish = () => {
+  const continuePublish = (enableThoughts) => {
     setButtonText('Publishing....');
     // hit api for publish
-    publishDebounce();
+    publishDebounce(enableThoughts);
+    onToggle();
   }
 
   return (

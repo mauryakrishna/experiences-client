@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox, Box, Text, Flex } from "@chakra-ui/core";
 import TextLikeLink from '../UIElements/TextLikeLink';
 
 const PublishModal = ({ onPublishCb }) => {
+  const [enableThoughts, setEnableThoughts] = useState(true);
+  
   return (
     <>
       <Flex p="15px">
         <Flex align="baseline">
-          <Checkbox size="lg" px="5px" py="5px" variantColor="green" defaultIsChecked />
+          <Checkbox 
+            size="lg" 
+            px="5px" 
+            py="5px" 
+            variantColor="green" 
+            isChecked={enableThoughts} 
+            onChange={()=> setEnableThoughts(!enableThoughts)}
+          />
         </Flex>
         <Box>
           <Text>Let reader express their thoughts.</Text>
@@ -16,7 +25,7 @@ const PublishModal = ({ onPublishCb }) => {
             thoughts which will appear in thoughts at the bottom of experience.
           </Text>
           <br />
-          <TextLikeLink cursor="pointer" onClick={onPublishCb}>
+          <TextLikeLink cursor="pointer" onClick={()=>onPublishCb(enableThoughts)}>
             Continue to publish
           </TextLikeLink>
         </Box>
