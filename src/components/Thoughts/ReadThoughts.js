@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import localStorage from 'local-storage';
 import gqloverhttp from '../../gqloverhttp';
 import { createEditor } from 'slate';
 import { Slate } from 'slate-react';
@@ -37,7 +38,15 @@ const Thoughts = ({ slugkey, refreshCursor }) => {
   `;
 
   const getListOfThoughts = async (cursor2) => {
-    const data = await gqloverhttp({ variables: { cursor:cursor2, experienceslugkey: slugkey }, query: GET_THOUGHTS_FOR_EXPERIENCE });
+
+    const data = await gqloverhttp({ 
+      variables: { 
+        cursor:cursor2, 
+        experienceslugkey: slugkey 
+      }, 
+      query: GET_THOUGHTS_FOR_EXPERIENCE,
+      token: localStorage.get('token') 
+    });
     if(data && data.getThoughtsOfExperience) {
       const { cursor, thoughts } = data.getThoughtsOfExperience;
       setCursor(cursor);

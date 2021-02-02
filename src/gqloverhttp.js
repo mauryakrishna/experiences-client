@@ -1,7 +1,10 @@
-import localStorage from "local-storage";
-
-export default async ({ variables, query }) => {
-  const token = localStorage.get('token');
+/**
+ * token is optional
+ * variables required
+ * query required
+ *  
+ * */ 
+export default async ({ variables, query, token }) => {
   const response = await fetch(`${window.location.origin}/gql`, {
     method: 'POST',
     headers: { 
