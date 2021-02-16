@@ -30,7 +30,7 @@ export default function Html({
         <title>{title}</title>
         <meta name="google-site-verification" content="UZYrsB1BXHH_HQD8QpPlyJJZZYUCVPIOrkO4XLXhqII" />
         <meta name="description" 
-          content="Write your experiences, share you life's experiences, lessons of day to day life, help others share your life's experiences, experiences of life." />
+          content="Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings" />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {scripts.map(script => (
