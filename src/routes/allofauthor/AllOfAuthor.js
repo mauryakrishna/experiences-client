@@ -201,12 +201,14 @@ const AllOfAuthor = ({ authoruid }) => {
       </Flex>
       <Flex>
         <Textarea
+          isDisabled={!allowActions}
           placeholder="A short bio about you."
           inputRef={ref}
           p={0}
           minHeight="0"
+          color="black"
           fontSize="18px"
-          fontWeight="300"
+          fontWeight="400"
           borderWidth="0"
           resize="none"
           focusBorderColor="white"
