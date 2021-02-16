@@ -13,7 +13,7 @@ import Layout from '../../components/Layout';
 
 async function action() {
   return {
-    title: 'Experiences Guru',
+    title: 'World of Experiences',
     chunks: ['home'],
     component: (
       <Layout>
