@@ -105,6 +105,7 @@ const ReadExperience = ({ slug }) => {
           <PseudoBox px={{ base: '1.5rem', sm: '2rem', md: '8rem' }} py={2}>
             <Flex align="left" pb={5}>
               <Text
+                as="h1"
                 fontWeight="400"
                 fontSize={{ base: '2rem', sm: '2rem', md: '2.5rem' }}
               >
