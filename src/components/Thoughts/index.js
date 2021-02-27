@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import loadable from "@loadable/component";
 import localStorage from "local-storage";
 import { Divider, Flex } from "@chakra-ui/core";
+import UserContext from '../UserContext';
 import { SectionHeader, TextLikeLink } from "./../UIElements";
 import { DetectMobileBrowser } from '../../detectmobilebrowser';
 const MobileNotSupported = loadable(()=> import('../UIElements/MobileNotSupported')) ;
@@ -13,6 +14,7 @@ const ExpressThoughts = loadable(()=> import("./ExpressThoughts"));
 const date = require("date-and-time");
 
 const Thoughts = ({slugkey}) => {
+  const userLoginContext = useContext(UserContext);
   const [thoughtSavedErr, setThoughtSavedErr] = useState(false);
   const [expressThoughts, toggleExpressThoughts] = useState(false);
   const [refreshCursor, setRefreshCursor] = useState(null); // yyyy-MM-dd HH:mm:ss.SSSSSS
@@ -40,7 +42,7 @@ const Thoughts = ({slugkey}) => {
           <SectionHeader>Thoughts</SectionHeader> 
         </Flex>
         {
-          localStorage.get('loggedin') && 
+          userLoginContext.loggedin && 
           <>
             <Flex><Divider orientation="vertical"/></Flex>
             <Flex align="flex-end" align="center">
