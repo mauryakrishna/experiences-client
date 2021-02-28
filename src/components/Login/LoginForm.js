@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Flex,
@@ -12,6 +12,8 @@ import {
   InputRightElement,
   Icon,
 } from '@chakra-ui/core';
+import UserContext from '../UserContext';
+import { SetLoginData } from '../SetLoginData';
 
 import ResendActivationEmail from '../ResendActivation';
 
@@ -20,6 +22,7 @@ import { ErrorMessage, TextLikeLink } from '../UIElements';
 import InfoMessage from '../UIElements/AuthFlow/InfoMessage';
 
 export default function Login({ loginCallback, toggle }) {
+  const { setLoggedIn } = useContext(UserContext);
   const loginInputRef = useRef();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -50,6 +53,8 @@ export default function Login({ loginCallback, toggle }) {
         email,
         password,
       );
+      // the below line placed just after the api response so as to avoid warning of updating unmounted component 
+      setIsLoading(false);
       if (!exist) {
         setError('User did not exist.');
       } else if (exist && !isemailverified) {
@@ -57,10 +62,12 @@ export default function Login({ loginCallback, toggle }) {
       } else if (exist && author && token) {
         setError('');
         loginCallback(author, token);
+        SetLoginData(author, token);
+        // set user context data for login state
+        setLoggedIn(true);
       } else {
         setError('Login failed.');
       }
-      setIsLoading(false);
       setShowPassword(false);
       // eslint-disable-next-line no-shadow
     } catch (error) {

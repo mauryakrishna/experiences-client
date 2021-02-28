@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import localStorage from 'local-storage';
 import loadable from '@loadable/component';
 import {
@@ -14,7 +14,7 @@ import {
   PopoverBody,
   PopoverArrow,
 } from '@chakra-ui/core';
-
+import UserContext from "../UserContext";
 const Login = loadable(()=> import('../Login'));
 const Link = loadable(()=> import('../Link'));
 const Register = loadable(()=> import('../Register'));
@@ -22,23 +22,17 @@ import { ClearLoginData } from '../SetLoginData';
 
 export default () => {
   const authorname = localStorage.get('displayname');
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.get('loggedin'));
+  const userLoginContext = useContext(UserContext);
 
   const logout = () => {
-    setIsLoggedIn(false);
     ClearLoginData();
-
     // redirect to home
     window.location.href = window.location.origin;
   };
 
-  const whenLogin = () => {
-    setIsLoggedIn(true);
-  };
-
   return (
     <>
-      {isLoggedIn ? (
+      {userLoginContext.loggedin ? (
         <Popover usePortal>
           <PopoverTrigger>
             <PseudoBox
@@ -89,7 +83,7 @@ export default () => {
       ) : (
         <Flex align="center">
           <Flex bg="transparent" align="flex-end">
-            <Login whenLoginSuccess={whenLogin} />
+            <Login />
           </Flex>
           {/* The flex below may not be right but worked so continued */}
           <Flex w="1px" h="20px" backgroundColor="white" mx={2} />
