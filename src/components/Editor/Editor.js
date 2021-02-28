@@ -5,6 +5,7 @@ import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
+import { Helmet } from 'react-helmet';
 import UserContext from "../UserContext"
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 
@@ -63,35 +64,40 @@ const Editor = ({ cb }) => {
   }, [userLoggedinContext.loggedin])
 
   return (
-    <Slate
-      editor={editor}
-      value={value}
-      onChange={newValue => {
-        // Do not go for auto save if the experience is already published ie ispublished true
-        if (ispublished) {
-          // update in cache so that while savenpublish can be taken from cache for saving
-          client.writeData({ data: { experience: JSON.stringify(newValue) } });
-        }
-        // this condition added to avoid unneccessary trigger at onFocus, onBlur
-        // https://github.com/ianstormtaylor/slate/issues/2055
-        // so now if there is really change in editor content as compared to just previous then only go for saving
-        else if (userLoggedinContext.loggedin && isDifferent(newValue, value)) {
-          saveExperienceDebounceCb(newValue);
-        }
-        setValue(newValue);
-      }}
-    >
-      <HeadingToolbar />
-      <Box w="100%" px={2} mb={8}>
-        <EditablePlugins
-          plugins={plugins}
-          placeholder="that moment.."
-          spellCheck
-          style={{ fontSize: '1.1rem', fontWeight: '400' }}
-          renderLeaf={[renderLeafBold]}
-        />
-      </Box>
-    </Slate>
+    <>
+      <Helmet>
+        <meta name="Description" content={"Editor to write your experience. It saves the title and experience as you go on writing. Built using slatejs plugins which usage slatjs library inside."} />
+      </Helmet>
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={newValue => {
+          // Do not go for auto save if the experience is already published ie ispublished true
+          if (ispublished) {
+            // update in cache so that while savenpublish can be taken from cache for saving
+            client.writeData({ data: { experience: JSON.stringify(newValue) } });
+          }
+          // this condition added to avoid unneccessary trigger at onFocus, onBlur
+          // https://github.com/ianstormtaylor/slate/issues/2055
+          // so now if there is really change in editor content as compared to just previous then only go for saving
+          else if (userLoggedinContext.loggedin && isDifferent(newValue, value)) {
+            saveExperienceDebounceCb(newValue);
+          }
+          setValue(newValue);
+        }}
+      >
+        <HeadingToolbar />
+        <Box w="100%" px={2} mb={8}>
+          <EditablePlugins
+            plugins={plugins}
+            placeholder="that moment.."
+            spellCheck
+            style={{ fontSize: '1.1rem', fontWeight: '400' }}
+            renderLeaf={[renderLeafBold]}
+          />
+        </Box>
+      </Slate>
+    </>
   );
 };
 
