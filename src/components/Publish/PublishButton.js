@@ -1,12 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { useApolloClient } from 'react-apollo-hooks';
 import localStorage from 'local-storage';
 import {
-  PseudoBox,
   Text,
   Flex,
-  Box,
-  Code,
   useDisclosure,
   Modal,
   ModalBody,
@@ -15,6 +12,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/core';
 
+import UserContext from "../UserContext";
 import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
 import history from '../../history';
@@ -28,6 +26,7 @@ import {
 } from '../../queries/experience';
 
 const PublishExperience = ({ saveState }) => {
+  const { loggedin } = useContext(UserContext);
   const client = useApolloClient();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { ispublished } = client.readQuery({
@@ -78,32 +77,50 @@ const PublishExperience = ({ saveState }) => {
 
   return (
     <Flex>
-      <Flex>
-        <Button disabled={disableButton} cursor="pointer" onClick={handlePublish}>
-          <Text>{buttonText}</Text>
-        </Button>
-
-        <Modal
-          blockScrollOnMount={false}
-          isOpen={isOpen}
-          onClose={onClose}
-          isCentered
-        >
-          <ModalOverlay bg="white" opacity="0.7" />
-          <ModalContent borderWidth={1} borderRadius={8}>
-            <ModalCloseButton />
-            <ModalBody>
-              <PublishModal onPublishCb={continuePublish}/>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      </Flex>
-      <Flex>
-        <Text display="flex" alignItems="center">{errMessage}</Text>
-      </Flex>
-      <Flex ml="auto" mr="0">
-        <ShowSaveState state={saveState} />
-      </Flex>
+      { loggedin && 
+        <>
+          <Flex>
+            <Button disabled={disableButton} cursor="pointer" onClick={handlePublish}>
+              <Text>{buttonText}</Text>
+            </Button>
+            
+            <Modal
+              blockScrollOnMount={false}
+              isOpen={isOpen}
+              onClose={onClose}
+              isCentered
+            >
+              <ModalOverlay bg="white" opacity="0.7" />
+              <ModalContent borderWidth={1} borderRadius={8}>
+                <ModalCloseButton />
+                <ModalBody>
+                  <PublishModal onPublishCb={continuePublish}/>
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+          </Flex>
+          <Flex>
+            <Text display="flex" alignItems="center">{errMessage}</Text>
+          </Flex>
+          <Flex ml="auto" mr="0">
+            <ShowSaveState state={saveState} />
+          </Flex>
+        </>
+      }
+      {
+        !loggedin && <>
+          <Text 
+            as="span" 
+            p="10px" 
+            ml="-10px" 
+            color="pink.500" 
+            backgroundColor="green.50" 
+            width="100%"
+          >
+            Please login to save your experience as you write them.
+          </Text>
+        </>
+      }
     </Flex>
   );
 };
