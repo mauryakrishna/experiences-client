@@ -33,7 +33,16 @@ export default function Header() {
       {
         pathname && (pathname !== "/writeanexperience") &&
         (
-          <Flex marginTop="3px" marginRight="auto" onClick={takeToEditor} cursor="pointer">
+          <Flex 
+            marginTop="3px" 
+            marginRight="auto" 
+            onClick={takeToEditor} 
+            cursor="pointer"
+            border="1px solid white"
+            padding="3px"
+            borderRadius="4px"
+            boxShadow="0px 1px 1px rgb(0 0 0 / 50%), inset 1px 2px 0px rgb(255 255 255 / 40%)"
+          >
             <svg 
               stroke="blanchedalmond"
               fill="white"
