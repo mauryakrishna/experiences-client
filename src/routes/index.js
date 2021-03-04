@@ -21,7 +21,6 @@ const routes = {
     },
     {
       path: '/writeanexperience',
-      protected: true,
       load: () => import(/* webpackChunkName: 'write-editor' */ './editor'),
     },
     // {
