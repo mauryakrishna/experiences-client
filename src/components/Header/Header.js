@@ -36,7 +36,7 @@ export default function Header() {
           <Flex marginTop="3px" marginRight="auto" onClick={takeToEditor} cursor="pointer">
             <svg 
               stroke="blanchedalmond"
-              fill="darkgray"
+              fill="white"
               width="24"
               height="24"
               viewBox="0 0 24 24" 
