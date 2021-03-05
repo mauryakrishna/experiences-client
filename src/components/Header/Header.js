@@ -4,6 +4,7 @@ import history from "../../history";
 import { Box, Flex, Text } from '@chakra-ui/core';
 
 import Link from '../Link';
+import { DetectMobileBrowser } from '../../detectmobilebrowser';
 const Authenticate = loadable(()=> import('./Authenticate'))
 
 export default function Header() {
@@ -31,7 +32,7 @@ export default function Header() {
         </Link>
       </Flex>
       {
-        pathname && (pathname !== "/writeanexperience") &&
+        !DetectMobileBrowser() && pathname && (pathname !== "/writeanexperience") &&
         (
           <Flex 
             marginTop="3px" 
