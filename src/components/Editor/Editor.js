@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useMemo, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import didContainText from "../../utils/didExperienceContainsText"
 import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
@@ -8,7 +9,6 @@ import { withHistory } from 'slate-history';
 import { Helmet } from 'react-helmet';
 import UserContext from "../UserContext"
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
-
 import { useApolloClient } from 'react-apollo-hooks';
 import { Box } from '@chakra-ui/core';
 
@@ -58,7 +58,7 @@ const Editor = ({ cb }) => {
     // added below save step to save the title just after user logs in after providing title
     // because there will not be any change event happening after login, need to save manually
     // TODO - get the length of string in value, currently its slatejs JSON
-    if(userLoggedinContext.loggedin) {
+    if(userLoggedinContext.loggedin && didContainText(value)) {
       saveExperienceDebounceCb(value)
     }
   }, [userLoggedinContext.loggedin])
