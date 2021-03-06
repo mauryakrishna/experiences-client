@@ -55,7 +55,7 @@ const Title = ({ cb }) => {
         saveTitleDebounceCb(value);
       }
     } else {
-      setMessage('Max Allowed 180 characters');
+      setMessage(`Max Allowed ${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS} characters`);
       setShowMessage(true);
     }
   };
