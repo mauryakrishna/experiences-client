@@ -3,12 +3,13 @@ import loadable from '@loadable/component';
 import history from '../../history';
 import UserContext from '../UserContext';
 import Button from '../UIElements/Button';
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 const Register = loadable(()=> import('../Register'));
 
 const GetStarted = () => {
   const context = useContext(UserContext);
   const handleClick = () => {
-    history.push('/writeanexperience');
+    history.push(`${WRITE_AN_EXPERIENCE_ROUTE}`);
   };
   return (
     <>

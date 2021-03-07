@@ -14,6 +14,7 @@ import {
   PopoverBody,
   PopoverArrow,
 } from '@chakra-ui/core';
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 import UserContext from "../UserContext";
 const Login = loadable(()=> import('../Login'));
 const Link = loadable(()=> import('../Link'));
@@ -63,7 +64,7 @@ export default () => {
             <PopoverArrow />
             <PopoverBody>
               <Box textDecoration="none">
-                <Link to="/writeanexperience">Write an Experience</Link>
+                <Link to={`${WRITE_AN_EXPERIENCE_ROUTE}`}>Write an Experience</Link>
               </Box>
               <Divider />
               <Box textDecoration="none">

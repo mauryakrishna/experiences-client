@@ -1,4 +1,9 @@
 /**
+ * Route name string constants
+*/
+export const WRITE_AN_EXPERIENCE_ROUTE = `/editor`;
+
+/**
  * time is ms, max wait before making save call for save title and experience.
  */
 export const MAX_WAIT = 3000;
