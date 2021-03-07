@@ -3,7 +3,7 @@ import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
+import { GET_EXPERIENCE_SLUGKEY, GET_EXPERIENCE_EXPERIENCE } from '../../queries/experience';
 import {
   WAIT,
   MAX_WAIT,
@@ -33,7 +33,7 @@ const Save = ({ cb }) => {
         if (saved) {
           // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
           cache.writeData({
-            data: { slugkey, experience: JSON.stringify(experience) },
+            data: { slugkey }, //, experience: JSON.stringify(experience) 
           });
           cb(SAVE_COMPLETED);
         } else {
@@ -45,13 +45,14 @@ const Save = ({ cb }) => {
   });
 
   const [debouncedCallback] = useDebouncedCallback(
-    experience => {
+    () => {
       // start showing the saving in progress
       cb(SAVE_INITIATED);
       const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+      const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
       saveExperience({
         variables: {
-          input: { experience, slugkey },
+          input: { experience: JSON.parse(experience), slugkey },
         },
       });
     },
