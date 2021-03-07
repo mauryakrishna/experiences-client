@@ -282,8 +282,11 @@ const AllOfAuthor = ({ authoruid }) => {
                       w="100%"
                     >
                       <ExperienceTitleInList>
-                        <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
-
+                        {/* below line redirect to read page, if there is no title the page fails because
+                            for read title can not be null
+                        */}
+                        {/* <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link> */}
+                        {title}
                         <Flex>
                           <PublishDate>
                             {ispublished
