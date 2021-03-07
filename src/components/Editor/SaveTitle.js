@@ -11,7 +11,7 @@ import {
   SAVE_ERROR,
 } from '../../ConfigConstants';
 
-import { GET_EXPERIENCE_SLUGKEY } from '../../queries/experience';
+import { GET_EXPERIENCE_SLUGKEY, GET_EXPERIENCE_TITLE } from '../../queries/experience';
 
 function SaveTitle({ cb }) {
   const client = useApolloClient();
@@ -30,10 +30,10 @@ function SaveTitle({ cb }) {
     update: (cache, { data }) => {
       if (data.saveTitle) {
         // eslint-disable-next-line no-shadow
-        const { saved, slugkey, title } = data.saveTitle;
+        const { saved, slugkey } = data.saveTitle;
         if (saved) {
           // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
-          cache.writeData({ data: { slugkey, title } });
+          cache.writeData({ data: { slugkey } });
           cb(SAVE_COMPLETED);
         } else {
           cb(SAVE_ERROR);
@@ -44,10 +44,11 @@ function SaveTitle({ cb }) {
   });
 
   const [debouncedCallback] = useDebouncedCallback(
-    title => {
+    () => {
       // show the saving in progress state
       cb(SAVE_INITIATED);
       const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+      const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
       saveTitle({
         variables: { input: { title, slugkey } },
       });

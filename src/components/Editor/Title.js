@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 import { Textarea, Flex } from '@chakra-ui/core';
@@ -28,13 +28,13 @@ const Title = ({ cb }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
 
-  useEffect(()=> {
-    // added below save step to save the title just after user logs in after providing title
-    // because there will not be any change event happening after login, need to save manually
-    if(useLoggedInContext.loggedin && title && title.length>0 && title.length<=EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS) {
-      saveTitleDebounceCb(title)
-    }
-  }, [useLoggedInContext.loggedin])
+  // useEffect(()=> {
+  //   // added below save step to save the title just after user logs in after providing title
+  //   // because there will not be any change event happening after login, need to save manually
+  //   if(useLoggedInContext.loggedin && title && title.length>0 && title.length<=EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS) {
+  //     saveTitleDebounceCb(title)
+  //   }
+  // }, [useLoggedInContext.loggedin])
   
   const ref = useRef();
   const validateTitle = event => {
@@ -46,13 +46,10 @@ const Title = ({ cb }) => {
     if (value.length <= EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS) {
       setTitle(value);
 
-      // do not auto save if experience is already published
-      if (ispublished) {
-        // keep in cache so that can be taken for savenpublish after comparision
-        client.writeData({ data: { title: value } });
-      } else if(useLoggedInContext.loggedin && value !== title) {
+      client.writeData({ data: { title: value } });
+      if(useLoggedInContext.loggedin && value !== title && !ispublished) {
         // placed here to avoid unneccesaary trigger of change this placed here
-        saveTitleDebounceCb(value);
+        saveTitleDebounceCb();
       }
     } else {
       setMessage(`Max Allowed ${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS} characters`);
