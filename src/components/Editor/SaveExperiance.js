@@ -3,7 +3,11 @@ import { useMutation, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { GET_EXPERIENCE_SLUGKEY, GET_EXPERIENCE_EXPERIENCE } from '../../queries/experience';
+import { 
+  GET_EXPERIENCE_SLUGKEY, 
+  GET_EXPERIENCE_EXPERIENCE, 
+  GET_EXPERIENCE_TITLE 
+} from '../../queries/experience';
 import {
   WAIT,
   MAX_WAIT,
@@ -14,11 +18,9 @@ import {
 
 const Save = ({ cb }) => {
   const client = useApolloClient();
-
   const mutation = gql`
     mutation saveExperience($input: SaveExperienceInput) {
       saveExperience(input: $input) {
-        experience
         slugkey
         saved
       }
@@ -29,11 +31,11 @@ const Save = ({ cb }) => {
     update: (cache, { data }) => {
       if (data.saveExperience) {
         // eslint-disable-next-line no-shadow
-        const { saved, slugkey, experience } = data.saveExperience;
+        const { saved, slugkey } = data.saveExperience;
         if (saved) {
           // https://stackoverflow.com/questions/58843960/difference-between-writequery-and-writedata-in-apollo-client
           cache.writeData({
-            data: { slugkey }, //, experience: JSON.stringify(experience) 
+            data: { slugkey },
           });
           cb(SAVE_COMPLETED);
         } else {
@@ -47,14 +49,17 @@ const Save = ({ cb }) => {
   const [debouncedCallback] = useDebouncedCallback(
     () => {
       // start showing the saving in progress
-      cb(SAVE_INITIATED);
       const { slugkey } = client.readQuery({ query: GET_EXPERIENCE_SLUGKEY });
+      const { title } = client.readQuery({ query: GET_EXPERIENCE_TITLE });
       const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
-      saveExperience({
-        variables: {
-          input: { experience: JSON.parse(experience), slugkey },
-        },
-      });
+      if(title || experience) {
+        cb(SAVE_INITIATED);
+        saveExperience({
+          variables: {
+            input: { title, experience: JSON.parse(experience), slugkey },
+          },
+        });
+      }
     },
     WAIT,
     { maxWait: MAX_WAIT },

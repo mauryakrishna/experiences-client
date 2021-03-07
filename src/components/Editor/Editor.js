@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useMemo, useContext, useEffect } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
-import didContainText from "../../utils/didExperienceContainsText"
 import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
@@ -19,7 +18,6 @@ import HeadingToolbar, {
   withPlugins as withPluginsHeading,
 } from '../PureEditors/HeadingToolbar';
 
-import SaveExperience from './SaveExperiance';
 import {
   GET_EXPERIENCE_EXPERIENCE,
   GET_EXPERIENCE_ISPUBLISHED,
@@ -29,7 +27,7 @@ const plugins = [...pluginsHeading];
 
 const withPlugins = [withReact, withHistory, ...withPluginsHeading];
 
-const Editor = ({ cb }) => {
+const Editor = ({ saveDebounce }) => {
   const client = useApolloClient();
   const { experience } = client.readQuery({ query: GET_EXPERIENCE_EXPERIENCE });
   const { ispublished } = client.readQuery({
@@ -37,7 +35,6 @@ const Editor = ({ cb }) => {
   });
 
   const userLoggedinContext = useContext(UserContext);
-  const saveExperienceDebounceCb = SaveExperience({ cb });
 
   const [value, setValue] = useState(
     JSON.parse(experience) || [
@@ -54,15 +51,6 @@ const Editor = ({ cb }) => {
 
   const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
 
-  // useEffect(()=> {
-  //   // added below save step to save the title just after user logs in after providing title
-  //   // because there will not be any change event happening after login, need to save manually
-  //   // TODO - get the length of string in value, currently its slatejs JSON
-  //   if(userLoggedinContext.loggedin && didContainText(value)) {
-  //     saveExperienceDebounceCb(value)
-  //   }
-  // }, [userLoggedinContext.loggedin])
-
   return (
     <>
       <Helmet>
@@ -78,7 +66,7 @@ const Editor = ({ cb }) => {
           // https://github.com/ianstormtaylor/slate/issues/2055
           // so now if there is really change in editor content as compared to just previous then only go for saving
           if (userLoggedinContext.loggedin && isDifferent(newValue, value) && !ispublished) {
-            saveExperienceDebounceCb();
+            saveDebounce();
           }
           setValue(newValue);
         }}
@@ -99,6 +87,6 @@ const Editor = ({ cb }) => {
 };
 
 Editor.propTypes = {
-  cb: PropTypes.func.isRequired,
+  saveDebounce: PropTypes.func.isRequired,
 };
 export default React.memo(Editor);

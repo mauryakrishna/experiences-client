@@ -10,11 +10,9 @@ import {
   GET_EXPERIENCE_ISPUBLISHED,
 } from '../../queries/experience';
 
-import SaveTitle from './SaveTitle';
-
 import { AutoResizeTextarea } from '../UIElements';
 
-const Title = ({ cb }) => {
+const Title = ({ saveDebounce }) => {
   const client = useApolloClient();
   const titleData = client.readQuery({ query: GET_EXPERIENCE_TITLE });
   const { ispublished } = client.readQuery({
@@ -22,19 +20,10 @@ const Title = ({ cb }) => {
   });
 
   const useLoggedInContext = useContext(UserContext);
-  let saveTitleDebounceCb = SaveTitle({ cb });
 
   const [title, setTitle] = useState(titleData.title || '');
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
-
-  // useEffect(()=> {
-  //   // added below save step to save the title just after user logs in after providing title
-  //   // because there will not be any change event happening after login, need to save manually
-  //   if(useLoggedInContext.loggedin && title && title.length>0 && title.length<=EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS) {
-  //     saveTitleDebounceCb(title)
-  //   }
-  // }, [useLoggedInContext.loggedin])
   
   const ref = useRef();
   const validateTitle = event => {
@@ -49,7 +38,7 @@ const Title = ({ cb }) => {
       client.writeData({ data: { title: value } });
       if(useLoggedInContext.loggedin && value !== title && !ispublished) {
         // placed here to avoid unneccesaary trigger of change this placed here
-        saveTitleDebounceCb();
+        saveDebounce();
       }
     } else {
       setMessage(`Max Allowed ${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS} characters`);
@@ -92,7 +81,7 @@ const Title = ({ cb }) => {
 };
 
 Title.propTypes = {
-  cb: PropTypes.func.isRequired,
+  saveDebounce: PropTypes.func.isRequired,
 };
 
 export default React.memo(Title);
