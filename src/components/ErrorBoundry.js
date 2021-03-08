@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Box, Text, List, ListItem } from '@chakra-ui/core';
+import Link from "./Link"
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class ErrorBoundary extends React.Component {
             color="white"
             fontWeight="500"
           >
-            <Text fontSize="4xl">Experiences</Text>
+            <Link to="/"><Text fontSize="4xl">Experiences</Text></Link>
           </Flex>
           <Box bg="green.50" p="2rem">
             <Text fontSize="2xl">Seems something was not right, here...</Text>
