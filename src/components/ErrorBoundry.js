@@ -15,6 +15,10 @@ class ErrorBoundary extends React.Component {
     })
   }
 
+  reloadPage() {
+    window.location.reload()
+  }
+
   render() {
     if (this.state.errorInfo) {
       return (
@@ -29,7 +33,8 @@ class ErrorBoundary extends React.Component {
             color="white"
             fontWeight="500"
           >
-            <Link to="/"><Text fontSize="4xl">Experiences</Text></Link>
+            <Link to="/"><Text fontSize="4xl">Experiences</Text></Link> 
+            <Icon name="repeat" size="32px" color="white" onClick={reloadPage}/>
           </Flex>
           <Box bg="green.50" p="2rem">
             <Text fontSize="2xl">Seems something was not right, here...</Text>
