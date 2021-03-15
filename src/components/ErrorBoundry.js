@@ -15,9 +15,9 @@ class ErrorBoundary extends React.Component {
     })
   }
 
-  reloadPage() {
-    window.location.reload()
-  }
+  // reloadPage() {
+  //   window.location.reload()
+  // }
 
   render() {
     if (this.state.errorInfo) {
