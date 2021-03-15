@@ -77,7 +77,7 @@ const Editor = ({ saveDebounce }) => {
             plugins={plugins}
             placeholder="that moment.."
             spellCheck
-            style={{ fontSize: '1.1rem', fontWeight: '400' }}
+            style={{ fontSize: '1.1rem', fontWeight: '400', lineHeight: "1.5" }}
             renderLeaf={[renderLeafBold]}
           />
         </Box>

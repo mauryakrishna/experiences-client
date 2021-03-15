@@ -111,7 +111,7 @@ const Thoughts = ({ slugkey, refreshCursor }) => {
               isauthor && <DeleteAThought {...{ slugkey, thoughtid, isauthor, deletedCb }} />
             }
           </Box>
-          <Slate editor={editor} value={JSON.parse(thought)}>
+          <Slate editor={editor} value={thought}>
             <EditablePlugins
               plugins={plugins}
               readOnly
