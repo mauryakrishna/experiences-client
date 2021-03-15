@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable global-require */
-
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../ConfigConstants"
 // The top-level (parent) route
 const routes = {
   path: '',
@@ -20,7 +20,7 @@ const routes = {
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
     {
-      path: '/writeanexperience',
+      path: `${WRITE_AN_EXPERIENCE_ROUTE}`,
       load: () => import(/* webpackChunkName: 'write-editor' */ './editor'),
     },
     // {

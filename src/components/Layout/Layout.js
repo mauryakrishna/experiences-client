@@ -9,6 +9,7 @@ import {
   PseudoBox,
 } from '@chakra-ui/core';
 
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 import ErrorBoundary from '../ErrorBoundry';
 import { UserProvider } from '../UserContext';
 import Header from '../Header';
@@ -27,7 +28,7 @@ export default function Layout({ children, pathname }) {
     breakpoints,
   };
 
-  const showFooter = pathname !== '/writeanexperience';
+  const showFooter = pathname !== `${WRITE_AN_EXPERIENCE_ROUTE}`;
 
   return (
     <ThemeProvider theme={customTheme}>

@@ -3,6 +3,7 @@ import loadable from "@loadable/component";
 import history from "../../history";
 import { Box, Flex, Text } from '@chakra-ui/core';
 
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 import Link from '../Link';
 import { DetectMobileBrowser } from '../../detectmobilebrowser';
 const Authenticate = loadable(()=> import('./Authenticate'))
@@ -10,7 +11,7 @@ const Authenticate = loadable(()=> import('./Authenticate'))
 export default function Header() {
   const { pathname } = history && history.location;
   const takeToEditor = () => {
-    history.push("/writeanexperience");
+    history.push(`${WRITE_AN_EXPERIENCE_ROUTE}`);
   }
 
   return (
@@ -32,7 +33,7 @@ export default function Header() {
         </Link>
       </Flex>
       {
-        !DetectMobileBrowser() && pathname && (pathname !== "/writeanexperience") &&
+        !DetectMobileBrowser() && pathname && (pathname !== `${WRITE_AN_EXPERIENCE_ROUTE}`) &&
         (
           <Flex 
             marginTop="3px" 

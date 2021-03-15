@@ -26,6 +26,7 @@ import {
   PublishDate,
   Loading
 } from '../../components/UIElements';
+import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 import history from './../../history';
 import AuthorActions from './AuthorActions';
 import Link from '../../components/Link';
@@ -156,7 +157,7 @@ const AllOfAuthor = ({ authoruid }) => {
   };
 
   const handleGetStartedClick = () => {
-    history.push('/writeanexperience');
+    history.push(`${WRITE_AN_EXPERIENCE_ROUTE}`);
   };
 
   const handleCancelChanges = () => {
