@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Text, List, ListItem, Icon } from '@chakra-ui/core';
+import { Flex, Box, Text, List, ListItem } from '@chakra-ui/core';
 import Link from "./Link"
 
 class ErrorBoundary extends React.Component {
@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component {
             fontWeight="500"
           >
             <Link to="/"><Text fontSize="4xl">Experiences</Text></Link> 
-            <Icon name="repeat" size="32px" color="white" onClick={reloadPage}/>
+            {/* <Icon name="repeat" size="32px" color="white" onClick={reloadPage}/> */}
           </Flex>
           <Box bg="green.50" p="2rem">
             <Text fontSize="2xl">Seems something was not right, here...</Text>
