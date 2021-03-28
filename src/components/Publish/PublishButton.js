@@ -64,7 +64,7 @@ const PublishExperience = ({ saveState }) => {
     } else if (!experience) {
       setErrMessage('Kindly add an experience.');
     } else {
-      ispublished ? continuePublishing() : onOpen();
+      ispublished ? continuePublish() : onOpen();
     }
   });
 
