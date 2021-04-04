@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import loadable from '@loadable/component'
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
+import { Helmet } from "react-helmet";
 import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
 import { DetectMobileBrowser } from '../../detectmobilebrowser';
 
@@ -133,29 +134,36 @@ export default function Home() {
   const inspireBoxWidth = expCountZero ? '100%' : '50%';
 
   return (
-    <Flex px="5">
-      { !DetectMobileBrowser() && 
-      <Box
-        display={{
-          base: expCountZero ? 'block' : 'none',
-          sm: expCountZero ? 'block' : 'none',
-          md: 'block',
-        }}
-        w={inspireBoxWidth}
-        textAlign="center"
-      >
-        <Inspire />
-      </Box>
-      }
-      {!loading && !expCountZero && (
+    <>
+      <Helmet>
+        <meta name="title" content="World of Experiences" />
+        <meta name="description" content="Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings" />
+        <link rel="canonical" href="https://experiences.guru/" />
+      </Helmet>
+      <Flex px="5">
+        { !DetectMobileBrowser() && 
         <Box
-          w={{ base: '100%', sm: '100%', md: '60%' }}
-          maxHeight="calc(87vh)"
-          overflowY="scroll"
+          display={{
+            base: expCountZero ? 'block' : 'none',
+            sm: expCountZero ? 'block' : 'none',
+            md: 'block',
+          }}
+          w={inspireBoxWidth}
+          textAlign="center"
         >
-          {getExperiencesStack(experiences)}
+          <Inspire />
         </Box>
-      )}
-    </Flex>
+        }
+        {!loading && !expCountZero && (
+          <Box
+            w={{ base: '100%', sm: '100%', md: '60%' }}
+            maxHeight="calc(87vh)"
+            overflowY="scroll"
+          >
+            {getExperiencesStack(experiences)}
+          </Box>
+        )}
+      </Flex>
+    </>
   );
 }
