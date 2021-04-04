@@ -12,6 +12,7 @@ import {
   ExperienceTitleInList,
   PublishDate,
   Loading,
+  ExperienceIntroText,
 } from '../../components/UIElements';
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         cursor
         experiences {
           title
+          experienceintrotext
           slug
           slugkey
           publishdate
@@ -76,7 +78,7 @@ export default function Home() {
     if (experiences.length > 0) {
       return (
         <Stack spacing={3} pr="5px">
-          {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
+          {experiences.map(({ title, slug, slugkey, author, publishdate, experienceintrotext }) => {
             const { displayname, uid } = author;
             const link = `/${uid}/${slug}-${slugkey}`;
             return (
@@ -93,7 +95,9 @@ export default function Home() {
                   <Link to={link} width="100%">
                     {title}
                   </Link>
-
+                  <ExperienceIntroText>
+                    {experienceintrotext}
+                  </ExperienceIntroText>
                   <Flex>
                     <PublishDate>
                       {`${publishdate}`} | {displayname}
