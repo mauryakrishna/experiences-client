@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 export default ({ title, description, canonical })=> {
   return (
     <Helmet>
+      <title>{title}</title>
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       <link rel="canonical" href={canonical} />
