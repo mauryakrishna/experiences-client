@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import loadable from '@loadable/component'
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { Helmet } from "react-helmet";
 import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
 import { DetectMobileBrowser } from '../../detectmobilebrowser';
 
 const Link = loadable(()=> import('../../components/Link'));
 const Inspire = loadable(()=> import('../../components/Inspire'));
+import SEOElements from "../../seo";
 
 import {
   ExperienceTitleInList,
@@ -133,13 +133,14 @@ export default function Home() {
   const expCountZero = experiences.length === 0;
   const inspireBoxWidth = expCountZero ? '100%' : '50%';
 
+  const metaDescription = "Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings";
   return (
     <>
-      <Helmet>
-        <meta name="title" content="World of Experiences" />
-        <meta name="description" content="Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings" />
-        <link rel="canonical" href="https://experiences.guru/" />
-      </Helmet>
+      <SEOElements 
+        title="World of Experiences" 
+        description={metaDescription} 
+        canonical={`https://experiences.guru`}
+      />
       <Flex px="5">
         { !DetectMobileBrowser() && 
         <Box
