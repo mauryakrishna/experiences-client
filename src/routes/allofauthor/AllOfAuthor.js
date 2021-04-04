@@ -24,7 +24,8 @@ import {
   AutoResizeTextarea,
   ExperienceTitleInList,
   PublishDate,
-  Loading
+  Loading,
+  ExperienceIntroText,
 } from '../../components/UIElements';
 import { WRITE_AN_EXPERIENCE_ROUTE } from "../../ConfigConstants"
 import history from './../../history';
@@ -62,6 +63,7 @@ const AllOfAuthor = ({ authoruid }) => {
             slug
             slugkey
             ispublished
+            experienceintrotext
             publishdate
             created_at
           }
@@ -270,6 +272,7 @@ const AllOfAuthor = ({ authoruid }) => {
                     slug,
                     ispublished,
                     publishdate,
+                    experienceintrotext,
                     // eslint-disable-next-line camelcase
                     created_at,
                   } = experience;
@@ -284,6 +287,9 @@ const AllOfAuthor = ({ authoruid }) => {
                     >
                       <ExperienceTitleInList>
                         <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
+                        <ExperienceIntroText>
+                          {experienceintrotext}
+                        </ExperienceIntroText>
                         <Flex>
                           <PublishDate>
                             {ispublished
