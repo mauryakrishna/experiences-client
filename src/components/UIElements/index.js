@@ -18,6 +18,7 @@ import SuccessMessage from './AuthFlow/SuccessMessage';
 import TextLikeLink from './TextLikeLink';
 import LegalText from './LegalText';
 import DisplayAcceptText from './DisplayAcceptText';
+import ExperienceIntroText from './ExperienceIntroText';
 
 export {
   Button,
@@ -39,5 +40,6 @@ export {
   SuccessMessage,
   TextLikeLink,
   LegalText,
-  DisplayAcceptText
+  DisplayAcceptText,
+  ExperienceIntroText
 };

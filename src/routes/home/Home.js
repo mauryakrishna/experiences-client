@@ -7,11 +7,13 @@ import { DetectMobileBrowser } from '../../detectmobilebrowser';
 
 const Link = loadable(()=> import('../../components/Link'));
 const Inspire = loadable(()=> import('../../components/Inspire'));
+import SEOElements from "../../seo";
 
 import {
   ExperienceTitleInList,
   PublishDate,
   Loading,
+  ExperienceIntroText,
 } from '../../components/UIElements';
 
 export default function Home() {
@@ -26,6 +28,7 @@ export default function Home() {
         cursor
         experiences {
           title
+          experienceintrotext
           slug
           slugkey
           publishdate
@@ -76,7 +79,7 @@ export default function Home() {
     if (experiences.length > 0) {
       return (
         <Stack spacing={3} pr="5px">
-          {experiences.map(({ title, slug, slugkey, author, publishdate }) => {
+          {experiences.map(({ title, slug, slugkey, author, publishdate, experienceintrotext }) => {
             const { displayname, uid } = author;
             const link = `/${uid}/${slug}-${slugkey}`;
             return (
@@ -93,7 +96,9 @@ export default function Home() {
                   <Link to={link} width="100%">
                     {title}
                   </Link>
-
+                  <ExperienceIntroText>
+                    {experienceintrotext}
+                  </ExperienceIntroText>
                   <Flex>
                     <PublishDate>
                       {`${publishdate}`} | {displayname}
@@ -128,30 +133,38 @@ export default function Home() {
   const expCountZero = experiences.length === 0;
   const inspireBoxWidth = expCountZero ? '100%' : '50%';
 
+  const metaDescription = "Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings";
   return (
-    <Flex px="5">
-      { !DetectMobileBrowser() && 
-      <Box
-        display={{
-          base: expCountZero ? 'block' : 'none',
-          sm: expCountZero ? 'block' : 'none',
-          md: 'block',
-        }}
-        w={inspireBoxWidth}
-        textAlign="center"
-      >
-        <Inspire />
-      </Box>
-      }
-      {!loading && !expCountZero && (
+    <>
+      <SEOElements 
+        title="World of Experiences" 
+        description={metaDescription} 
+        canonical={`https://experiences.guru`}
+      />
+      <Flex px="5">
+        { !DetectMobileBrowser() && 
         <Box
-          w={{ base: '100%', sm: '100%', md: '60%' }}
-          maxHeight="calc(87vh)"
-          overflowY="scroll"
+          display={{
+            base: expCountZero ? 'block' : 'none',
+            sm: expCountZero ? 'block' : 'none',
+            md: 'block',
+          }}
+          w={inspireBoxWidth}
+          textAlign="center"
         >
-          {getExperiencesStack(experiences)}
+          <Inspire />
         </Box>
-      )}
-    </Flex>
+        }
+        {!loading && !expCountZero && (
+          <Box
+            w={{ base: '100%', sm: '100%', md: '60%' }}
+            maxHeight="calc(87vh)"
+            overflowY="scroll"
+          >
+            {getExperiencesStack(experiences)}
+          </Box>
+        )}
+      </Flex>
+    </>
   );
 }

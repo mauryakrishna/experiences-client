@@ -7,13 +7,12 @@ import { Slate } from 'slate-react';
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { Helmet } from 'react-helmet';
-
 import { Flex, Text, PseudoBox, Divider } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
 import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
-
+import SEOElements from "../../seo";
+import GetExperienceIntroText from "../../utils/getexperienceintrotext";
 const Thoughts =  loadable(()=> import("../Thoughts"));
 
 const ReadExperience = ({ slug }) => {
@@ -22,6 +21,7 @@ const ReadExperience = ({ slug }) => {
   const [publishdate, setPublishDate] = useState('');
   const [uid, setUid] = useState('');
   const [displayname, setDisplayname] = useState('');
+  const [experienceintrotext, setExperienceIntroText] = useState("");
   const [thoughtsenabled, setThoughtsenabled] = useState(false);
 
   const [experienceNotFound, setExperienceNotFound] = useState(false);
@@ -79,6 +79,7 @@ const ReadExperience = ({ slug }) => {
         setValue(experience);
         setThoughtsenabled(thoughtsenabled);
         setPublishDate(publishdate);
+        setExperienceIntroText(GetExperienceIntroText(experience));
         const { uid, displayname } = author;
         setUid(uid);
         setDisplayname(displayname);
@@ -92,10 +93,11 @@ const ReadExperience = ({ slug }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="Description" content={title} />
-      </Helmet>
+      <SEOElements 
+        title={title} 
+        description={experienceintrotext}
+        canonical={`https://experiences.guru/${uid}/${slug}`}
+      />
       {experienceNotFound ? (
         <Text fontSize="1rem" fontWeight="bold">
           {' '}

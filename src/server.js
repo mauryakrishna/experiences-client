@@ -197,7 +197,6 @@ app.use((err, req, res, next) => {
   const html = ReactDOM.renderToStaticMarkup(
     <Html
       title="Internal Server Error"
-      description={err.message}
       styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
     >
       {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
