@@ -14,8 +14,6 @@ import serialize from 'serialize-javascript';
 /* eslint-disable react/no-danger */
 
 export default function Html({
-  title,
-  description,
   styles,
   scripts,
   app,
@@ -27,20 +25,18 @@ export default function Html({
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <title>{title}</title>
         <meta name="google-site-verification" content="UZYrsB1BXHH_HQD8QpPlyJJZZYUCVPIOrkO4XLXhqII" />
-        <meta name="description" 
-          content="Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings" />
-        <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index/follow"/>
         {scripts.map(script => (
           <link key={script} rel="preload" href={script} as="script" />
         ))}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
 
         {styles.map(style => (
           <style
