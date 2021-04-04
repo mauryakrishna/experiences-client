@@ -14,6 +14,8 @@ import serialize from 'serialize-javascript';
 /* eslint-disable react/no-danger */
 
 export default function Html({
+  title,
+  description,
   styles,
   scripts,
   app,

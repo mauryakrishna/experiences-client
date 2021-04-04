@@ -86,7 +86,7 @@ const routes = {
 
     // Provide default values for title, description etc.
     route.title = `${route.title || 'World of experiences'}`;
-    route.description = route.description || '';
+    // route.description = route.description || '';
 
     return route;
   },
