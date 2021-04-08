@@ -97,6 +97,7 @@ const ReadExperience = ({ slug }) => {
         title={title} 
         description={experienceintrotext}
         canonical={`https://experiences.guru/${uid}/${slug}`}
+        type="article"
       />
       {experienceNotFound ? (
         <Text fontSize="1rem" fontWeight="bold">

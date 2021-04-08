@@ -6,7 +6,7 @@ const Title = props => {
   return (
     <Text
       fontWeight="500"
-      fontSize={{ base: '1rem', md: '1.2rem' }}
+      fontSize={{ base: '1.2rem', md: '1.2rem' }}
       margin={3}
       width="100%"
       color="gray.800"
