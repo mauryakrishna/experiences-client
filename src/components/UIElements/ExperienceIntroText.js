@@ -9,7 +9,7 @@ const ExperienceIntroText = props => {
       fontWeight="400"
       mt={"4px"}
       ml={"1px"}
-      fontSize={{ base: '1rem', md: '0.85rem' }}
+      fontSize={{ base: '0.85rem', sm: '0.85rem', md: '0.85rem' }}
       width="100%"
       lineHeight="1.5"
       color="gray.900"
