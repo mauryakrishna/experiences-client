@@ -140,6 +140,7 @@ export default function Home() {
         title="World of Experiences" 
         description={metaDescription} 
         canonical={`https://experiences.guru`}
+        type="website"
       />
       <Flex px="5">
         { !DetectMobileBrowser() && 

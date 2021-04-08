@@ -1,7 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet";
 
-export default ({ title, description, canonical })=> {
+export default ({ title, description, canonical, type })=> {
   return (
     <Helmet>
       <title>{title}</title>
@@ -13,6 +13,7 @@ export default ({ title, description, canonical })=> {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
+      <meta property="og:type" content={type} />
       
       {/* twitter specific tags */}
       <meta name="twitter:title" content={title} />
