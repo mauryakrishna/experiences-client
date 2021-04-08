@@ -5,12 +5,12 @@ import isDifferent from '../../utils/IsDifferent';
 import { Slate, withReact } from 'slate-react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
-import { Helmet } from 'react-helmet';
 import UserContext from "../UserContext"
 import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useApolloClient } from 'react-apollo-hooks';
 import { Box } from '@chakra-ui/core';
 
+import SEOElements from "../../seo"
 import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
 
 import HeadingToolbar, {
@@ -53,9 +53,11 @@ const Editor = ({ saveDebounce }) => {
 
   return (
     <>
-      <Helmet>
-        <meta name="Description" content={"Editor to write your experience. It saves the title and experience as you go on writing. Built using slatejs plugins which usage slatjs library inside."} />
-      </Helmet>
+      <SEOElements 
+        title={`Pen your experience`}
+        description={"Editor to write your experience. It saves the title and experience as you go on writing. Built using slatejs plugins which usage slatjs library inside."}
+        canonical={`https://experiences.guru/editor/`}
+      />
       <Slate
         editor={editor}
         value={value}
