@@ -90,7 +90,7 @@ export default function Home() {
                   borderWidth={1}
                   borderRadius="8px"
                   width="100%"
-                  _hover={{ borderColor: 'teal.400', bg: 'cyan.50' }} 
+                  _hover={{ borderColor: 'teal.400', bg: 'green.50' }} 
                 >
                   <Link to={link} width="100%">
                     <ExperienceTitleInList>
