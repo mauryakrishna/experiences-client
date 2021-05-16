@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import loadable from '@loadable/component'
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
-import { Box, Flex, Button, Stack, CircularProgress } from '@chakra-ui/core';
+import { Box, Flex, Button, Stack, CircularProgress, PseudoBox } from '@chakra-ui/core';
 import { DetectMobileBrowser } from '../../detectmobilebrowser';
 
 const Link = loadable(()=> import('../../components/Link'));
@@ -83,28 +83,29 @@ export default function Home() {
             const { displayname, uid } = author;
             const link = `/${uid}/${slug}-${slugkey}`;
             return (
-              <Flex
-                key={slugkey}
-                pointer="cursor"
-                borderColor="gray.200"
-                borderWidth={1}
-                borderRadius="8px"
-                width="100%"
-                _hover={{ borderColor: 'gray.400', bg: 'gray.50' }}
-              >
-                <ExperienceTitleInList>
+              <Flex key={slugkey}>
+                <PseudoBox 
+                  pointer="cursor"
+                  borderColor="gray.200"
+                  borderWidth={1}
+                  borderRadius="8px"
+                  width="100%"
+                  _hover={{ borderColor: 'teal.400', bg: 'cyan.50' }} 
+                >
                   <Link to={link} width="100%">
-                    {title}
+                    <ExperienceTitleInList>
+                        {title}
+                      <ExperienceIntroText>
+                        {experienceintrotext}
+                      </ExperienceIntroText>
+                      <Flex>
+                        <PublishDate>
+                          {`${publishdate}`} | {displayname}
+                        </PublishDate>
+                      </Flex>
+                    </ExperienceTitleInList>
                   </Link>
-                  <ExperienceIntroText>
-                    {experienceintrotext}
-                  </ExperienceIntroText>
-                  <Flex>
-                    <PublishDate>
-                      {`${publishdate}`} | {displayname}
-                    </PublishDate>
-                  </Flex>
-                </ExperienceTitleInList>
+                </PseudoBox>
               </Flex>
             );
           })}
