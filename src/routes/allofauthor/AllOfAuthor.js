@@ -8,6 +8,7 @@ import localStorage from 'local-storage';
 
 import {
   Text,
+  Box,
   Flex,
   Stack,
   PseudoBox,
@@ -186,6 +187,9 @@ const AllOfAuthor = ({ authoruid }) => {
     setExperiences(experiences);
   }
 
+  const onCardClick = (authoruid, slug, slugkey)=> {
+    history.push(`/${authoruid}/${slug}-${slugkey}`)
+  }
   if (loading) {
     return <Loading />;
   }
@@ -277,34 +281,45 @@ const AllOfAuthor = ({ authoruid }) => {
                     created_at,
                   } = experience;
                   return (
-                    <Flex
-                      key={slugkey}
-                      p={2}
-                      borderWidth="1px"
-                      borderColor="gray.200"
-                      borderRadius="8px"
-                      w="100%"
-                    >
-                      <ExperienceTitleInList>
-                        <Link to={`/${authoruid}/${slug}-${slugkey}`}>{title}</Link>
-                        <ExperienceIntroText>
-                          {experienceintrotext}
-                        </ExperienceIntroText>
-                        <Flex>
-                          <PublishDate>
-                            {ispublished
-                              ? `Published on ${publishdate}`
-                              : // eslint-disable-next-line camelcase
-                              `Started ${created_at}`}
-                          </PublishDate>
+                    <Flex key={slugkey} p={2}>
+                      <PseudoBox 
+                        cursor="pointer"
+                        borderColor="gray.200"
+                        borderWidth={1}
+                        borderRadius="8px"
+                        width="100%"
+                        _hover={{ borderColor: 'teal.400', bg: 'teal.50' }} 
+                      >
+                        <Flex w="100%">
+                          <Flex width="100%">
+                            <Box w="100%" onClick={()=> onCardClick(authoruid, slug, slugkey)}>
+                              <ExperienceTitleInList width="100%">
+                                {title}
+                                <ExperienceIntroText>
+                                  {experienceintrotext}
+                                </ExperienceIntroText>
+                                <Flex>
+                                  <PublishDate>
+                                    {ispublished
+                                      ? `Published on ${publishdate}`
+                                      : // eslint-disable-next-line camelcase
+                                      `Started ${created_at}`}
+                                  </PublishDate>
+                                </Flex>
+                              </ExperienceTitleInList>
+                            </Box>
+                          </Flex>
+                          <Flex  
+                            margin="10px" 
+                            align="center" 
+                            justify="left"
+                          >
+                            {allowActions && (
+                              <AuthorActions {...{ ispublished, slugkey, onDeleteExperienceCb }} />
+                            )}
+                          </Flex>
                         </Flex>
-                      </ExperienceTitleInList>
-
-                      <Flex align="center" justify="center">
-                        {allowActions && (
-                          <AuthorActions {...{ ispublished, slugkey, onDeleteExperienceCb }} />
-                        )}
-                      </Flex>
+                      </PseudoBox>
                     </Flex>
                   );
                 })}
