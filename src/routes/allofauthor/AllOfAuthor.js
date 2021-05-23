@@ -281,7 +281,7 @@ const AllOfAuthor = ({ authoruid }) => {
                     created_at,
                   } = experience;
                   return (
-                    <Flex key={slugkey} p={2}>
+                    <Flex key={slugkey}>
                       <PseudoBox 
                         cursor="pointer"
                         borderColor="gray.200"
@@ -310,7 +310,7 @@ const AllOfAuthor = ({ authoruid }) => {
                             </Box>
                           </Flex>
                           <Flex  
-                            margin="10px" 
+                            margin="10px"
                             align="center" 
                             justify="left"
                           >
