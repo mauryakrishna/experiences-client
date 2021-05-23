@@ -1,39 +1,39 @@
 {
   "client": [
     "/assets/vendors.e1c92e3d.js",
-    "/assets/client.0063866a.js"
+    "/assets/client.db5aafc2.js"
   ],
   "home": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/259.9cab0362.chunk.js",
     "/assets/593.be845d70.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/home.31d39470.chunk.js"
   ],
   "write-editor": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/write-editor.a550ea21.chunk.js"
   ],
   "allofauthor": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/259.9cab0362.chunk.js",
     "/assets/13.99be7865.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/allofauthor.85225724.chunk.js"
   ],
   "reset-password": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/reset-password.ff824109.chunk.js"
   ],
   "verify-email": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/verify-email.74b6eb89.chunk.js"
   ],
   "read-experience": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/259.9cab0362.chunk.js",
     "/assets/593.be845d70.chunk.js",
     "/assets/122.b71063e4.chunk.js",
@@ -41,7 +41,7 @@
     "/assets/read-experience.f5a8c421.chunk.js"
   ],
   "not-found": [
-    "/assets/45.0f6dfa8f.chunk.js",
+    "/assets/754.fe194c88.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
     "/assets/not-found.ac667f4f.chunk.js"
   ],

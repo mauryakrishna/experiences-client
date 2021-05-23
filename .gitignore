@@ -6,6 +6,12 @@ node_modules/
 # Compiled output- this is removed from ignore list to save some compute capacity on aws
 # build
 
+# build files - commented for same reason as for /build above
+# loadable-stats.json
+
+# hot reload update files
+build/update/*
+
 # Runtime data
 database.sqlite
 
@@ -30,6 +36,3 @@ yarn-error.log*
 
 # node-localstorage
 scratch
-
-# build files
-loadable-stats.json

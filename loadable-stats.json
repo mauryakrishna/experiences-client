@@ -1,0 +1,258 @@
+{
+  "errors": [],
+  "warnings": [],
+  "version": "4.43.0",
+  "hash": "33d40347e4c5533497ea",
+  "publicPath": "/assets/",
+  "outputPath": "E:\\exp\\experiences-client\\build",
+  "assetsByChunkName": {
+    "allofauthor": "chunks/allofauthor.js",
+    "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email": "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+    "edit-editor": "chunks/edit-editor.js",
+    "home": "chunks/home.js",
+    "not-found": "chunks/not-found.js",
+    "read-experience": "chunks/read-experience.js",
+    "reset-password": "chunks/reset-password.js",
+    "server": "server.js",
+    "verify-email": "chunks/verify-email.js"
+  },
+  "assets": [
+    {
+      "name": "chunks/allofauthor.js",
+      "size": 49409,
+      "chunks": [
+        "allofauthor"
+      ],
+      "chunkNames": [
+        "allofauthor"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+      "size": 224218,
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email"
+      ],
+      "chunkNames": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/edit-editor.js",
+      "size": 138588,
+      "chunks": [
+        "edit-editor"
+      ],
+      "chunkNames": [
+        "edit-editor"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/home.js",
+      "size": 29986,
+      "chunks": [
+        "home"
+      ],
+      "chunkNames": [
+        "home"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/not-found.js",
+      "size": 20955,
+      "chunks": [
+        "not-found"
+      ],
+      "chunkNames": [
+        "not-found"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/read-experience.js",
+      "size": 37235,
+      "chunks": [
+        "read-experience"
+      ],
+      "chunkNames": [
+        "read-experience"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/reset-password.js",
+      "size": 19171,
+      "chunks": [
+        "reset-password"
+      ],
+      "chunkNames": [
+        "reset-password"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "chunks/verify-email.js",
+      "size": 12904,
+      "chunks": [
+        "verify-email"
+      ],
+      "chunkNames": [
+        "verify-email"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "server.js",
+      "size": 204718,
+      "chunks": [
+        "server"
+      ],
+      "chunkNames": [
+        "server"
+      ],
+      "info": {},
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "server": {
+      "chunks": [
+        "server"
+      ],
+      "assets": [
+        "server.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "server": {
+      "chunks": [
+        "server"
+      ],
+      "assets": [
+        "server.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "home": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "home"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/home.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "write-editor": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "edit-editor"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/edit-editor.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "allofauthor": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "allofauthor"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/allofauthor.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "edit-editor": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "edit-editor"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/edit-editor.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "reset-password": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "reset-password"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/reset-password.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "verify-email": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "verify-email"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/verify-email.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "read-experience": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "read-experience"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/read-experience.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "not-found": {
+      "chunks": [
+        "allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email",
+        "not-found"
+      ],
+      "assets": [
+        "chunks/allofauthor~edit-editor~home~not-found~read-experience~reset-password~verify-email.js",
+        "chunks/not-found.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 5,
+      "debug": false
+    }
+  },
+  "children": []
+}
