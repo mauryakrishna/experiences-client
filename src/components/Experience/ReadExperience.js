@@ -135,7 +135,7 @@ const ReadExperience = ({ slug }) => {
                 />
               </Slate>
             </Flex>
-            <Divider pt={'2rem'} orientation="horizontal"/>
+            <Divider pt={'1rem'} orientation="horizontal"/>
             { thoughtsenabled && <Thoughts slugkey={slugkey} thoughtauthoruid={uid} /> }
             { !thoughtsenabled && <Text textAlign="center"
               m="15px"
