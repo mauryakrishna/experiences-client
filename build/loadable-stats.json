@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "hash": "b191423bdca15e9157cd",
+  "hash": "628f5f0ef8c5f7b2264c",
   "version": "5.11.0",
   "publicPath": "/assets/",
   "outputPath": "E:\\exp\\experiences-client\\build",
@@ -231,7 +231,7 @@
     {
       "type": "asset",
       "name": "chunks/allofauthor.js",
-      "size": 6692,
+      "size": 6689,
       "emitted": false,
       "comparedForEmit": false,
       "cached": true,
@@ -279,7 +279,7 @@
     {
       "type": "asset",
       "name": "chunks/home.js",
-      "size": 5385,
+      "size": 5376,
       "emitted": false,
       "comparedForEmit": false,
       "cached": true,

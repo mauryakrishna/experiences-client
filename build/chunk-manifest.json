@@ -1,14 +1,14 @@
 {
   "client": [
     "/assets/vendors.e1c92e3d.js",
-    "/assets/client.db5aafc2.js"
+    "/assets/client.b7303a51.js"
   ],
   "home": [
     "/assets/754.fe194c88.chunk.js",
     "/assets/259.9cab0362.chunk.js",
     "/assets/593.be845d70.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
-    "/assets/home.31d39470.chunk.js"
+    "/assets/home.6657feb3.chunk.js"
   ],
   "write-editor": [
     "/assets/754.fe194c88.chunk.js",
@@ -20,7 +20,7 @@
     "/assets/259.9cab0362.chunk.js",
     "/assets/13.99be7865.chunk.js",
     "/assets/675.bf0b28c2.chunk.js",
-    "/assets/allofauthor.85225724.chunk.js"
+    "/assets/allofauthor.67871f02.chunk.js"
   ],
   "reset-password": [
     "/assets/754.fe194c88.chunk.js",
