@@ -3,8 +3,8 @@
 # Dependencies
 node_modules/
 
-# Compiled output
-build
+# Compiled output- this is removed from ignore list to save some compute capacity on aws
+# build
 
 # Runtime data
 database.sqlite
