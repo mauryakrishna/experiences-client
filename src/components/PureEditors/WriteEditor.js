@@ -5,7 +5,7 @@ import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Box } from '@chakra-ui/core';
 
-import { EditablePlugins, pipe } from '@udecode/slate-plugins';
+import { SlatePlugins, pipe } from '@udecode/slate-plugins';
 import { renderLeafBold } from '../SlatePluginsNext/Custom/renderLeafBold';
 
 import HeadingToolbar, {
@@ -14,29 +14,40 @@ import HeadingToolbar, {
 } from './HeadingToolbar';
 
 const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
-  const withPlugins = [withReact, withHistory, ...withPluginsHeading];
-  const plugins = [...pluginsHeading];
-  const editor = useMemo(() => pipe(createEditor(), ...withPlugins), []);
-  
+  const editableProps = {
+    placeholder,
+    style,
+  }
   return (
-    <Slate
-      editor={editor}
-      value={initialValue}
-      onChange={newValue => {
+    <SlatePlugins
+      id="3"
+      plugins={plugins}
+      editableProps={editableProps}
+      initialValue={initialValue}
+      onChange={(newValue) => {
         onChangeCb(newValue);
       }}
     >
       <HeadingToolbar />
-      <Box w="100%" px={2} mb={8}>
-        <EditablePlugins
-          plugins={plugins}
-          placeholder={placeholder}
-          spellCheck
-          style={style}
-          renderLeaf={[renderLeafBold]}
-        />
-      </Box>
-    </Slate>
+    </SlatePlugins>
+    // <Slate
+    //   editor={editor}
+    //   value={initialValue}
+    //   onChange={newValue => {
+    //     onChangeCb(newValue);
+    //   }}
+    // >
+    //   <HeadingToolbar />
+    //   <Box w="100%" px={2} mb={8}>
+    //     <EditablePlugins
+    //       plugins={plugins}
+    //       placeholder={placeholder}
+    //       spellCheck
+    //       style={style}
+    //       renderLeaf={[renderLeafBold]}
+    //     />
+    //   </Box>
+    // </Slate>
   );
 }
 

@@ -1,7 +1,7 @@
-import { ELEMENT_BLOCKQUOTE, SoftBreakPlugin } from '@udecode/slate-plugins';
+import { ELEMENT_BLOCKQUOTE, createSoftBreakPlugin } from '@udecode/slate-plugins';
 
 export default [
-  SoftBreakPlugin({
+  createSoftBreakPlugin({
     rules: [
       { hotkey: 'shift+enter' },
       {

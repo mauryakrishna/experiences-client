@@ -13,11 +13,11 @@ import {
   ToolbarElement,
   // ToolbarImage,
   ToolbarLink,
-  withToggleType,
-  withDeleteStartReset,
-  withBreakEmptyReset,
-  // withImageUpload,
-  withLink,
+  // withToggleType,
+  // withDeleteStartReset,
+  // withBreakEmptyReset,
+  // // withImageUpload,
+  // withLink,
 } from '@udecode/slate-plugins';
 
 import pluginExitBreak from '../SlatePluginsNext/ExitBreakPlugin';

@@ -21,7 +21,7 @@
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
     "@styled-icons/material": "10.0.0",
-    "@udecode/slate-plugins": "0.62.0",
+    "@udecode/slate-plugins": "1.0.0-alpha.25",
     "apollo-cache-inmemory": "1.6.6",
     "apollo-client": "2.6.9",
     "apollo-link": "1.2.14",

@@ -11,12 +11,12 @@ import {
   MARK_STRIKETHROUGH,
   MARK_UNDERLINE,
   ToolbarMark,
-  withToggleType,
+  // withToggleType,
 } from '@udecode/slate-plugins';
 
 import { plugins, nodeTypes } from '../SlatePluginsNext/ToolbarMarksPlugins';
 
-const withPlugins = [withToggleType(nodeTypes)];
+const withPlugins = []; // [withToggleType(nodeTypes)];
 
 const MARK_BOLD = 'strong';
 
