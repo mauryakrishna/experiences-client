@@ -4,7 +4,7 @@
 node_modules/
 
 # Compiled output- this is removed from ignore list to save some compute capacity on aws
-# build
+build
 
 # Runtime data
 database.sqlite
