@@ -27,8 +27,7 @@ const Editor = ({ saveDebounce }) => {
       {
         children: [
           {
-            type: 'paragraph',
-            children: [{ text: '' }],
+            text: ""
           },
         ],
       },

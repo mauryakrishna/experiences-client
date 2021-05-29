@@ -1,15 +1,14 @@
 /* eslint-disable no-shadow */
-import useStyles from 'isomorphic-style-loader/useStyles';
-import React, { useState } from 'react';
+import { Box } from "@chakra-ui/core"
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useApolloClient } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 
-import s from './Editor.css';
+import './Editor.css';
 import Layout from '../../components/Editor/Layout';
 
 export default function Editor({ slugkey }) {
-  useStyles(s);
   const client = useApolloClient();
   const cacheData = {
     data: {
@@ -61,11 +60,11 @@ export default function Editor({ slugkey }) {
 
   
   return (
-    <div className={s.root}>
-      <div className={s.container}>
+    <Box pl="20px" pr="20px">
+      <Box margin="0 auto" maxWidth="768px" px={{ base: '1.5rem', sm: '2rem', md: '4rem' }}>
         <Layout />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
