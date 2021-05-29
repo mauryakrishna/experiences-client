@@ -82,11 +82,14 @@ const options = createSlatePluginsOptions({
   // customize your options by plugin key
 })
 
-const WriteEditor = ({ initialValue, placeholder }) => {
+const WriteEditor = ({ initialValue, onChangeCb, placeholder }) => {
   const { setSearch, plugin: searchHighlightPlugin } = useFindReplacePlugin()
   // const { getMentionSelectProps, plugin: mentionPlugin } = useMentionPlugin(
   //   optionsMentionPlugin
   // )
+
+  // override to use passed one
+  editableProps.placeholder = placeholder;
 
   const plugins = useMemo(() => {
     const p = [
@@ -144,7 +147,7 @@ const WriteEditor = ({ initialValue, placeholder }) => {
         editableProps={editableProps}
         initialValue={initialValue}
         onChange={(newValue) => {
-          console.log("New Value", newValue)
+          onChangeCb(newValue)
         }}
       >
         <HeadingToolbar>
