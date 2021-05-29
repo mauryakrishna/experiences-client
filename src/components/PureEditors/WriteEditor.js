@@ -82,7 +82,7 @@ const options = createSlatePluginsOptions({
   // customize your options by plugin key
 })
 
-const WriteEditor = ({ initialValue, onChangeCb, placeholder }) => {
+const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
   const { setSearch, plugin: searchHighlightPlugin } = useFindReplacePlugin()
   // const { getMentionSelectProps, plugin: mentionPlugin } = useMentionPlugin(
   //   optionsMentionPlugin
@@ -90,7 +90,7 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder }) => {
 
   // override to use passed one
   editableProps.placeholder = placeholder;
-
+  editableProps.style = style || editableProps.style;
   const plugins = useMemo(() => {
     const p = [
       createReactPlugin(),
