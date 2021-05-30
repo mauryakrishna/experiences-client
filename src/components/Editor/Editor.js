@@ -25,11 +25,7 @@ const Editor = ({ saveDebounce }) => {
   const [value, setValue] = useState(
     JSON.parse(experience) || [
       {
-        children: [
-          {
-            text: ""
-          },
-        ],
+        text: ""
       },
     ],
   );

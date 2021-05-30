@@ -120,9 +120,10 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
       createResetNodePlugin(optionsResetBlockTypePlugin),
       createSoftBreakPlugin(optionsSoftBreakPlugin),
       createExitBreakPlugin(optionsExitBreakPlugin),
-      createNormalizeTypesPlugin({
-        rules: [{ path: [0, 0], strictType: options[ELEMENT_H1].type }],
-      }),
+      // commented lines below are for forced layout usage
+      // createNormalizeTypesPlugin({
+      //   rules: [{ path: [0, 0], strictType: options[ELEMENT_H1].type }],
+      // }),
       createTrailingBlockPlugin({
         type: options[ELEMENT_PARAGRAPH].type,
         level: 1,
