@@ -4,16 +4,16 @@ import {
   withPlaceholders,
 } from '@udecode/slate-plugins'
 
-export const withStyledPlaceHolders = (components: any) =>
+export const withStyledPlaceHolders = (components) =>
   withPlaceholders(components, [
     {
       key: ELEMENT_PARAGRAPH,
-      placeholder: 'Type a paragraph',
+      // placeholder: 'Type a paragraph',
       hideOnBlur: true,
     },
     {
       key: ELEMENT_H1,
-      placeholder: 'Untitled',
+      // placeholder: 'Untitled',
       hideOnBlur: false,
     },
   ])

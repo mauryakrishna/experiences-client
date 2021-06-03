@@ -75,14 +75,15 @@ let components = createSlatePluginsComponents({
   // }),
   // customize your components by plugin key
 })
-// components = withStyledPlaceHolders(components)
-// components = withStyledDraggables(components)
+components = withStyledPlaceHolders(components)
+components = withStyledDraggables(components)
 
 const options = createSlatePluginsOptions({
   // customize your options by plugin key
 })
 
-const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
+const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly }) => {
+  
   const { setSearch, plugin: searchHighlightPlugin } = useFindReplacePlugin()
   // const { getMentionSelectProps, plugin: mentionPlugin } = useMentionPlugin(
   //   optionsMentionPlugin
@@ -91,6 +92,8 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
   // override to use passed one
   editableProps.placeholder = placeholder;
   editableProps.style = style || editableProps.style;
+  editableProps.readOnly = readOnly;
+
   const plugins = useMemo(() => {
     const p = [
       createReactPlugin(),
@@ -148,14 +151,19 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style }) => {
         editableProps={editableProps}
         initialValue={initialValue}
         onChange={(newValue) => {
-          onChangeCb(newValue)
+          !readOnly && onChangeCb(newValue)
         }}
       >
-        <HeadingToolbar>
-          <ToolbarButtons />
-        </HeadingToolbar>
+        {
+          !readOnly && <>
+            <HeadingToolbar>
+              <ToolbarButtons />
+            </HeadingToolbar>
 
-        <BallonToolbarMarks />
+            <BallonToolbarMarks />
+          </>
+        }
+        
       </SlatePlugins>
     </DndProvider>
   )
