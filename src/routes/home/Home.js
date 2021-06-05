@@ -78,7 +78,7 @@ export default function Home() {
   const getExperiencesStack = experiences => {
     if (experiences.length > 0) {
       return (
-        <Stack spacing={3}>
+        <Stack spacing={3} pr="5px">
           {experiences.map(({ title, slug, slugkey, author, publishdate, experienceintrotext }) => {
             const { displayname, uid } = author;
             const link = `/${uid}/${slug}-${slugkey}`;

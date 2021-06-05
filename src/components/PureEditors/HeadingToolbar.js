@@ -13,9 +13,8 @@ import {
   ToolbarElement,
   // ToolbarImage,
   ToolbarLink,
-  withToggleType,
-  withDeleteStartReset,
-  withBreakEmptyReset,
+  toggleNodeType,
+  createResetNodePlugin,
   // withImageUpload,
   withLink,
 } from '@udecode/slate-plugins';
@@ -61,10 +60,9 @@ const plugins = [
 const withPlugins = [
   ...withPluginsToolbarList,
   ...withPluginsToolbarMarks,
-  withDeleteStartReset(resetOptions),
-  withBreakEmptyReset(resetOptions),
+  createResetNodePlugin(resetOptions),
   // withImageUpload(nodeTypes),
-  withToggleType(nodeTypes),
+  toggleNodeType(nodeTypes),
   withLink(nodeTypes),
 ];
 

@@ -2,18 +2,20 @@
 import React, { useState, useMemo } from 'react';
 import loadable from "@loadable/component";
 import PropTypes from 'prop-types';
+import { createEditor } from 'slate';
+import { Slate } from 'slate-react';
+import { EditablePlugins, pipe } from '@udecode/slate-plugins';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
 import { Flex, Text, PseudoBox, Divider } from '@chakra-ui/core';
 import { Loading } from '../UIElements';
+import { plugins, renderLeafBold } from './SlatePlugins';
 import AuthorDisplay from './AuthorDisplay';
 import SEOElements from "../../seo";
 import GetExperienceIntroText from "../../utils/getexperienceintrotext";
 const Thoughts =  loadable(()=> import("../Thoughts"));
-import WriteEditor from "../PureEditors/WriteEditor";
 
 const ReadExperience = ({ slug }) => {
-  const [loadingValue, setLoadingValue] = useState(true);
   const [value, setValue] = useState([{ children: [{ text: '' }] }]);
   const [title, setTitle] = useState('');
   const [publishdate, setPublishDate] = useState('');
@@ -23,6 +25,7 @@ const ReadExperience = ({ slug }) => {
   const [thoughtsenabled, setThoughtsenabled] = useState(false);
 
   const [experienceNotFound, setExperienceNotFound] = useState(false);
+  const editor = useMemo(() => pipe(createEditor()), []);
 
   const slugWords = slug.split('-');
   const slugkey = slugWords[slugWords.length - 1];
@@ -80,15 +83,11 @@ const ReadExperience = ({ slug }) => {
         const { uid, displayname } = author;
         setUid(uid);
         setDisplayname(displayname);
-        // added this loading complete indicator to avoid the
-        // issue of slate-plugins editor not updating with latest
-        // value coming from server
-        setLoadingValue(false);
       }
     }
   }, [data]);
 
-  if (loading || loadingValue) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -125,14 +124,16 @@ const ReadExperience = ({ slug }) => {
               />
             </Flex>
             <Flex justify="left" py={5}>
-              {/* <SlatePlugins editor={editor} value={value}> */}
-                <WriteEditor
-                  initialValue={value}
-                  readOnly={true}
+              <Slate editor={editor} value={value}>
+                <EditablePlugins
+                  plugins={plugins}
+                  readOnly
+                  autoFocus
                   placeholder="Read here."
-                  style= {{ fontSize: '1.1rem', fontWeight: '400', lineHeight: '1.5' } }
+                  style={{ fontSize: '1.1rem', fontWeight: '400', lineHeight: '1.5' }}
+                  renderLeaf={[renderLeafBold]}
                 />
-              {/* </Slate> */}
+              </Slate>
             </Flex>
             <Divider pt={'1rem'} orientation="horizontal"/>
             { thoughtsenabled && <Thoughts slugkey={slugkey} thoughtauthoruid={uid} /> }
