@@ -160,7 +160,7 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly })
               <ToolbarButtons />
             </HeadingToolbar>
 
-            <BallonToolbarMarks />
+            {/* <BallonToolbarMarks /> */}
           </>
         }
         
