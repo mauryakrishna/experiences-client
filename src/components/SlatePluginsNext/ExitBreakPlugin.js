@@ -2,11 +2,11 @@ import {
   ELEMENT_H1,
   ELEMENT_H2,
   ELEMENT_H3,
-  ExitBreakPlugin,
+  createExitBreakPlugin,
 } from '@udecode/slate-plugins';
 
 export default [
-  ExitBreakPlugin({
+  createExitBreakPlugin({
     rules: [
       {
         hotkey: 'mod+enter',

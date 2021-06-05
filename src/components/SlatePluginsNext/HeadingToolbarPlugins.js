@@ -6,11 +6,11 @@ import {
   ELEMENT_H2,
   ELEMENT_H3,
   ELEMENT_PARAGRAPH,
-  HeadingPlugin,
-  CodeBlockPlugin,
-  BlockquotePlugin,
-  // ImagePlugin,
-  LinkPlugin,
+  createHeadingPlugin,
+  createCodeBlockPlugin,
+  createBlockquotePlugin,
+  // createImagePlugin,
+  createLinkPlugin,
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
@@ -24,11 +24,11 @@ const nodeTypes = {
 };
 
 const plugins = [
-  HeadingPlugin(nodeTypes),
-  CodeBlockPlugin(nodeTypes),
-  BlockquotePlugin(nodeTypes),
-  LinkPlugin(nodeTypes),
-  // ImagePlugin(nodeTypes),
+  createHeadingPlugin(nodeTypes),
+  createCodeBlockPlugin(nodeTypes),
+  createBlockquotePlugin(nodeTypes),
+  createLinkPlugin(nodeTypes),
+  // createImagePlugin(nodeTypes),
 ];
 
 export { plugins, nodeTypes };

@@ -4,27 +4,27 @@ import {
   MARK_UNDERLINE,
   ELEMENT_PARAGRAPH,
   DEFAULTS_BOLD,
-  ParagraphPlugin,
-  BoldPlugin,
-  ItalicPlugin,
-  UnderlinePlugin,
-  StrikethroughPlugin,
+  createParagraphPlugin,
+  createBoldPlugin,
+  createItalicPlugin,
+  createUnderlinePlugin,
+  createStrikethroughPlugin,
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
   typeP: ELEMENT_PARAGRAPH,
-  typeBold: DEFAULTS_BOLD.bold.type,
+  typeBold: DEFAULTS_BOLD,
   typeItalic: MARK_ITALIC,
   typeUnderline: MARK_UNDERLINE,
   typeStrikethrough: MARK_STRIKETHROUGH,
 };
 
 const plugins = [
-  ParagraphPlugin(nodeTypes),
-  BoldPlugin(nodeTypes),
-  ItalicPlugin(nodeTypes),
-  UnderlinePlugin(nodeTypes),
-  StrikethroughPlugin(nodeTypes),
+  createParagraphPlugin(),
+  createBoldPlugin(),
+  createItalicPlugin(),
+  createUnderlinePlugin(),
+  createStrikethroughPlugin(),
 ];
 
 export { plugins, nodeTypes };

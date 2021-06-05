@@ -2,7 +2,7 @@ import {
   ELEMENT_ALIGN_CENTER,
   ELEMENT_ALIGN_RIGHT,
   ELEMENT_ALIGN_LEFT,
-  AlignPlugin,
+  createAlignPlugin,
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
@@ -11,6 +11,6 @@ const nodeTypes = {
   typeAlignCenter: ELEMENT_ALIGN_CENTER,
 };
 
-const plugins = [AlignPlugin(nodeTypes)];
+const plugins = [createAlignPlugin(nodeTypes)];
 
 export { plugins, nodeTypes };

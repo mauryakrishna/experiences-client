@@ -2,7 +2,7 @@ import {
   ELEMENT_LI,
   ELEMENT_OL,
   ELEMENT_UL,
-  ListPlugin,
+  createListPlugin,
 } from '@udecode/slate-plugins';
 
 const nodeTypes = {
@@ -11,6 +11,6 @@ const nodeTypes = {
   typeLi: ELEMENT_LI,
 };
 
-const plugins = [ListPlugin(nodeTypes)];
+const plugins = [createListPlugin(nodeTypes)];
 
 export { plugins, nodeTypes };
