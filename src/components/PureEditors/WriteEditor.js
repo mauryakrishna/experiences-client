@@ -136,7 +136,7 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly })
       searchHighlightPlugin,
     ]
 
-    p.push(createDeserializeHTMLPlugin({ plugins: p }))
+    // p.push(createDeserializeHTMLPlugin({ plugins: p }))
 
     return p
   }, [/*mentionPlugin,*/ searchHighlightPlugin])
