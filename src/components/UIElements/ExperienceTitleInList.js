@@ -8,7 +8,7 @@ const Title = props => {
       fontWeight="500"
       fontSize={{ base: '1.2rem', md: '1.2rem' }}
       margin={3}
-      width="100%"
+      width="95%"
       color="gray.800"
       {...props}
     >
