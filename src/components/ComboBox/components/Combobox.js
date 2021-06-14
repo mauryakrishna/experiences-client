@@ -13,9 +13,8 @@ import { setElementPositionByRange } from '../../tag/utils/setElementPositionByR
 import { useComboboxControls } from '../hooks/useComboboxControls'
 import { useComboboxIsOpen } from '../selectors/useComboboxIsOpen'
 import { useComboboxStore } from '../useComboboxStore'
-import { ComboboxProps } from './Combobox.types'
 
-export const Combobox = ({ onSelectItem, onRenderItem }: ComboboxProps) => {
+export const Combobox = ({ onSelectItem, onRenderItem }) => {
   // TODO
   const at = useComboboxStore((state) => state.targetRange)
   const items = useComboboxStore((state) => state.items)
