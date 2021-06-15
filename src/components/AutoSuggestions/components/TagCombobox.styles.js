@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components'
 //   tagItemHighlighted: 'slate-TagCombobox-tagItemHighlighted',
 // };
 
-export const ComboboxRoot = styled.ul<{ isOpen: boolean }>`
+export const ComboboxRoot = styled.ul`
   ${({ isOpen }) =>
     isOpen &&
     css`
@@ -24,7 +24,7 @@ export const ComboboxRoot = styled.ul<{ isOpen: boolean }>`
     `}
 `
 
-export const ComboboxItem = styled.div<{ highlighted: boolean }>`
+export const ComboboxItem = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;

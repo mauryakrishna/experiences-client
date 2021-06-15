@@ -8,8 +8,8 @@ import {
 import {
   ComboboxItem,
   ComboboxRoot,
-} from '../../tag/components/TagCombobox.styles'
-import { setElementPositionByRange } from '../../tag/utils/setElementPositionByRange'
+} from '../../AutoSuggestions/components/TagCombobox.styles'
+import { setElementPositionByRange } from '../../AutoSuggestions/utils/setElementPositionByRange'
 import { useComboboxControls } from '../hooks/useComboboxControls'
 import { useComboboxIsOpen } from '../selectors/useComboboxIsOpen'
 import { useComboboxStore } from '../useComboboxStore'

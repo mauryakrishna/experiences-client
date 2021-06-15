@@ -1,4 +1,4 @@
-import pipe from 'ramda/es/pipe'
+import { pipe } from 'ramda'
 import create from 'zustand'
 import { immer } from './immer.middleware'
 

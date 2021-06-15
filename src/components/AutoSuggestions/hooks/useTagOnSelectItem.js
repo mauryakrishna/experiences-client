@@ -3,13 +3,10 @@ import {
   getBlockAbove,
   getSlatePluginType,
   insertNodes,
-  SPEditor,
-  TElement,
 } from '@udecode/slate-plugins'
 import { Editor, Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
-import { useComboboxIsOpen } from '../../combobox/selectors/useComboboxIsOpen'
-import { useComboboxStore } from '../../combobox/useComboboxStore'
+import { useComboboxIsOpen } from '../../Combobox/selectors/useComboboxIsOpen'
+import { useComboboxStore } from '../../Combobox/useComboboxStore'
 import { ELEMENT_P } from '../defaults'
 
 /**
@@ -21,7 +18,7 @@ export const useTagOnSelectItem = () => {
   const closeMenu = useComboboxStore((state) => state.closeMenu)
 
   return useCallback(
-    (editor: SPEditor & ReactEditor, item) => {
+    (editor, item) => {
       const type = getSlatePluginType(editor, ELEMENT_P)
 
       if (isOpen && targetRange) {
@@ -38,7 +35,7 @@ export const useTagOnSelectItem = () => {
 
         // select the tag text and insert the tag element
         Transforms.select(editor, targetRange)
-        insertNodes<TElement>(editor, {
+        insertNodes(editor, {
           type,
           children: [{ text: '' }],
           value: item.text,
