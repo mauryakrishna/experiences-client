@@ -22,7 +22,7 @@ export const Combobox = ({ onSelectItem, onRenderItem }) => {
   const combobox = useComboboxControls()
   const isOpen = useComboboxIsOpen()
 
-  const ref = React.useRef<any>(null)
+  const ref = React.useRef(null)
   const editor = useEditorState()
   // const _editor = useStoreEditorState(useEventEditorId('focus'));
   // console.log(editor === _editor);

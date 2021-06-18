@@ -1,4 +1,3 @@
-Plugins
 /**
  * Returns the new index in the list, in a circular way. If next value is out of bonds from the total,
  * it will wrap to either 0 or itemCount - 1.

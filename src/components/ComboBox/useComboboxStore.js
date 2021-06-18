@@ -1,4 +1,4 @@
-import { createStore, setStoreValue } from '../ComboBox/store/createStore';
+import { createStore, setStoreValue } from './store/createStore';
 export var ComboboxKey;
 (function (ComboboxKey) {
     ComboboxKey["TAG"] = "p";

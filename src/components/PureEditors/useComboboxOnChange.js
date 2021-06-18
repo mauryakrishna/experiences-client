@@ -1,12 +1,14 @@
 
 import { useTagOnChange } from '../AutoSuggestions/hooks/useTagOnChange'
 import { useStoreEditorRef } from '@udecode/slate-plugins'
+import { useComboboxIsOpen } from '../ComboBox/selectors/useComboboxIsOpen'
+import { useComboboxStore } from '../ComboBox/useComboboxStore'
+import { useCallback } from 'react'
 
 // Handle multiple combobox
 export const useComboboxOnChange = () => {
-  const id = "someid"
+  const id = 'Examples/Playground'
   const editor = useStoreEditorRef(id)
-
   const tagOnChange = useTagOnChange(editor, [{name: "Some name", value: "some value"}])
   const isOpen = useComboboxIsOpen()
   const closeMenu = useComboboxStore((state) => state.closeMenu)

@@ -71,6 +71,7 @@ import Comboboxcontainer from '../ComboBox/ComboboxContainer'
 import { createAutoSuggestionsPlugin } from '../AutoSuggestions/createAutoSuggestionsPlugin'
 import { useTagOnSelectItem } from '../AutoSuggestions/hooks/useTagOnSelectItem'
 import { useComboboxOnChange } from './useComboboxOnChange'
+import { useComboboxOnKeyDown } from '../ComboBox/hooks/useComboboxOnKeyDown'
 
 const id = 'Examples/Playground'
 
@@ -157,7 +158,7 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly })
     // p.push(createDeserializeHTMLPlugin({ plugins: p }))
 
     return p
-  }, [/*mentionPlugin,*/ searchHighlightPlugin])
+  }, [/*mentionPlugin,*/ searchHighlightPlugin, comboboxOnChange, comboboxOnKeyDown])
 
   return (
     <DndProvider backend={HTML5Backend}>

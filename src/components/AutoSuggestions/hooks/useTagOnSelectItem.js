@@ -44,9 +44,9 @@ export const useTagOnSelectItem = () => {
         Transforms.move(editor)
 
         // delete the inserted space
-        // if (isBlockEnd) {
-        //   Transforms.delete(editor)
-        // }
+        if (isBlockEnd) {
+          Transforms.delete(editor)
+        }
 
         return closeMenu()
       }
