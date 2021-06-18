@@ -1,24 +1,32 @@
 import { createStore, setStoreValue } from './store/createStore';
-export var ComboboxKey;
-(function (ComboboxKey) {
-    ComboboxKey["TAG"] = "p";
-    ComboboxKey["SLASH_COMMAND"] = "slash_command";
-})(ComboboxKey || (ComboboxKey = {}));
+
+export const ComboboxKey = {
+    TAG = 'p',
+    SLASH_COMMAND = 'slash_command',
+}
+
 export const useComboboxStore = createStore()((set) => ({
-    key: ComboboxKey.SLASH_COMMAND,
+    key: ComboboxKey.TAG,
     setKey: setStoreValue(set, 'key', 'setKey'),
+
     maxSuggestions: 10,
     setMaxSuggestions: setStoreValue(set, 'maxSuggestions', 'setMaxSuggestions'),
+
     search: '',
     setSearch: setStoreValue(set, 'search', 'setSearch'),
+
     items: [],
     setItems: setStoreValue(set, 'items', 'setItems'),
+
     targetRange: null,
     setTargetRange: setStoreValue(set, 'targetRange', 'setTargetRange'),
+
     itemIndex: 0,
     setItemIndex: setStoreValue(set, 'itemIndex', 'setItemIndex'),
+
     combobox: null,
     setCombobox: setStoreValue(set, 'combobox', 'setCombobox'),
+
     closeMenu: () => {
         set((state) => {
             state.targetRange = null;
