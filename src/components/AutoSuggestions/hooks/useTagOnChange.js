@@ -9,7 +9,7 @@ export const useTagOnChange = (editor, data) => {
   const comboboxOnChange = useComboboxOnChange({
     editor,
     key: ComboboxKey.TAG,
-    trigger: '[A-za-z0-9]',
+    trigger: '#', //[A-za-z0-9]
   })
   const { maxSuggestions, setItems } = useComboboxStore(
     // eslint-disable-next-line @typescript-eslint/no-shadow

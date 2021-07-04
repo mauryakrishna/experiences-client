@@ -1,1 +1,1 @@
-export const ELEMENT_P = 'p'
+export const ELEMENT_TAG = 'tag'

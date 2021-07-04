@@ -7,20 +7,20 @@ import {
 import { Editor, Transforms } from 'slate'
 import { useComboboxIsOpen } from '../../Combobox/selectors/useComboboxIsOpen'
 import { useComboboxStore } from '../../Combobox/useComboboxStore'
-import { ELEMENT_P } from '../defaults'
+import { ELEMENT_TAG } from '../defaults'
 
 /**
  * Select the target range, add a tag node and set the target range to null
  */
 export const useTagOnSelectItem = () => {
+ 
   const isOpen = useComboboxIsOpen()
   const targetRange = useComboboxStore((state) => state.targetRange)
   const closeMenu = useComboboxStore((state) => state.closeMenu)
 
   return useCallback(
     (editor, item) => {
-      const type = getSlatePluginType(editor, ELEMENT_P)
-
+      const type = getSlatePluginType(editor, ELEMENT_TAG)
       if (isOpen && targetRange) {
         const pathAbove = getBlockAbove(editor)?.[1]
         const isBlockEnd =

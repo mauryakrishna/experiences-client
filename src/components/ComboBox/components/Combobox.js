@@ -21,7 +21,6 @@ export const Combobox = ({ onSelectItem, onRenderItem }) => {
   const itemIndex = useComboboxStore((state) => state.itemIndex)
   const combobox = useComboboxControls()
   const isOpen = useComboboxIsOpen()
-
   const ref = React.useRef(null)
   const editor = useEditorState()
   // const _editor = useStoreEditorState(useEventEditorId('focus'));
@@ -34,7 +33,6 @@ export const Combobox = ({ onSelectItem, onRenderItem }) => {
   const menuProps = combobox ? combobox.getMenuProps() : { ref: null }
 
   const multiRef = useMergedRef(menuProps.ref, ref)
-
   if (!combobox) return null
 
   return (

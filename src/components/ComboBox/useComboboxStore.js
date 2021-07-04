@@ -1,8 +1,8 @@
 import { createStore, setStoreValue } from './store/createStore';
 
 export const ComboboxKey = {
-    TAG = 'p',
-    SLASH_COMMAND = 'slash_command',
+    TAG: 'tag',
+    SLASH_COMMAND: 'slash_command',
 }
 
 export const useComboboxStore = createStore()((set) => ({

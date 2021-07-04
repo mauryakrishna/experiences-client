@@ -1,4 +1,3 @@
-Plugins
 import * as React from 'react';
 import { getRootClassNames, useEditorRef } from '@udecode/slate-plugins';
 import { styled } from '@uifabric/utilities';

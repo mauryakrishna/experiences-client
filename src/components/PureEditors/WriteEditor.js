@@ -72,10 +72,12 @@ import { createAutoSuggestionsPlugin } from '../AutoSuggestions/createAutoSugges
 import { useTagOnSelectItem } from '../AutoSuggestions/hooks/useTagOnSelectItem'
 import { useComboboxOnChange } from './useComboboxOnChange'
 import { useComboboxOnKeyDown } from '../ComboBox/hooks/useComboboxOnKeyDown'
-
+import { TagElement } from '../AutoSuggestions/components/TagElement'
+import { ELEMENT_TAG } from '../AutoSuggestions/defaults'
 const id = 'Examples/Playground'
 
 let components = createSlatePluginsComponents({
+  [ELEMENT_TAG]: TagElement,
   // [ELEMENT_MENTION]: withProps(MentionElement, {
   //   renderLabel: renderMentionLabel,
   // }),

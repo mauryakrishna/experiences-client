@@ -8,7 +8,7 @@ import { Editor } from 'slate';
 export const getTextFromTrigger = (editor, { at, trigger }) => {
     const escapedTrigger = escapeRegExp(trigger);
     console.log('escapedTrigger', escapedTrigger);
-    const triggerRegex = new RegExp(`^${trigger}`);
+    const triggerRegex = new RegExp(escapedTrigger);
     console.log('triggerRegex', triggerRegex);
     const noWhiteSpaceRegex = new RegExp(`\\S+`);
     let start = at;
