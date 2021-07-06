@@ -5,8 +5,8 @@ import {
   insertNodes,
 } from '@udecode/slate-plugins'
 import { Editor, Transforms } from 'slate'
-import { useComboboxIsOpen } from '../../Combobox/selectors/useComboboxIsOpen'
-import { useComboboxStore } from '../../Combobox/useComboboxStore'
+import { useComboboxIsOpen } from '../../ComboBox/selectors/useComboboxIsOpen'
+import { useComboboxStore } from '../../ComboBox/useComboboxStore'
 import { ELEMENT_TAG } from '../defaults'
 
 /**

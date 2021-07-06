@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 import { MentionNodeData } from '@udecode/slate-plugins'
 import shallow from 'zustand/shallow'
 // import { IComboboxItem } from '../../combobox/components/Combobox.types'
-import { useComboboxOnChange } from '../../Combobox/hooks/useComboboxOnChange'
-import { ComboboxKey, useComboboxStore } from '../../Combobox/useComboboxStore'
+import { useComboboxOnChange } from '../../ComboBox/hooks/useComboboxOnChange'
+import { ComboboxKey, useComboboxStore } from '../../ComboBox/useComboboxStore'
 
 export const useTagOnChange = (editor, data) => {
   const comboboxOnChange = useComboboxOnChange({

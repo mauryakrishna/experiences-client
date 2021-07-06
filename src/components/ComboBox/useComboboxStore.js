@@ -6,7 +6,7 @@ export const ComboboxKey = {
 }
 
 export const useComboboxStore = createStore()((set) => ({
-    key: ComboboxKey.TAG,
+    key: ComboboxKey.SLASH_COMMAND,
     setKey: setStoreValue(set, 'key', 'setKey'),
 
     maxSuggestions: 10,

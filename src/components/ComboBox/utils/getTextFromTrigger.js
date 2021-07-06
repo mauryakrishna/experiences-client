@@ -6,11 +6,10 @@ import { Editor } from 'slate';
  * TODO: move to plugins
  */
 export const getTextFromTrigger = (editor, { at, trigger }) => {
-    const escapedTrigger = escapeRegExp(trigger);
-    console.log('escapedTrigger', escapedTrigger);
-    const triggerRegex = new RegExp(escapedTrigger);
-    console.log('triggerRegex', triggerRegex);
-    const noWhiteSpaceRegex = new RegExp(`\\S+`);
+    const escapedTrigger = escapeRegExp(trigger)
+    const triggerRegex = new RegExp(`^${escapedTrigger}`)
+    const noWhiteSpaceRegex = new RegExp(`\\S+`)
+
     let start = at;
     let end;
     while (true) {

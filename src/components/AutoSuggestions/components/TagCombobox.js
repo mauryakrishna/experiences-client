@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Combobox } from '../../Combobox/components/Combobox'
-import { ComboboxKey, useComboboxStore } from '../../Combobox/useComboboxStore'
+import { Combobox } from '../../ComboBox/components/Combobox'
+import { ComboboxKey, useComboboxStore } from '../../ComboBox/useComboboxStore'
 import { useTagOnSelectItem } from '../hooks/useTagOnSelectItem'
 import { TagComboboxItem } from './TagComboboxItem'
 
