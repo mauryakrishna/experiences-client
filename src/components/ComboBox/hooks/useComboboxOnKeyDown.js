@@ -28,8 +28,8 @@ export const useComboboxOnKeyDown = ({ onSelectItem, }) => {
                 e.preventDefault();
                 return closeMenu();
             }
-            console.log('e.key', e.key.length);
-            if (['Tab', 'Enter', ' '].includes(e.key)) {
+            // 1 - for spacebar key
+            if (['Tab', 'Enter', '1'].includes(e.key)) {
                 e.preventDefault();
                 closeMenu();
                 if (items[itemIndex]) {

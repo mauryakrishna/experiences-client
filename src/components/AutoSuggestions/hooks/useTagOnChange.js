@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import { MentionNodeData } from '@udecode/slate-plugins'
 import shallow from 'zustand/shallow'
-// import { IComboboxItem } from '../../combobox/components/Combobox.types'
 import { useComboboxOnChange } from '../../ComboBox/hooks/useComboboxOnChange'
 import { ComboboxKey, useComboboxStore } from '../../ComboBox/useComboboxStore'
 
@@ -9,7 +8,7 @@ export const useTagOnChange = (editor, data) => {
   const comboboxOnChange = useComboboxOnChange({
     editor,
     key: ComboboxKey.TAG,
-    trigger: '#', //[A-za-z0-9]
+    trigger: `[A-za-z0-9]`
   })
   const { maxSuggestions, setItems } = useComboboxStore(
     // eslint-disable-next-line @typescript-eslint/no-shadow
