@@ -10,11 +10,12 @@ export const useTagOnChange = (editor, data) => {
     key: ComboboxKey.TAG,
     trigger: `[A-za-z0-9]`
   })
-  const { maxSuggestions, setItems } = useComboboxStore(
+  const { maxSuggestions, setItems, setTargetRange } = useComboboxStore(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    ({ maxSuggestions, setItems }) => ({
+    ({ maxSuggestions, setItems, setTargetRange }) => ({
       maxSuggestions,
       setItems,
+      setTargetRange,
     }),
     shallow
   )
@@ -34,6 +35,8 @@ export const useTagOnChange = (editor, data) => {
       }))
 
     setItems(items)
+
+    items.length === 0 && setTargetRange(null)
 
     return true
   }, [comboboxOnChange, data, maxSuggestions, setItems])
