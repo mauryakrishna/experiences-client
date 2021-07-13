@@ -35,7 +35,8 @@ export const useTagOnChange = (editor, data) => {
       }))
 
     setItems(items)
-
+    // this is when, user continues to type and no match from the combobox then set the range as null
+    // so as to close the combobox
     items.length === 0 && setTargetRange(null)
 
     return true
