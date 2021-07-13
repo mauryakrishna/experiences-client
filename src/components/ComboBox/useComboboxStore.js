@@ -1,7 +1,7 @@
 import { createStore, setStoreValue } from './store/createStore';
 
 export const ComboboxKey = {
-    TAG: 'tag',
+    TAG: 'autosuggestion',
     SLASH_COMMAND: 'slash_command',
 }
 

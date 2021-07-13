@@ -37,8 +37,9 @@ export const useTagOnSelectItem = () => {
         Transforms.select(editor, targetRange)
         insertNodes(editor, {
           type,
-          children: [{ text: '' }],
-          value: item.text,
+          // commented below to avoid deleting whole word when doing backspace
+          // children: [{ text: '' }],
+          text: item.text,
         })
         // move the selection after the tag element
         Transforms.move(editor)
