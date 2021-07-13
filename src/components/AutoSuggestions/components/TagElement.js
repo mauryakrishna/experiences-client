@@ -18,7 +18,8 @@ export const TagElementBase = ({ attributes, children, element, styles, classNam
     const onClickProps = useOnMouseClick(() => console.info('tag clicked'));
     useHotkeys('backspace', () => {
         if (selected && focused && editor.selection) {
-            Transforms.move(editor);
+            // commented the below as it was causing the issue when deleting a line 
+            // Transforms.move(editor);
         }
     }, [selected, focused]);
     useHotkeys('delete', () => {
