@@ -51,7 +51,7 @@ const Title = ({ saveDebounce }) => {
       <Flex>
         <Textarea
           // eslint-disable-next-line jsx-a11y/no-autofocus
-          inputRef={ref}
+          ref={ref}
           px={0}
           autoFocus
           w="100%"
