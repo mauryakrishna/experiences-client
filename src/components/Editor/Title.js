@@ -1,9 +1,13 @@
 import React, { useState, useRef, useContext } from 'react';
+import { useCombobox } from 'downshift'
+import useMergedRef from '@react-hook/merged-ref'
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 import { Textarea, Flex } from '@chakra-ui/core';
 import UserContext from "../UserContext"
 import { EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS } from '../../ConfigConstants';
+import TitleCombobox from './TitleCombobox';
+import {items, menuStyles, comboboxStyles} from './shared'
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -26,6 +30,7 @@ const Title = ({ saveDebounce }) => {
   const [message, setMessage] = useState('');
   
   const ref = useRef();
+  const comboboxRef = useRef()
   const validateTitle = event => {
     let { value } = event.target;
 
@@ -46,9 +51,40 @@ const Title = ({ saveDebounce }) => {
     }
   };
 
+  
+  const [inputItems, setInputItems] = useState(items)
+  const {
+    isOpen,
+    getMenuProps,
+    getInputProps,
+    getComboboxProps,
+    highlightedIndex,
+    getItemProps,
+  } = useCombobox({
+    items: inputItems,
+    onInputValueChange: ({inputValue}) => {
+      console.log("oninput change", items, inputValue)
+      setInputItems(
+        items.filter((item) =>
+          item.toLowerCase().startsWith(inputValue.toLowerCase()),
+        ),
+      )
+    },
+  })
+  
+  const menuProps = getMenuProps()
+  const multiRef = useMergedRef(menuProps.ref, comboboxRef)
+
   return (
     <React.Fragment>
-      <Flex>
+      <TitleCombobox 
+        inputItems={inputItems}
+        menuProps={menuProps} 
+        isOpen={isOpen}
+        comboboxRef={multiRef} 
+        highlightedIndex={highlightedIndex}
+      />
+      <Flex {...getComboboxProps()}>
         <Textarea
           // eslint-disable-next-line jsx-a11y/no-autofocus
           ref={ref}
@@ -65,12 +101,14 @@ const Title = ({ saveDebounce }) => {
           placeholder="Start with the title..."
           value={title}
           as={AutoResizeTextarea}
-          onChange={validateTitle}
-          onKeyPress={event => {
-            if (event.key === 'Enter') {
-              event.preventDefault();
+          {...getInputProps({
+            onChange: validateTitle,
+            onKeyPress: (event)=> {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+              }
             }
-          }}
+          })}
           maxLength={`${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS}`}
           transition="height none"
         />
