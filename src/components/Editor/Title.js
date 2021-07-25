@@ -8,6 +8,8 @@ import UserContext from "../UserContext"
 import { EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS } from '../../ConfigConstants';
 import TitleCombobox from './TitleCombobox';
 import {items, menuStyles, comboboxStyles} from './shared'
+import calculateNumberOfLines from '../../utils/calculateNumberOfLines';
+import getTextAreaCursorXY from 'textarea-caret'
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -51,7 +53,7 @@ const Title = ({ saveDebounce }) => {
     }
   };
 
-  
+
   const [inputItems, setInputItems] = useState(items)
   const {
     isOpen,
@@ -60,20 +62,40 @@ const Title = ({ saveDebounce }) => {
     getComboboxProps,
     highlightedIndex,
     getItemProps,
+    setInputValue,
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({inputValue}) => {
-      console.log("oninput change", items, inputValue)
+      const word = inputValue.trim().split(" ")
       setInputItems(
         items.filter((item) =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase()),
+          item.toLowerCase().startsWith(word[word.length-1].toLowerCase()),
         ),
       )
     },
+    onSelectedItemChange: (item) => {
+      const titleSplit = title.trim().split(" ")
+      titleSplit.splice(titleSplit.length - 1, 1)
+      titleSplit.push(item.inputValue)
+      const updatedTitle = titleSplit.join(" ").trim()
+      setTitle(updatedTitle)
+      setInputValue(updatedTitle)
+    }
   })
   
   const menuProps = getMenuProps()
   const multiRef = useMergedRef(menuProps.ref, comboboxRef)
+
+  const setOptionsPosition = (domRef) => {
+    const el = comboboxRef.current
+    const coords = getTextAreaCursorXY(domRef.target, domRef.target.selectionEnd)
+    const { offsetLeft, offsetTop} = domRef.target
+    const numberOfLines = calculateNumberOfLines(domRef.target)
+    coords.left = coords.left + offsetLeft
+    coords.top = offsetTop
+    el.style.top = `${coords.top + window.pageYOffset + coords.height * numberOfLines}px`;
+    el.style.left = `${coords.left + window.pageXOffset}px`;
+  }
 
   return (
     <React.Fragment>
@@ -83,6 +105,7 @@ const Title = ({ saveDebounce }) => {
         isOpen={isOpen}
         comboboxRef={multiRef} 
         highlightedIndex={highlightedIndex}
+        getItemProps={getItemProps}
       />
       <Flex {...getComboboxProps()}>
         <Textarea
@@ -104,6 +127,7 @@ const Title = ({ saveDebounce }) => {
           {...getInputProps({
             onChange: validateTitle,
             onKeyPress: (event)=> {
+              setOptionsPosition(event)
               if (event.key === 'Enter') {
                 event.preventDefault();
               }

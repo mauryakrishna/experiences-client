@@ -4,7 +4,7 @@ import {useCombobox} from 'downshift'
 import {items, menuStyles, comboboxStyles} from './shared'
 import TitleComboboxRoot from './TitleComboboxRoot'
 
-function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, inputItems }) {
+function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, inputItems, getItemProps }) {
   // const [inputItems, setInputItems] = useState(items)
   // const {
   //   isOpen,
@@ -46,7 +46,7 @@ function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, in
                 highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
               }
               key={`${item}${index}`}
-              // {...getItemProps({item, index})}
+              {...getItemProps({item, index})}
             >
               {item}
             </li>

@@ -4,8 +4,8 @@ const TitleComboboxRoot = styled.ul`
   ${({ isOpen }) =>
     isOpen &&
     css`
-      top: 400px;
-      left: 200px;
+      top: -99999px;
+      left: -99999px;
       position: absolute;
       padding: 0;
       margin: 0;

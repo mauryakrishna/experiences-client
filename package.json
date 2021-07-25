@@ -78,6 +78,7 @@
     "source-map-support": "^0.5.9",
     "starwars-names": "^1.6.0",
     "styled-components": "5.1.1",
+    "textarea-caret": "^3.1.0",
     "universal-router": "^9.0.1",
     "use-debounce": "3.4.2",
     "whatwg-fetch": "^3.0.0",
