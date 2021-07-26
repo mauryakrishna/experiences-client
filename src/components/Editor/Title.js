@@ -73,13 +73,21 @@ const Title = ({ saveDebounce }) => {
         ),
       )
     },
-    onSelectedItemChange: (item) => {
-      const titleSplit = title.trim().split(" ")
-      titleSplit.splice(titleSplit.length - 1, 1)
-      titleSplit.push(item.inputValue)
-      const updatedTitle = titleSplit.join(" ").trim()
-      setTitle(updatedTitle)
-      setInputValue(updatedTitle)
+    stateReducer: (state, actionAndChanges) => {
+      const {type, changes} = actionAndChanges
+      switch (type) { 
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          const titleSplit = title.trim().split(" ")
+          titleSplit.splice(titleSplit.length - 1, 1)
+          titleSplit.push(changes.inputValue)
+          const updatedTitle = titleSplit.join(" ").trim()
+          changes.inputValue = updatedTitle
+          return {
+            ...changes,
+          }
+        default:
+          return changes
+      }
     }
   })
   
