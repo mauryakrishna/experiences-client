@@ -133,9 +133,11 @@ const Title = ({ saveDebounce }) => {
           value={title}
           as={AutoResizeTextarea}
           {...getInputProps({
-            onChange: validateTitle,
-            onKeyPress: (event)=> {
+            onChange: (event) => { 
+              validateTitle(event)
               setOptionsPosition(event)
+            },
+            onKeyPress: (event)=> {
               if (event.key === 'Enter') {
                 event.preventDefault();
               }
