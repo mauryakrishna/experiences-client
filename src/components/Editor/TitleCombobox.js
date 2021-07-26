@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react'
 import {render} from 'react-dom'
 import {useCombobox} from 'downshift'
 import {items, menuStyles, comboboxStyles} from './shared'
-import TitleComboboxRoot from './TitleComboboxRoot'
+import {
+  ComboboxItem,
+  ComboboxRoot,
+} from '../AutoSuggestions/components/TagCombobox.styles'
 
 function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, inputItems, getItemProps }) {
   // const [inputItems, setInputItems] = useState(items)
@@ -38,20 +41,17 @@ function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, in
           &#8595;
         </button>
       </div> */}
-      <TitleComboboxRoot {...menuProps} ref={comboboxRef} isOpen={isOpen}>
+      <ComboboxRoot {...menuProps} ref={comboboxRef} isOpen={isOpen}>
         {isOpen &&
           inputItems.map((item, index) => (
-            <li
-              style={
-                highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
-              }
+            <ComboboxItem highlighted={highlightedIndex === index}
               key={`${item}${index}`}
               {...getItemProps({item, index})}
             >
               {item}
-            </li>
+            </ComboboxItem>
           ))}
-      </TitleComboboxRoot>
+      </ComboboxRoot>
     </div>
   )
 }
