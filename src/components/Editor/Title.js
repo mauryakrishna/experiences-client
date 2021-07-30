@@ -65,11 +65,13 @@ const Title = ({ saveDebounce }) => {
     setInputValue,
   } = useCombobox({
     items: inputItems,
-    onInputValueChange: ({inputValue}) => {
+    onInputValueChange: (props) => {
+      const { inputValue, isOpen } = props
       const word = inputValue.trim().split(" ")
-      setInputItems(
+      const filterTerm = word.pop().toLowerCase()
+      isOpen && !!filterTerm && setInputItems(
         items.filter((item) =>
-          item.toLowerCase().startsWith(word[word.length-1].toLowerCase()),
+          item.toLowerCase().startsWith(filterTerm),
         ),
       )
     },
