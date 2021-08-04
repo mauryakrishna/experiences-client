@@ -68,7 +68,7 @@ const Title = ({ saveDebounce }) => {
     onInputValueChange: (props) => {
       const { inputValue, isOpen } = props
       const word = inputValue.trim().split(" ")
-      const filterTerm = word.pop().toLowerCase()
+      const filterTerm = word[word.length - 1].toLowerCase()
       isOpen && !!filterTerm && setInputItems(
         items.filter((item) =>
           item.toLowerCase().startsWith(filterTerm),
