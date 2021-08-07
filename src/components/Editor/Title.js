@@ -54,8 +54,18 @@ const Title = ({ saveDebounce }) => {
     }
   };
 
+  const onWordSelection = (changes) => {
+    const titleSplit = title.trim().split(" ")
+    titleSplit.splice(titleSplit.length - 1, 1)
+    titleSplit.push(changes.inputValue)
+    const updatedTitle = titleSplit.join(" ").trim()
+    changes.inputValue = updatedTitle
+    return {
+      ...changes,
+    }
+  }
 
-  const [inputItems, setInputItems] = useState(items)
+  const [inputItems, setInputItems] = useState([])
   const {
     isOpen,
     getMenuProps,
@@ -68,33 +78,23 @@ const Title = ({ saveDebounce }) => {
     items: inputItems,
     onInputValueChange: (props) => {
       const { inputValue, isOpen } = props
-      const word = inputValue.trim().split(" ")
+      const word = inputValue.split(" ")
       const filterTerm = word[word.length - 1].toLowerCase()
       if(isOpen && !!filterTerm) {
           autoSuggestion(filterTerm)
-          .then(resp => {
-            console.log("resp", resp)
-            setInputItems(resp.options)
-          })
-          // setInputItems(
-          //   items.filter((item) =>
-          //     item.toLowerCase().startsWith(filterTerm),
-          //   ),
-          // )
+            .then(resp => {
+              console.log("resp", resp)
+              setInputItems(resp.twords[0].options)
+            })
       }
     },
     stateReducer: (state, actionAndChanges) => {
       const {type, changes} = actionAndChanges
-      switch (type) { 
+      switch (type) {
+        case useCombobox.stateChangeTypes.ItemClick: 
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
-          const titleSplit = title.trim().split(" ")
-          titleSplit.splice(titleSplit.length - 1, 1)
-          titleSplit.push(changes.inputValue)
-          const updatedTitle = titleSplit.join(" ").trim()
-          changes.inputValue = updatedTitle
-          return {
-            ...changes,
-          }
+          return onWordSelection(changes)
+
         default:
           return changes
       }
