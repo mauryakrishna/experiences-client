@@ -10,6 +10,7 @@ import TitleCombobox from './TitleCombobox';
 import {items, menuStyles, comboboxStyles} from './shared'
 import calculateNumberOfLines from '../../utils/calculateNumberOfLines';
 import getTextAreaCursorXY from 'textarea-caret'
+import autoSuggestion from "../../services/autosuggestions"
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -69,11 +70,18 @@ const Title = ({ saveDebounce }) => {
       const { inputValue, isOpen } = props
       const word = inputValue.trim().split(" ")
       const filterTerm = word[word.length - 1].toLowerCase()
-      isOpen && !!filterTerm && setInputItems(
-        items.filter((item) =>
-          item.toLowerCase().startsWith(filterTerm),
-        ),
-      )
+      if(isOpen && !!filterTerm) {
+          autoSuggestion(filterTerm)
+          .then(resp => {
+            console.log("resp", resp)
+            setInputItems(resp.options)
+          })
+          // setInputItems(
+          //   items.filter((item) =>
+          //     item.toLowerCase().startsWith(filterTerm),
+          //   ),
+          // )
+      }
     },
     stateReducer: (state, actionAndChanges) => {
       const {type, changes} = actionAndChanges
