@@ -83,8 +83,9 @@ const Title = ({ saveDebounce }) => {
       if(isOpen && !!filterTerm) {
           autoSuggestion(filterTerm)
             .then(resp => {
-              console.log("resp", resp)
-              setInputItems(resp.twords[0].options)
+              if(resp) {
+                setInputItems(resp.twords[0].options)
+              }
             })
       }
     },
