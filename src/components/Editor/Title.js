@@ -89,6 +89,9 @@ const Title = ({ saveDebounce }) => {
               }
             })
       }
+      else if(!filterTerm) {
+        setInputItems([])
+      }
     },
     stateReducer: (state, actionAndChanges) => {
       const {type, changes} = actionAndChanges
