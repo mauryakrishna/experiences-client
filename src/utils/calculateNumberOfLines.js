@@ -43,7 +43,6 @@ var calculateNumberOfLines = function(textAreaElement) {
         // Get the scroll height of the textarea
         taHeight = calculateContentHeight(ta, taLineHeight);
         // calculate the number of lines
-        console.log(`taHeight ${taHeight} | taLineHeight ${taLineHeight}`);
     const numberOfLines = Math.floor(taHeight / taLineHeight);
 
         return numberOfLines
