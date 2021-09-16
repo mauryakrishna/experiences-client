@@ -13,7 +13,7 @@ function DropdownCombobox({ menuProps, isOpen, highlightedIndex, comboboxRef, in
           inputItems.map((item, index) => (
             <ComboboxItem highlighted={highlightedIndex === index}
               key={`${item}${index}`}
-              {...getItemProps({item, index})}
+              {...getItemProps({item, index, isSelected: highlightedIndex === index})}
             >
               {item}
             </ComboboxItem>
