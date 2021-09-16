@@ -98,6 +98,7 @@ const Title = ({ saveDebounce }) => {
       switch (type) {
         case useCombobox.stateChangeTypes.ItemClick: 
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
+        case useCombobox.stateChangeTypes.InputBlur:
           return onWordSelection(changes)
 
         case useCombobox.stateChangeTypes.InputKeyDownEscape:
@@ -157,7 +158,7 @@ const Title = ({ saveDebounce }) => {
               setOptionsPosition(event)
             },
             onKeyPress: (event)=> {
-              if (event.key === 'Enter') {
+              if (event.key === 'Enter' || event.key === 'Tab') {
                 event.preventDefault();
               }
             }
