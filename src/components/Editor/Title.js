@@ -76,6 +76,7 @@ const Title = ({ saveDebounce }) => {
     setInputValue,
   } = useCombobox({
     items: inputItems,
+    defaultHighlightedIndex: 0,
     onInputValueChange: (props) => {
       const { inputValue, isOpen } = props
       const word = inputValue.split(" ")
@@ -96,6 +97,10 @@ const Title = ({ saveDebounce }) => {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
           return onWordSelection(changes)
 
+        case useCombobox.stateChangeTypes.InputKeyDownEscape:
+          setInputItems([])
+          return changes
+          
         default:
           return changes
       }
