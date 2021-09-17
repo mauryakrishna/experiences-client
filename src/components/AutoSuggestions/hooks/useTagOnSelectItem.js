@@ -39,7 +39,7 @@ export const useTagOnSelectItem = () => {
           type,
           // commented below to avoid deleting whole word when doing backspace
           // children: [{ text: '' }],
-          text: item.text,
+          text: item,
         })
         // move the selection after the tag element
         Transforms.move(editor)
