@@ -40,5 +40,5 @@ export const useTagOnChange = (editor) => {
       })
 
     return true
-  }, [comboboxOnChange, data, maxSuggestions, setItems])
+  }, [comboboxOnChange, maxSuggestions, setItems])
 }
