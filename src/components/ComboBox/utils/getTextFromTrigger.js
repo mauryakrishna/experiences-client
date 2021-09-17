@@ -35,6 +35,8 @@ export const getTextFromTrigger = (editor, { at, trigger }) => {
         return;
     return {
         range,
-        textAfterTrigger: text.substring(1),
+        // excluding the #, so had text.substring(1), 
+        // but now want complete text because the trigger is [A-Za-z0-9]
+        textAfterTrigger: text,
     };
 };
