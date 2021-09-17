@@ -1,11 +1,10 @@
 import { useCallback } from 'react'
-import { MentionNodeData } from '@udecode/slate-plugins'
 import shallow from 'zustand/shallow'
 import { useComboboxOnChange } from '../../ComboBox/hooks/useComboboxOnChange'
 import { ComboboxKey, useComboboxStore } from '../../ComboBox/useComboboxStore'
 import autoSuggestion from "../../../services/autosuggestions"
 
-export const useTagOnChange = (editor, data) => {
+export const useTagOnChange = (editor) => {
   const comboboxOnChange = useComboboxOnChange({
     editor,
     key: ComboboxKey.TAG,
