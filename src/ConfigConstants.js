@@ -23,3 +23,8 @@ export const SAVE_ERROR = 4;
 
 export const SHORT_INTRO_MAX_CHARACTERS_LIMIT = 200;
 export const EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS = 160;
+
+/**
+ * local storage key name for experience editor language
+*/
+export const EXPERIENCE_EDITOR_LANG = `experiences.guru.lang`

@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import localStorage from 'local-storage';
+import { EXPERIENCE_EDITOR_LANG } from "../../ConfigConstants"
 import {
     Button,
     Menu,
@@ -15,9 +17,11 @@ const ChooseLanguage = () => {
         { key: "hindi", value: "हिन्दी" },
         { key: "marathi", value: "मराठी" }
     ]
-    const [chosenLanguage, setChosenLanguage] = useState("english")
+    const chosenLang = localStorage.get(EXPERIENCE_EDITOR_LANG)
+    const [chosenLanguage, setChosenLanguage] = useState(chosenLang || "english")
     const handleLanguageChange = (lang) => {
         setChosenLanguage(lang)
+        localStorage.set(EXPERIENCE_EDITOR_LANG, lang)
     }
 
     return (

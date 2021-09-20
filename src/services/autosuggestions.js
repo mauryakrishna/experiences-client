@@ -1,4 +1,6 @@
 import find from "lodash/find"
+import localStorage from "local-storage"
+import { EXPERIENCE_EDITOR_LANG } from "../ConfigConstants"
 
 const cache = [];
 const getFromCache = (inString) => {
@@ -27,12 +29,12 @@ export default (inString) => {
         return Promise.resolve(found)
     }
     else {
-        return getFromService(inString)
+        return getFromService(inString, localStorage.get(EXPERIENCE_EDITOR_LANG))
     }
 }
 
-const getFromService = (inString) => {
-    return fetch(`${window.location.origin}/processWordJSON?inString=${inString}&lang=hindi`, {
+const getFromService = (inString, chosenLang) => {
+    return fetch(`${window.location.origin}/processWordJSON?inString=${inString}&lang=${chosenLang}`, {
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json',
