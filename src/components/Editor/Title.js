@@ -79,6 +79,9 @@ const Title = ({ saveDebounce }) => {
     defaultHighlightedIndex: 0,
     onInputValueChange: (props) => {
       const { inputValue, isOpen } = props
+      if (!inputValue) {
+        return
+      }
       const word = inputValue.split(" ")
       const filterTerm = word[word.length - 1].toLowerCase()
       if(isOpen && !!filterTerm) {
@@ -98,9 +101,12 @@ const Title = ({ saveDebounce }) => {
       switch (type) {
         case useCombobox.stateChangeTypes.ItemClick: 
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
-        case useCombobox.stateChangeTypes.InputBlur:
           return onWordSelection(changes)
 
+        case useCombobox.stateChangeTypes.InputBlur:
+          changes.inputValue = title
+          return changes
+          
         case useCombobox.stateChangeTypes.InputKeyDownEscape:
           setInputItems([])
           return changes
