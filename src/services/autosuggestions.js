@@ -20,6 +20,10 @@ const getNonEnglish = (itrans) => {
 const isEnglishCharacter = new RegExp("[a-zA-Z0-9]")
 
 export default (inString) => {
+    const chosenLang = localStorage.get(EXPERIENCE_EDITOR_LANG)
+    if(chosenLang == "english") {
+        return Promise.reject(null)
+    }
     if(!isEnglishCharacter.test(inString)) {
         return Promise.resolve(getNonEnglish(inString))
     }
@@ -29,7 +33,7 @@ export default (inString) => {
         return Promise.resolve(found)
     }
     else {
-        return getFromService(inString, localStorage.get(EXPERIENCE_EDITOR_LANG))
+        return getFromService(inString, chosenLang)
     }
 }
 
