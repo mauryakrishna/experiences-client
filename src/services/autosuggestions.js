@@ -22,7 +22,7 @@ const isEnglishCharacter = new RegExp("[a-zA-Z0-9]")
 export default (inString) => {
     const chosenLang = localStorage.get(EXPERIENCE_EDITOR_LANG)
     if(chosenLang == "english") {
-        return Promise.reject(null)
+        return Promise.resolve(null)
     }
     if(!isEnglishCharacter.test(inString)) {
         return Promise.resolve(getNonEnglish(inString))
