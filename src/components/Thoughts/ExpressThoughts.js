@@ -20,10 +20,7 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
     },
   ];
 
-  let slateUuid;
-  useEffect(()=> {
-    slateUuid = uuidv4()
-  }, [])
+  const [slateUuid] = useState(uuidv4())
 
   const [value, setValue] = useState(initialValue);
 
