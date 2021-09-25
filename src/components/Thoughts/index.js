@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import loadable from "@loadable/component";
 import localStorage from "local-storage";
 import { Divider, Flex } from "@chakra-ui/core";
@@ -35,6 +35,19 @@ const Thoughts = ({slugkey}) => {
     toggleExpressThoughts(!expressThoughts);
   }
 
+  const MemoizedEpressThought = useMemo(()=> {
+    return <ExpressThoughts 
+      slugkey={slugkey} 
+      thoughtauthoruid={localStorage.get("username")} 
+      onSaveCb={onSaveThought} 
+      onCancelCb={toggleExpressThought} 
+    />
+  }, [slugkey, expressThoughts])
+
+  const MemoizedReadThoughts = useMemo(()=> {
+    return <ReadThoughts slugkey={slugkey} refreshCursor={refreshCursor} />
+  }, [refreshCursor])
+
   return (
     <>
       <Flex>
@@ -55,15 +68,10 @@ const Thoughts = ({slugkey}) => {
         DetectMobileBrowser() ? <MobileNotSupported /> : 
         expressThoughts && <>
           {thoughtSavedErr && <ErrorMessage>{'Could not save thoughts. Keep a backup of your thoughts, refresh and try again.'}</ErrorMessage>}
-          <ExpressThoughts 
-            slugkey={slugkey} 
-            thoughtauthoruid={localStorage.get("username")} 
-            onSaveCb={onSaveThought} 
-            onCancelCb={toggleExpressThought} 
-          />
+          {MemoizedEpressThought}
         </>
       }
-      <ReadThoughts slugkey={slugkey} refreshCursor={refreshCursor} />
+      {MemoizedReadThoughts}
     </>
   )
 }

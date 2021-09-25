@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import WriteEditor from '../PureEditors/WriteEditor';
 
 import Button from '../UIElements/Button';
+import uuidv4 from "./../../utils/uuidv4"
 
 const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) => {
   const initialValue = [
@@ -18,6 +19,8 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
       ],
     },
   ];
+
+  const [slateUuid] = useState(uuidv4())
 
   const [value, setValue] = useState(initialValue);
 
@@ -60,6 +63,7 @@ const ExpressThoughts = ({ slugkey, thoughtauthoruid, onSaveCb, onCancelCb }) =>
   return (
     <>
       <WriteEditor
+        id={`thoughts-section-${slateUuid}`}
         initialValue={value}
         onChangeCb={(newValue)=> {setEditorContent(newValue)}}
         placeholder="express your thoughts.."
