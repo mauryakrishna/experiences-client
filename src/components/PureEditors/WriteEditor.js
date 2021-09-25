@@ -67,8 +67,6 @@ import { withStyledDraggables } from './config/withStyledDraggables'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-const id = 'Examples/Playground'
-
 let components = createSlatePluginsComponents({
   // [ELEMENT_MENTION]: withProps(MentionElement, {
   //   renderLabel: renderMentionLabel,
@@ -82,7 +80,7 @@ const options = createSlatePluginsOptions({
   // customize your options by plugin key
 })
 
-const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly }) => {
+const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly, id }) => {
   
   const { setSearch, plugin: searchHighlightPlugin } = useFindReplacePlugin()
   // const { getMentionSelectProps, plugin: mentionPlugin } = useMentionPlugin(
