@@ -74,7 +74,6 @@ import { useComboboxOnChange } from './useComboboxOnChange'
 import { useComboboxOnKeyDown } from '../ComboBox/hooks/useComboboxOnKeyDown'
 import { TagElement } from '../AutoSuggestions/components/TagElement'
 import { ELEMENT_TAG } from '../AutoSuggestions/defaults'
-const id = 'Examples/Playground'
 
 let components = createSlatePluginsComponents({
   [ELEMENT_TAG]: TagElement,
@@ -90,7 +89,7 @@ const options = createSlatePluginsOptions({
   // customize your options by plugin key
 })
 
-const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly }) => {
+const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly, id }) => {
   
   const { setSearch, plugin: searchHighlightPlugin } = useFindReplacePlugin()
   // const { getMentionSelectProps, plugin: mentionPlugin } = useMentionPlugin(
