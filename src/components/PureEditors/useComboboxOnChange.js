@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 
 // Handle multiple combobox
 export const useComboboxOnChange = () => {
-  const id = 'Examples/Playground'
+  const id = 'experience-editor'
   const editor = useStoreEditorRef(id)
   const tagOnChange = useTagOnChange(editor)
   const isOpen = useComboboxIsOpen()
