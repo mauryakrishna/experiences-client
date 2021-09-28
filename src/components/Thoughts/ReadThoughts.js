@@ -1,24 +1,19 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import localStorage from 'local-storage';
 import gqloverhttp from '../../gqloverhttp';
-import { createEditor } from 'slate';
-import { Slate } from 'slate-react';
-import { EditablePlugins, pipe } from '@udecode/slate-plugins';
-import { plugins, renderLeafBold } from '../Experience/SlatePlugins';
+import WriteEditor from "../PureEditors/WriteEditor";
 
 import { Box, Stack, CircularProgress } from '@chakra-ui/core';
 import DeleteAThought from "./DeleteAThought";
-import { Button, Loading, TextLikeLink } from '../UIElements';
+import { Button, TextLikeLink } from '../UIElements';
 import history from "../../history";
 
 const Thoughts = ({ slugkey, refreshCursor }) => {
   const [thoughtsdata, setThoughtsData] = useState([]);
   const [cursor, setCursor] = useState(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-  const [showLoading, setShowLoading] = useState(true)
 
-  const editor = useMemo(() => pipe(createEditor()), []);
   const GET_THOUGHTS_FOR_EXPERIENCE = `
     query getThoughtsOfExperience($cursor: String, $experienceslugkey: String!) {
       getThoughtsOfExperience(cursor: $cursor, experienceslugkey: $experienceslugkey) {
@@ -65,11 +60,10 @@ const Thoughts = ({ slugkey, refreshCursor }) => {
   }
 
   useEffect(()=> {
+    console.log("read though useeffect")
     async function getListOnLoad() {
-      setShowLoading(true);
       const thoughts = await getListOfThoughts(refreshCursor);
       setThoughtsData(thoughts);
-      setShowLoading(false);
     }
     getListOnLoad();
   }, [refreshCursor]);
@@ -111,37 +105,30 @@ const Thoughts = ({ slugkey, refreshCursor }) => {
               isauthor && <DeleteAThought {...{ slugkey, thoughtid, isauthor, deletedCb }} />
             }
           </Box>
-          <Slate editor={editor} value={thought}>
-            <EditablePlugins
-              plugins={plugins}
-              readOnly
+            <WriteEditor
+              id={`read-thoughts-${thoughtid}`}
+              initialValue={thought}
+              readOnly={true}
               style={{ fontSize: '0.9rem', fontWeight: '400' }}
-              renderLeaf={[renderLeafBold]}
             />
-          </Slate>
         </Box>
       );
     });
   }
 
   return (
-    <>
-      { showLoading && <Loading />}
-      { !showLoading && 
-        <Box justify="left" py={5}>
-          <Stack spacing={3} pr="5px" width="100%">
-            {displayThoughts()}
-          </Stack>
-          <Button onClick={loadMoreThoughts}>
-            {fetchMoreLoading ? (
-              <CircularProgress isIndeterminate size="24px" color="teal" />
-            ) : (
-                'Load more'
-              )}
-          </Button>
-        </Box>
-      }
-    </>
+    <Box justify="left" py={5}>
+      <Stack spacing={3} pr="5px" width="100%">
+        {displayThoughts()}
+      </Stack>
+      <Button onClick={loadMoreThoughts}>
+        {fetchMoreLoading ? (
+          <CircularProgress isIndeterminate size="24px" color="teal" />
+        ) : (
+            'Load more'
+          )}
+      </Button>
+    </Box>
   );
 }
 

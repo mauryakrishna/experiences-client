@@ -91,7 +91,6 @@ const ReadExperience = ({ slug }) => {
   if (loading || loadingValue) {
     return <Loading />;
   }
-
   return (
     <>
       <SEOElements 
@@ -127,6 +126,7 @@ const ReadExperience = ({ slug }) => {
             <Flex justify="left" py={5}>
               {/* <SlatePlugins editor={editor} value={value}> */}
                 <WriteEditor
+                  id="read-experience"
                   initialValue={value}
                   readOnly={true}
                   placeholder="Read here."
