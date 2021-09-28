@@ -67,7 +67,16 @@ import { withStyledDraggables } from './config/withStyledDraggables'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
+import Comboboxcontainer from '../ComboBox/ComboboxContainer'
+import { createAutoSuggestionsPlugin } from '../AutoSuggestions/createAutoSuggestionsPlugin'
+import { useTagOnSelectItem } from '../AutoSuggestions/hooks/useTagOnSelectItem'
+import { useComboboxOnChange } from './useComboboxOnChange'
+import { useComboboxOnKeyDown } from '../ComboBox/hooks/useComboboxOnKeyDown'
+import { TagElement } from '../AutoSuggestions/components/TagElement'
+import { ELEMENT_TAG } from '../AutoSuggestions/defaults'
+
 let components = createSlatePluginsComponents({
+  [ELEMENT_TAG]: TagElement,
   // [ELEMENT_MENTION]: withProps(MentionElement, {
   //   renderLabel: renderMentionLabel,
   // }),
@@ -92,10 +101,23 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly, i
   editableProps.style = style || editableProps.style;
   editableProps.readOnly = readOnly;
 
+  const comboboxOnChange = useComboboxOnChange()
+
+  // Handle multiple combobox
+  const tagOnSelect = useTagOnSelectItem()
+  const comboboxOnKeyDown = useComboboxOnKeyDown({
+    onSelectItem: tagOnSelect,
+  })
+  
   const plugins = useMemo(() => {
     const p = [
       createReactPlugin(),
       createHistoryPlugin(),
+      createAutoSuggestionsPlugin(),
+      {
+        onChange: comboboxOnChange,
+        onKeyDown: comboboxOnKeyDown,
+      },
       createParagraphPlugin(),
       createBlockquotePlugin(),
       createTodoListPlugin(),
@@ -137,7 +159,7 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly, i
     // p.push(createDeserializeHTMLPlugin({ plugins: p }))
 
     return p
-  }, [/*mentionPlugin,*/ searchHighlightPlugin])
+  }, [/*mentionPlugin,*/ searchHighlightPlugin, comboboxOnChange, comboboxOnKeyDown])
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -161,6 +183,8 @@ const WriteEditor = ({ initialValue, onChangeCb, placeholder, style, readOnly, i
             {/* <BallonToolbarMarks /> */}
           </>
         }
+
+        <Comboboxcontainer />
         
       </SlatePlugins>
     </DndProvider>
