@@ -106,6 +106,7 @@ const extractor = new ChunkExtractor({ statsFile });
 // -----------------------------------------------------------------------------
 app.post('/gql', proxy(config.api.serverUrl));
 
+app.get('/processWordJSON', proxy(`localhost:8090`))
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------

@@ -1,9 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
+import { useCombobox } from 'downshift'
+import useMergedRef from '@react-hook/merged-ref'
 import PropTypes from 'prop-types';
 import { useApolloClient } from 'react-apollo-hooks';
 import { Textarea, Flex } from '@chakra-ui/core';
 import UserContext from "../UserContext"
 import { EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS } from '../../ConfigConstants';
+import TitleCombobox from './TitleCombobox';
+import {items, menuStyles, comboboxStyles} from './shared'
+import calculateNumberOfLines from '../../utils/calculateNumberOfLines';
+import getTextAreaCursorXY from 'textarea-caret'
+import autoSuggestion from "../../services/autosuggestions"
 
 import {
   GET_EXPERIENCE_TITLE,
@@ -26,6 +33,7 @@ const Title = ({ saveDebounce }) => {
   const [message, setMessage] = useState('');
   
   const ref = useRef();
+  const comboboxRef = useRef()
   const validateTitle = event => {
     let { value } = event.target;
 
@@ -46,12 +54,97 @@ const Title = ({ saveDebounce }) => {
     }
   };
 
+  const onWordSelection = (changes) => {
+    const titleSplit = title.trim().split(" ")
+    titleSplit.splice(titleSplit.length - 1, 1)
+    titleSplit.push(changes.inputValue)
+    const updatedTitle = titleSplit.join(" ").trim()
+    changes.inputValue = updatedTitle
+    return {
+      ...changes,
+    }
+  }
+
+  const [inputItems, setInputItems] = useState([])
+  const {
+    isOpen,
+    getMenuProps,
+    getInputProps,
+    getComboboxProps,
+    highlightedIndex,
+    getItemProps,
+    setInputValue,
+  } = useCombobox({
+    items: inputItems,
+    defaultHighlightedIndex: 0,
+    onInputValueChange: (props) => {
+      const { inputValue, isOpen } = props
+      if (!inputValue) {
+        return
+      }
+      const word = inputValue.split(" ")
+      const filterTerm = word[word.length - 1].toLowerCase()
+      if(isOpen && !!filterTerm) {
+          autoSuggestion(filterTerm)
+            .then(resp => {
+              if(resp) {
+                setInputItems(resp.twords[0].options)
+              }
+            })
+      }
+      else if(!filterTerm) {
+        setInputItems([])
+      }
+    },
+    stateReducer: (state, actionAndChanges) => {
+      const {type, changes} = actionAndChanges
+      switch (type) {
+        case useCombobox.stateChangeTypes.ItemClick: 
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+          return onWordSelection(changes)
+
+        case useCombobox.stateChangeTypes.InputBlur:
+          changes.inputValue = title
+          return changes
+          
+        case useCombobox.stateChangeTypes.InputKeyDownEscape:
+          setInputItems([])
+          return changes
+          
+        default:
+          return changes
+      }
+    }
+  })
+  
+  const menuProps = getMenuProps()
+  const multiRef = useMergedRef(menuProps.ref, comboboxRef)
+
+  const setOptionsPosition = (domRef) => {
+    const el = comboboxRef.current
+    const coords = getTextAreaCursorXY(domRef.target, domRef.target.selectionEnd)
+    const { offsetLeft, offsetTop} = domRef.target
+    const numberOfLines = calculateNumberOfLines(domRef.target)
+    coords.left = coords.left + offsetLeft
+    coords.top = offsetTop
+    el.style.top = `${coords.top + window.pageYOffset + coords.height * numberOfLines}px`;
+    el.style.left = `${coords.left + window.pageXOffset}px`;
+  }
+
   return (
     <React.Fragment>
-      <Flex>
+      <TitleCombobox 
+        inputItems={inputItems}
+        menuProps={menuProps} 
+        isOpen={isOpen}
+        comboboxRef={multiRef} 
+        highlightedIndex={highlightedIndex}
+        getItemProps={getItemProps}
+      />
+      <Flex {...getComboboxProps()}>
         <Textarea
           // eslint-disable-next-line jsx-a11y/no-autofocus
-          inputRef={ref}
+          ref={ref}
           px={0}
           autoFocus
           w="100%"
@@ -65,12 +158,17 @@ const Title = ({ saveDebounce }) => {
           placeholder="Start with the title..."
           value={title}
           as={AutoResizeTextarea}
-          onChange={validateTitle}
-          onKeyPress={event => {
-            if (event.key === 'Enter') {
-              event.preventDefault();
+          {...getInputProps({
+            onChange: (event) => { 
+              validateTitle(event)
+              setOptionsPosition(event)
+            },
+            onKeyPress: (event)=> {
+              if (event.key === 'Enter' || event.key === 'Tab') {
+                event.preventDefault();
+              }
             }
-          }}
+          })}
           maxLength={`${EXPERIENCE_TITLE_MAX_ALLOWED_CHARACTERS}`}
           transition="height none"
         />

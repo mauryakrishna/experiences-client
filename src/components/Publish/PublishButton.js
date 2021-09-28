@@ -3,6 +3,7 @@ import { useApolloClient } from 'react-apollo-hooks';
 import localStorage from 'local-storage';
 import {
   Text,
+  Box,
   Flex,
   useDisclosure,
   Modal,
@@ -12,6 +13,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/core';
 
+import LanguageButton from "../Language/ChooseLanguage";
 import UserContext from "../UserContext";
 import FirstPublish from './FirstPublish';
 import SaveNPublish from './SaveNPublish';
@@ -76,7 +78,7 @@ const PublishExperience = ({ saveState }) => {
   }
 
   return (
-    <Flex>
+    <Flex alignItems="center">
       { loggedin && 
         <>
           <Flex>
@@ -121,6 +123,9 @@ const PublishExperience = ({ saveState }) => {
           </Text>
         </>
       }
+      <Box ml="0.5rem">
+        <LanguageButton />
+      </Box>
     </Flex>
   );
 };

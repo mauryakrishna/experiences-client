@@ -40,6 +40,7 @@ const Editor = ({ saveDebounce }) => {
         canonical={`https://experiences.guru/editor/`}
       />
       <WriteEditor
+        id={`experience-editor`}
         initialValue={value}
         onChangeCb={newValue => {
           
