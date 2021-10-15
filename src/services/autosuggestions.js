@@ -54,7 +54,6 @@ const getFromService = (inString, chosenLang) => {
         return json
     })
     .catch((error) => {
-        console.log("Error in autosuggestion", error)
         return null
     })
 }

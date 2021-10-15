@@ -12,10 +12,18 @@ import {
 import find from "lodash/find";
 
 const ChooseLanguage = () => {
+    // enDisplay - for dispalying the english phonetics of corresponding language
     const languageList = [
-        { key: "english", value: "English" },
-        { key: "hindi", value: "हिन्दी" },
-        { key: "marathi", value: "मराठी" }
+        { key: "english", value: "English", enDisplay: "English" },
+        { key: "hindi", value: "हिन्दी", enDisplay: "Hindi" },
+        { key: "marathi", value: "मराठी", enDisplay: "Marathi" },
+        { key: "gujarati", value: "ગુજરાતી", enDisplay: "Gujarati" },
+        { key: "kannada", value: "ಕನ್ನಡ", enDisplay: "Kannada" },
+        { key: "punjabi", value: "ਪੰਜਾਬੀ", enDisplay: "Punjabi" },
+        { key: "bengali", value: "বাঙ্গালী", enDisplay: "Bengali" },
+        { key: "tamil", value: "தமிழ்", enDisplay: "Tamil" },
+        { key: "telugu", value: "తెలుగు", enDisplay: "Telugu" },
+        { key: "nepali", value: "नेपाली", enDisplay: "Nepali" },
     ]
     const chosenLang = localStorage.get(EXPERIENCE_EDITOR_LANG)
     const [chosenLanguage, setChosenLanguage] = useState(chosenLang || "english")
@@ -33,7 +41,7 @@ const ChooseLanguage = () => {
                 <MenuOptionGroup onChange={handleLanguageChange} value={chosenLanguage} type="radio">
                     {
                         languageList.map((lang) => {
-                            return <MenuItemOption key={lang.key} value={lang.key}>{lang.value}</MenuItemOption>
+                            return <MenuItemOption key={lang.key} value={lang.key}>{lang.value} - {lang.enDisplay}</MenuItemOption>
                         })
                     }
                 </MenuOptionGroup>
