@@ -75,6 +75,7 @@ const Title = ({ saveDebounce }) => {
     getItemProps,
     setInputValue,
   } = useCombobox({
+    inputValue: title,
     items: inputItems,
     defaultHighlightedIndex: 0,
     onInputValueChange: (props) => {
