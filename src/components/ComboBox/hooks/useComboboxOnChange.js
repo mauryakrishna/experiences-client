@@ -18,7 +18,7 @@ export const useComboboxOnChange = ({
   const setKey = useComboboxStore((state) => state.setKey)
 
   return useCallback(() => {
-    const { selection } = editor
+    const { selection } = editor || {}
     if (selection && isCollapsed(selection)) {
       const cursor = Range.start(selection)
 
