@@ -123,9 +123,9 @@ const PublishExperience = ({ saveState }) => {
           </Text>
         </>
       }
-      {/* <Box ml="0.5rem">
+      <Box ml="0.5rem">
         <LanguageButton />
-      </Box> */}
+      </Box>
     </Flex>
   );
 };

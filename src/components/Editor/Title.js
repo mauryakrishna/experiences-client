@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useCombobox } from 'downshift'
 import useMergedRef from '@react-hook/merged-ref'
 import PropTypes from 'prop-types';
@@ -75,7 +75,6 @@ const Title = ({ saveDebounce }) => {
     getItemProps,
     setInputValue,
   } = useCombobox({
-    inputValue: title,
     items: inputItems,
     defaultHighlightedIndex: 0,
     onInputValueChange: (props) => {
@@ -131,6 +130,14 @@ const Title = ({ saveDebounce }) => {
     el.style.top = `${coords.top + window.pageYOffset + coords.height * numberOfLines}px`;
     el.style.left = `${coords.left + window.pageXOffset}px`;
   }
+
+  /**
+   * added below hook so that title load once the page has loaded for edit 
+   * when logged in.
+  */
+  useEffect(() => {
+    setInputValue(title)
+  }, [title])
 
   return (
     <React.Fragment>
