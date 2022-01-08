@@ -68,6 +68,27 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+var randomString = function(length) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for(var i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
+// security headers
+app.use((req, res, next) => {
+  const randomNonce = randomString(5)
+  // https://blog.vnaik.com/posts/web-attacks.html
+  // https://securityheaders.com/
+  res.append("Content-Security-Policy", "unsafe-inline");
+  res.append("Access-Control-Allow-Origin", "self")
+  res.append("X-Frame-Options", "SAMEORIGIN");
+  res.append("X-Content-Type-Options", "nosniff");
+  res.append("Referrer-Policy", "same-origin");
+  next();
+});
 /***************Loadable components setup starts ************************/
 
 const statsFile = path.resolve('./build/loadable-stats.json');
