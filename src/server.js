@@ -82,7 +82,7 @@ app.use((req, res, next) => {
   const randomNonce = randomString(5)
   // https://blog.vnaik.com/posts/web-attacks.html
   // https://securityheaders.com/
-  res.append("Content-Security-Policy", "unsafe-inline");
+  res.append("Content-Security-Policy", "style-src 'self' 'unsafe-inline';");
   res.append("Access-Control-Allow-Origin", "self")
   res.append("X-Frame-Options", "SAMEORIGIN");
   res.append("X-Content-Type-Options", "nosniff");
