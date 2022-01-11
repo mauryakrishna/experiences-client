@@ -134,7 +134,7 @@ export default function Home() {
   const expCountZero = experiences.length === 0;
   const inspireBoxWidth = expCountZero ? '100%' : '50%';
 
-  const metaDescription = "Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings";
+  const metaDescription = "Write your life's experiences, help others by sharing it with world, learn from the experiences of others, lessons of day to day life, build collection of learnings. Ability to write in major indian languages such as Hindi, Marathi, Gujarati, Kannada, Punjabi, Bengali, Tamil, Telugu, Nepali.";
   return (
     <>
       <SEOElements 
