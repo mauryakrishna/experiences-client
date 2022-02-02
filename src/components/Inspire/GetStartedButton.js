@@ -9,6 +9,7 @@ const Register = loadable(()=> import('../Register'));
 const GetStarted = () => {
   const context = useContext(UserContext);
   const handleClick = () => {
+    plausible('Get Started', {props: { mtehod: 'Landing Page - LoggedIn'}})
     history.push(`${WRITE_AN_EXPERIENCE_ROUTE}`);
   };
   return (

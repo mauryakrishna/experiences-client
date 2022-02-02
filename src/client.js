@@ -8,6 +8,7 @@
  */
 
 import 'whatwg-fetch';
+import './PlausibleExtras';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { loadableReady } from "@loadable/component";
