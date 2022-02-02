@@ -18,7 +18,7 @@ export default () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
   const handleClick = () => {
-    plausible('Get Started', {props: { mtehod: 'Landing Page - Not LoggedIn'}})
+    plausible('Get Started', {props: { method: 'Landing Page - Not LoggedIn'}})
     onOpen()
   }
   const cb = (author, token) => {

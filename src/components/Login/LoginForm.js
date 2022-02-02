@@ -35,6 +35,7 @@ export default function Login({ loginCallback, toggle }) {
     setShowMsgForEmailVerification,
   ] = useState(false);
   const showForgotpasswordForm = () => {
+    plausible('ForgotPasswordButton', { props: { method: 'Login form' }})
     // setting false will hide login form and make forgot password form visible
     toggle(false);
   };

@@ -28,6 +28,7 @@ const ChooseLanguage = () => {
     const chosenLang = localStorage.get(EXPERIENCE_EDITOR_LANG)
     const [chosenLanguage, setChosenLanguage] = useState(chosenLang || "english")
     const handleLanguageChange = (lang) => {
+        plausible('ChooseLanguage', { props: { lang } })
         setChosenLanguage(lang)
         localStorage.set(EXPERIENCE_EDITOR_LANG, lang)
     }

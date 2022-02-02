@@ -46,6 +46,7 @@ export default function Home() {
   });
 
   const loadMoreExperiences = () => {
+    plausible('LoadMoreButton', { props: { method: 'Landing page'}})
     setFetchMoreLoading(true);
     fetchMore({
       query: GET_EXPERIENCES_QUERY,

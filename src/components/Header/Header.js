@@ -11,7 +11,12 @@ const Authenticate = loadable(()=> import('./Authenticate'))
 export default function Header() {
   const { pathname } = history && history.location;
   const takeToEditor = () => {
+    plausible('Editor', { props: { method: 'Header' }})
     history.push(`${WRITE_AN_EXPERIENCE_ROUTE}`);
+  }
+
+  const goToHomePage = () => {
+    plausible('ExperiencesLogo', { props: { method: 'Header' } })
   }
 
   return (
@@ -26,7 +31,7 @@ export default function Header() {
       color="white"
     >
       <Flex align="center" mr={3} fontWeight="500">
-        <Link to="/">
+        <Link to="/" onClick={goToHomePage}>
           <Text fontSize="1.8rem" color="white">
             Experiences
             </Text>
