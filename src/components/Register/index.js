@@ -17,6 +17,10 @@ import { SetLoginData } from '../SetLoginData';
 export default () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
+  const handleClick = () => {
+    plausible('Get Started', {props: { mtehod: 'Landing Page - Not LoggedIn'}})
+    onOpen()
+  }
   const cb = (author, token) => {
     SetLoginData(author, token);
     // and close the login modal
@@ -25,7 +29,7 @@ export default () => {
 
   return (
     <Flex>
-      <PseudoBox cursor="pointer" onClick={onOpen}>
+      <PseudoBox cursor="pointer" onClick={handleClick}>
         <Text>Get Started</Text>
       </PseudoBox>
       <Modal
