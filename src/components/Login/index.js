@@ -20,6 +20,10 @@ export default () => {
   const [toggleForm, setToggleForm] = useState(true);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
+  const handleLoginClick = () => {
+    onOpen()
+    plausible('LoginButton', {props: { method: 'Header'}})
+  }
   const LoginCallback = () => {
     // and close the login modal
     onToggle();
@@ -27,7 +31,7 @@ export default () => {
 
   return (
     <Flex>
-      <PseudoBox cursor="pointer" onClick={onOpen}>
+      <PseudoBox cursor="pointer" onClick={handleLoginClick}>
         <Text>Login</Text>
       </PseudoBox>
 
