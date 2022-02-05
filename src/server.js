@@ -60,6 +60,20 @@ global.fetch = nodeFetch;
 // -----------------------------------------------------------------------------
 app.set('trust proxy', config.trustProxy);
 
+// security headers
+app.use((req, res, next) => {
+  const randomNonce = randomString(5)
+  // https://blog.vnaik.com/posts/web-attacks.html
+  // https://securityheaders.com/
+  res.append("Content-Security-Policy", "style-src 'self' 'unsafe-inline';");
+  res.append("Access-Control-Allow-Origin", "self")
+  res.append("X-Frame-Options", "SAMEORIGIN");
+  res.append("X-Content-Type-Options", "nosniff");
+  res.append("Referrer-Policy", "same-origin");
+  res.append("Cache-Control", "public, max-age=31536000");
+  next();
+});
+
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
@@ -77,19 +91,6 @@ var randomString = function(length) {
   return text;
 }
 
-// security headers
-app.use((req, res, next) => {
-  const randomNonce = randomString(5)
-  // https://blog.vnaik.com/posts/web-attacks.html
-  // https://securityheaders.com/
-  res.append("Content-Security-Policy", "style-src 'self' 'unsafe-inline';");
-  res.append("Access-Control-Allow-Origin", "self")
-  res.append("X-Frame-Options", "SAMEORIGIN");
-  res.append("X-Content-Type-Options", "nosniff");
-  res.append("Referrer-Policy", "same-origin");
-  res.append("Cache-Control", "public, max-age=31536000");
-  next();
-});
 /***************Loadable components setup starts ************************/
 
 const statsFile = path.resolve('./build/loadable-stats.json');
