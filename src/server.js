@@ -87,6 +87,7 @@ app.use((req, res, next) => {
   res.append("X-Frame-Options", "SAMEORIGIN");
   res.append("X-Content-Type-Options", "nosniff");
   res.append("Referrer-Policy", "same-origin");
+  res.append("Cache-Control", "public, max-age=31536000");
   next();
 });
 /***************Loadable components setup starts ************************/
