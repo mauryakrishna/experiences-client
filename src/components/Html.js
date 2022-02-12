@@ -51,7 +51,7 @@ export default function Html({
         <script>
           global = window.globalThis
         </script>
-        <script async defer data-domain="experiences.guru" src="https://experiences.guru/js/plausible.js"></script>
+        <script async defer data-domain="experiences.guru" src="https://experiences.guru/js/plausible.outbound-links.js"></script>
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
