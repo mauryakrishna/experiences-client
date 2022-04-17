@@ -165,7 +165,7 @@ app.get('*', async (req, res, next) => {
     const apolloClient = createApolloClient(req);
 
     getDataFromTree(App).then(() => {
-      const stringApp = ReactDOM.renderToNodeStream(
+      const stringApp = ReactDOM.renderToString(
         <ChunkExtractorManager extractor={extractor}>
           <ApolloProvider client={apolloClient}>
             <App context={context} insertCss={insertCss}>
@@ -223,7 +223,7 @@ app.use((err, req, res, next) => {
       title="Internal Server Error"
       styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
     >
-      {ReactDOM.renderToNodeStream(<ErrorPageWithoutStyle error={err} />)}
+      {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
     </Html>,
   );
   res.status(err.status || 500);
