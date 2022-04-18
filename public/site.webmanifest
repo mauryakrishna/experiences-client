@@ -1,7 +1,13 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Experiences",
+  "short_name": "Exp",
+  "description": "A portal for sharing experiences.",
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -15,5 +21,8 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "id": "/",
+  "scope": "/",
+  "start_url": "/"
 }
